@@ -1,6 +1,6 @@
-export interface User {
-	id: number;
-	email: string;
+import type { User as IUser } from '@supabase/supabase-js';
+
+export interface User extends IUser {
 }
 
 export interface UserSchema {
