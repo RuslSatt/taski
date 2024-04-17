@@ -23,9 +23,11 @@ import { AuthForm } from '@/feature/auth';
 
 .auth-container {
 	display: flex;
+	flex-direction: column;
 	justify-content: flex-start;
-	width: 500px;
+	width: 400px;
 	height: 100vh;
+	padding: 10px;
 }
 
 .auth-logo {

@@ -4,11 +4,14 @@ import PrimeVue from 'primevue/config';
 import App from './app/App.vue';
 import router from '@/app/router/router';
 
+import '@/app/styles/reset.css';
 import 'primevue/resources/themes/aura-light-green/theme.css';
+import { initPrimeComponents } from '@/shared/ui/prime';
 
-const app = createApp(App);
+export const app = createApp(App);
 
 app.use(PrimeVue);
 app.use(createPinia());
 app.use(router);
+initPrimeComponents();
 app.mount('#app');
