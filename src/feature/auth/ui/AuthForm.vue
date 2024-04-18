@@ -5,8 +5,14 @@
 				{{ title }}
 			</h2>
 			<InputText v-model="authStore.email" placeholder="Email" class="form-input" />
-			<Password v-model="authStore.password" :feedback="!isSignIn" toggleMask placeholder="Password"
-					  class="form-input" />
+			<Password
+				v-model="authStore.password"
+				:feedback="!isSignIn"
+				toggleMask
+				placeholder="Password"
+				class="form-input"
+				aria-label="Password"
+			/>
 			<Button @click="onSign" class="form-button" :label="labelFormButton" />
 			<Button v-if="isSignIn" link class="form-reset-password" label="Забыли пароль?" />
 			<div class="form-toggle-sign">
@@ -47,9 +53,7 @@ const isToggleSignButton = computed(() => {
 });
 
 const onSign = () => {
-
 };
-
 </script>
 
 <style scoped>
@@ -83,7 +87,7 @@ const onSign = () => {
 }
 
 .form-reset-password {
-	padding: 0;
+	padding: 1px;
 	align-self: flex-start;
 	font-size: 14px;
 }
@@ -97,6 +101,6 @@ const onSign = () => {
 }
 
 .form-toggle-sign-btn {
-	padding: 0;
+	padding: 1px 0;
 }
 </style>
