@@ -1,22 +1,54 @@
 <template>
-	<div class="form">
+	<form @onsubmit.prevent class="form">
 		<div class="form-container">
-			<h2 class="form-header">
-				Войти
+			<h2 class="form-title">
+				{{ title }}
 			</h2>
-			<InputText placeholder="Email" class="form-input" />
-			<Password placeholder="Password" class="form-input" />
-			<Button class="form-button" label="Войти" />
-			<Button link class="form-reset-password" label="Забыли пароль?" />
+			<InputText v-model="authStore.email" placeholder="Email" class="form-input" />
+			<Password v-model="authStore.password" :feedback="!isSignIn" toggleMask placeholder="Password"
+					  class="form-input" />
+			<Button @click="onSign" class="form-button" :label="labelFormButton" />
+			<Button v-if="isSignIn" link class="form-reset-password" label="Забыли пароль?" />
 			<div class="form-toggle-sign">
-				<span>Еще нет аккаунта?</span>
-				<Button link class="form-toggle-sign-btn" label="Зарегистрироваться" />
+				<span>{{ toggleSignText }}</span>
+				<Button @click="toggleTypeSign" link class="form-toggle-sign-btn" :label="isToggleSignButton" />
 			</div>
 		</div>
-	</div>
+	</form>
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
+import { useAuthStore } from '@/feature/auth';
+
+const authStore = useAuthStore();
+
+const isSignIn = ref(true);
+
+const toggleTypeSign = () => {
+	authStore.$reset();
+	isSignIn.value = !isSignIn.value;
+};
+
+const title = computed(() => {
+	return isSignIn.value ? 'Войти' : 'Регистрация';
+});
+
+const labelFormButton = computed(() => {
+	return isSignIn.value ? 'Войти' : 'Зарегистрироваться';
+});
+
+const toggleSignText = computed(() => {
+	return isSignIn.value ? 'Еще нет аккаунта?' : 'Уже есть аккаунт?';
+});
+
+const isToggleSignButton = computed(() => {
+	return isSignIn.value ? 'Зарегистрироваться' : 'Войти';
+});
+
+const onSign = () => {
+
+};
 
 </script>
 
@@ -37,7 +69,7 @@
 	width: 100%;
 }
 
-.form-header {
+.form-title {
 	font-weight: normal;
 	font-size: 24px;
 }

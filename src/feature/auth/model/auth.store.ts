@@ -47,4 +47,13 @@ export const useAuthStore = defineStore('auth', () => {
 		if (error) errorMessage.value = error.message;
 		isLoading.value = false;
 	}
+
+	function $reset() {
+		email.value = '';
+		password.value = '';
+		isLoading.value = false;
+		errorMessage.value = '';
+	}
+
+	return { email, password, isLoading, errorMessage, signUp, signIn, signOut, $reset };
 });
