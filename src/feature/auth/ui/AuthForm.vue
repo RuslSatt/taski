@@ -1,6 +1,7 @@
 <template>
 	<form @onsubmit.prevent class="form">
-		<div class="form-container">
+		<ProgressSpinner v-if="authStore.isLoading" aria-label="Загрузка" />
+		<div v-else class="form-container">
 			<h2 class="form-title">
 				{{ title }}
 			</h2>
@@ -24,10 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useAuthStore } from '@/feature/auth';
+import { useUserStore } from '@/entities/user';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
+const router = useRouter();
 
 const isSignIn = ref(true);
 
@@ -52,8 +57,19 @@ const isToggleSignButton = computed(() => {
 	return isSignIn.value ? 'Зарегистрироваться' : 'Войти';
 });
 
-const onSign = () => {
+const onSign = async () => {
+	if (isSignIn.value) {
+		await authStore.signIn();
+	} else {
+		await authStore.signUp();
+	}
+	authStore.$reset();
 };
+
+onMounted(() => {
+	userStore.initUser();
+	if (userStore.user) router.push('/');
+});
 </script>
 
 <style scoped>

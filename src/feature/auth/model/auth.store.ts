@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { useUserStore } from '@/entities/user';
+import { type User, useUserStore } from '@/entities/user';
 import { supabase } from '@/shared/api/supabase';
+import { useRouter } from 'vue-router';
+import type { AuthError } from '@supabase/supabase-js';
 
 export const useAuthStore = defineStore('auth', () => {
 	const email = ref('');
@@ -10,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
 	const errorMessage = ref('');
 
 	const userStore = useUserStore();
+	const router = useRouter();
 
 	async function signUp() {
 		isLoading.value = true;
@@ -19,11 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
 			password: password.value
 		});
 
-		if (data?.user) userStore.setUser(data.user);
-
-		if (error) errorMessage.value = error.message;
-
-		isLoading.value = false;
+		await handlerResponse(data?.user, error);
 	}
 
 	async function signIn() {
@@ -34,9 +33,21 @@ export const useAuthStore = defineStore('auth', () => {
 			password: password.value
 		});
 
-		if (data?.user) userStore.setUser(data.user);
+		await handlerResponse(data?.user, error);
+	}
 
-		if (error) errorMessage.value = error.message;
+	/**
+	 * Обработка авторизации пользователя после получения ответа от сервера
+	 * @param user - Пользователь
+	 * @param error - Ошибка
+	 */
+	async function handlerResponse(user: User | null, error?: AuthError | null) {
+		if (user) {
+			userStore.setUser(user);
+			await router.push('/');
+		} else if (error) {
+			errorMessage.value = error.message;
+		}
 
 		isLoading.value = false;
 	}

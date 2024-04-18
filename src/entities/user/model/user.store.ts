@@ -1,30 +1,27 @@
 import { defineStore } from 'pinia';
-import type { User, UserSchema } from '@/entities/user/model/user';
+import type { User } from '@/entities/user/model/user';
+import { ref } from 'vue';
 
-const initialState: UserSchema = {
-	user: undefined
-};
+export const useUserStore = defineStore('user', () => {
 
-export const useUserStore = defineStore('user', {
-	state: () => initialState,
-	actions: {
-		setUser(user: User) {
-			this.user = user;
-		},
-		initUser() {
-			const user = localStorage.getItem('user');
-			if (user) {
-				this.user = JSON.parse(user);
-			}
-		},
-		logout() {
-			this.user = undefined;
-			localStorage.removeItem('user');
-		}
-	},
-	getters: {
-		getUser(): User | undefined {
-			return this.user;
+	const user = ref<User | undefined>(undefined);
+
+	function setUser(newUser: User) {
+		user.value = newUser;
+		localStorage.setItem('user', JSON.stringify(newUser));
+	}
+
+	function initUser() {
+		const authUser = localStorage.getItem('user');
+		if (authUser) {
+			user.value = JSON.parse(authUser);
 		}
 	}
+
+	function removeUser() {
+		user.value = undefined;
+		localStorage.removeItem('user');
+	}
+
+	return { user, removeUser, setUser, initUser };
 });
