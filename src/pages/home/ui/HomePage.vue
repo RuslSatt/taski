@@ -1,6 +1,9 @@
 <template>
 	<div class="home">
-		<NavBar />
+		<SideBar />
+		<div class="home-content">
+			<NavBar />
+		</div>
 	</div>
 </template>
 
@@ -9,6 +12,7 @@ import { onMounted } from 'vue';
 import { useUserStore } from '@/entities/user';
 import { useRouter } from 'vue-router';
 import { NavBar } from '@/widgets/navbar';
+import { SideBar } from '@/widgets/sidebar';
 
 const userStore = useUserStore();
 
@@ -25,5 +29,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.home {
+	display: flex;
+	height: 100vh;
+}
 
+.home-content {
+	flex: 1;
+}
 </style>
