@@ -4,6 +4,7 @@ import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import ProgressSpinner from 'primevue/progressspinner';
+import Avatar from 'primevue/avatar';
 
 
 export function initPrimeComponents() {
@@ -12,4 +13,5 @@ export function initPrimeComponents() {
 	app.component('Button', Button);
 	app.component('Card', Card);
 	app.component('ProgressSpinner', ProgressSpinner);
+	app.component('Avatar', Avatar);
 }

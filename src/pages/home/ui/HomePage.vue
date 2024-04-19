@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<p>Home page</p>
+		<NavBar />
 	</div>
 </template>
 
@@ -8,6 +8,7 @@
 import { onMounted } from 'vue';
 import { useUserStore } from '@/entities/user';
 import { useRouter } from 'vue-router';
+import { NavBar } from '@/widgets/navbar';
 
 const userStore = useUserStore();
 
