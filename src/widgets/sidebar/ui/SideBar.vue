@@ -49,7 +49,7 @@ const selectItem = (item: Item) => {
 	flex-direction: column;
 	border-right: 1px solid var(--surface-300);
 	height: 100%;
-	width: 250px;
+	min-width: 250px;
 	transition: margin-left 0.3s;
 }
 

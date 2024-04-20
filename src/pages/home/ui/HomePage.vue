@@ -3,6 +3,7 @@
 		<NavBar />
 		<div class="home-content">
 			<SideBar />
+			<TasksPage />
 		</div>
 	</div>
 </template>
@@ -13,6 +14,7 @@ import { useUserStore } from '@/entities/user';
 import { useRouter } from 'vue-router';
 import { NavBar } from '@/widgets/navbar';
 import { SideBar } from '@/widgets/sidebar';
+import { TasksPage } from '@/pages/tasks';
 
 const userStore = useUserStore();
 
@@ -36,6 +38,7 @@ onMounted(() => {
 }
 
 .home-content {
+	display: flex;
 	flex: 1;
 }
 </style>
