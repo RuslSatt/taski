@@ -1,8 +1,8 @@
 <template>
 	<div class="home">
-		<SideBar />
+		<NavBar />
 		<div class="home-content">
-			<NavBar />
+			<SideBar />
 		</div>
 	</div>
 </template>
@@ -31,6 +31,7 @@ onMounted(() => {
 <style scoped>
 .home {
 	display: flex;
+	flex-direction: column;
 	height: 100vh;
 }
 

@@ -1,11 +1,21 @@
 <template>
 	<header class="navbar">
+		<Button
+			class="sidebar-toggle-menu"
+			icon="pi pi-bars"
+			severity="secondary"
+			text rounded
+			aria-label="Bookmark"
+			@click="themeStore.toggleShowNavBar"
+		/>
 		<Avatar label="R" class="avatar" shape="circle" />
 	</header>
 </template>
 
 <script setup lang="ts">
+import { useThemeStore } from '@/entities/theme';
 
+const themeStore = useThemeStore();
 </script>
 
 <style scoped>
@@ -13,7 +23,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 40px;
 	width: 100%;
 	padding: 2px 10px;
 	border-bottom: 1px solid var(--surface-300);

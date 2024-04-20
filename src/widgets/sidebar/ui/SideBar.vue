@@ -1,14 +1,5 @@
 <template>
-	<aside class="sidebar">
-		<div class="sidebar-header">
-			<Button
-				class="sidebar-toggle-menu"
-				icon="pi pi-bars"
-				severity="secondary"
-				text rounded
-				aria-label="Bookmark"
-			/>
-		</div>
+	<aside :class="{sidebar: true, hide: themeStore.isHideNavBar}">
 		<ul class="sidebar-list">
 			<li
 				@click="selectItem(item)"
@@ -18,22 +9,6 @@
 			>
 				<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
 				<p>{{ item.label }}</p>
-				<div v-if="item.mode === 'tree'" class="item-buttons">
-					<Button class="item-button"
-							icon="pi pi-plus"
-							severity="secondary"
-							text rounded
-							aria-label="Bookmark"
-							@click.stop
-					/>
-					<Button class="item-button"
-							icon="pi pi-angle-down"
-							severity="secondary"
-							text rounded
-							aria-label="Bookmark"
-							@click.stop
-					/>
-				</div>
 			</li>
 		</ul>
 	</aside>
@@ -41,6 +16,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useThemeStore } from '@/entities/theme';
+
+const themeStore = useThemeStore();
 
 interface Item {
 	id: string,
@@ -54,7 +32,7 @@ type ModeItem = 'single' | 'tree'
 
 const items = ref<Item[]>([
 	{ id: '1', label: 'Мои задачи', icon: 'pi pi-check-circle', mode: 'single' },
-	{ id: '2', label: 'Мои проекты', children: [], mode: 'tree' }
+	{ id: '2', label: 'Проекты', children: [], mode: 'tree' }
 ]);
 
 const selectedItem = ref<Item | null>(null);
@@ -62,6 +40,7 @@ const selectedItem = ref<Item | null>(null);
 const selectItem = (item: Item) => {
 	selectedItem.value = item;
 };
+
 </script>
 
 <style scoped>
@@ -69,25 +48,20 @@ const selectItem = (item: Item) => {
 	display: flex;
 	flex-direction: column;
 	border-right: 1px solid var(--surface-300);
-	width: 250px;
 	height: 100%;
+	width: 250px;
+	transition: margin-left 0.3s;
 }
 
-.sidebar-header {
-	display: flex;
-	align-items: center;
-	height: 40px;
-	width: 100%;
-}
-
-.sidebar-toggle-menu {
-	margin-left: auto;
+.sidebar.hide {
+	margin-left: -251px;
 }
 
 .sidebar-list {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	flex: 0 0 auto;
 	width: 100%;
 	height: 100%;
 	padding: 10px;
@@ -102,7 +76,7 @@ const selectItem = (item: Item) => {
 	gap: 10px;
 	width: 100%;
 	border-radius: 10px;
-	transition: background-color, color 0.3s;
+	transition: background-color 0.3s, color 0.3s;
 }
 
 .list-item:hover, .list-item-group:hover {
@@ -110,12 +84,12 @@ const selectItem = (item: Item) => {
 }
 
 .list-item.active {
-	color: var(--green-400);
+	color: var(--highlight-text-color);
+	background-color: var(--highlight-bg);
 }
 
 .list-item-group {
-	font-weight: bold;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 .item-buttons {
