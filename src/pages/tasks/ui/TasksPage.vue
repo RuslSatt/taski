@@ -2,12 +2,15 @@
 	<div class="wrapper">
 		<div class="content">
 			<h2 class="title">Задачи</h2>
+			<AddTaskButton class="add-task-button" />
+			<AddTaskForm />
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 
+import { AddTaskButton, AddTaskForm } from '@/feature/task';
 </script>
 
 <style scoped>
@@ -27,6 +30,11 @@
 
 .title {
 	font-size: 26px;
+	align-self: flex-start;
+	margin-bottom: 20px;
+}
+
+.add-task-button {
 	align-self: flex-start;
 }
 </style>
