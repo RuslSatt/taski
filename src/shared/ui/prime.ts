@@ -6,6 +6,7 @@ import Card from 'primevue/card';
 import ProgressSpinner from 'primevue/progressspinner';
 import Avatar from 'primevue/avatar';
 import Checkbox from 'primevue/checkbox';
+import Skeleton from 'primevue/skeleton';
 
 
 export function initPrimeComponents() {
@@ -16,4 +17,5 @@ export function initPrimeComponents() {
 	app.component('ProgressSpinner', ProgressSpinner);
 	app.component('Avatar', Avatar);
 	app.component('Checkbox', Checkbox);
+	app.component('Skeleton', Skeleton);
 }

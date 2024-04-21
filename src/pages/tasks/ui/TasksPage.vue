@@ -3,6 +3,7 @@
 		<div class="content">
 			<h2 class="title">Задачи</h2>
 			<AddTaskButton class="add-task-button" />
+			<TaskList />
 			<AddTaskForm v-if="taskStore.isShowAddForm" />
 		</div>
 	</div>
@@ -11,6 +12,7 @@
 <script setup lang="ts">
 import { AddTaskButton, AddTaskForm } from '@/feature/task';
 import { useTaskStore } from '@/entities/task';
+import { TaskList } from '@/widgets/task-list';
 
 const taskStore = useTaskStore();
 </script>

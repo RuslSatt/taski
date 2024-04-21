@@ -10,6 +10,7 @@ export const useTaskStore = defineStore('task', () => {
 	const description = ref<string>('');
 
 	const tasks = ref<Task[]>([]);
+	const isLoading = ref<boolean>(false);
 	const errorMessage = ref<string>('');
 
 	function toggleShowAddForm() {
@@ -17,7 +18,8 @@ export const useTaskStore = defineStore('task', () => {
 		if (!isShowAddForm.value) $reset();
 	}
 
-	async function getTasks() {
+	async function fetchTasks() {
+		isLoading.value = true;
 		const { data, error } = await supabase
 			.from('tasks')
 			.select();
@@ -27,6 +29,8 @@ export const useTaskStore = defineStore('task', () => {
 		} else if (error) {
 			errorMessage.value = error.message;
 		}
+
+		isLoading.value = false;
 	}
 
 	async function addTask() {
@@ -80,7 +84,8 @@ export const useTaskStore = defineStore('task', () => {
 		addTask,
 		removeTask,
 		updateTask,
-		getTasks,
+		fetchTasks,
+		isLoading,
 		$reset
 	};
 });
