@@ -36,7 +36,8 @@ const taskStore = useTaskStore();
 }
 
 .task-name, .task-description {
-	border: none
+	border: none;
+	box-shadow: none
 }
 
 .task-name {

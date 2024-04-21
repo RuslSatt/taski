@@ -1,4 +1,5 @@
-import TaskCard from '@/entities/task/ui/TaskCard.vue';
-import { useTaskStore } from '@/entities/task/model/task.store';
+import TaskCard from './ui/TaskCard.vue';
+import { useTaskStore } from './model/task.store';
+import type { Task } from './model/task';
 
-export { TaskCard, useTaskStore };
+export { TaskCard, useTaskStore, type Task };

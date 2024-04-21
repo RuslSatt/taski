@@ -3,14 +3,16 @@
 		<div class="content">
 			<h2 class="title">Задачи</h2>
 			<AddTaskButton class="add-task-button" />
-			<AddTaskForm />
+			<AddTaskForm v-if="taskStore.isShowAddForm" />
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-
 import { AddTaskButton, AddTaskForm } from '@/feature/task';
+import { useTaskStore } from '@/entities/task';
+
+const taskStore = useTaskStore();
 </script>
 
 <style scoped>
