@@ -32,13 +32,32 @@ export const useTaskStore = defineStore('task', () => {
 		if (error) errorMessage.value = error.message;
 	}
 
-	function removeTask() {
+	async function removeTask(task: Task) {
+		const { error } = await supabase
+			.from('countries')
+			.delete()
+			.eq('id', task.id);
 
+		if (error) errorMessage.value = error.message;
 	}
 
-	function updateTask() {
+	async function updateTask(task: Task) {
+		const { error } = await supabase
+			.from('countries')
+			.update(task)
+			.eq('id', task.id);
 
+		if (error) errorMessage.value = error.message;
 	}
 
-	return { isShowAddForm, toggleShowAddForm, tasks, addTask, removeTask, updateTask, getTasks };
+	return {
+		isShowAddForm,
+		toggleShowAddForm,
+		tasks,
+		errorMessage,
+		addTask,
+		removeTask,
+		updateTask,
+		getTasks
+	};
 });
