@@ -5,6 +5,10 @@ import { supabase } from '@/shared/api/supabase';
 
 export const useTaskStore = defineStore('task', () => {
 	const isShowAddForm = ref<boolean>(false);
+
+	const name = ref<string>('');
+	const description = ref<string>('');
+
 	const tasks = ref<Task[]>([]);
 	const errorMessage = ref<string>('');
 
@@ -24,7 +28,14 @@ export const useTaskStore = defineStore('task', () => {
 		}
 	}
 
-	async function addTask(task: TaskInput) {
+	async function addTask() {
+		if (!name.value) return;
+
+		const task: TaskInput = {
+			name: name.value,
+			description: description.value
+		};
+
 		const { error } = await supabase
 			.from('tasks')
 			.insert(task);
@@ -34,7 +45,7 @@ export const useTaskStore = defineStore('task', () => {
 
 	async function removeTask(task: Task) {
 		const { error } = await supabase
-			.from('countries')
+			.from('tasks')
 			.delete()
 			.eq('id', task.id);
 
@@ -43,7 +54,7 @@ export const useTaskStore = defineStore('task', () => {
 
 	async function updateTask(task: Task) {
 		const { error } = await supabase
-			.from('countries')
+			.from('tasks')
 			.update(task)
 			.eq('id', task.id);
 
@@ -55,6 +66,8 @@ export const useTaskStore = defineStore('task', () => {
 		toggleShowAddForm,
 		tasks,
 		errorMessage,
+		name,
+		description,
 		addTask,
 		removeTask,
 		updateTask,

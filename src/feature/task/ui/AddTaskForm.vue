@@ -2,11 +2,11 @@
 	<Card class="card">
 		<template #content>
 			<div class="card-content">
-				<InputText class="task-name" placeholder="Название задачи" />
-				<InputText class="task-description" placeholder="Описание задачи" />
+				<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
+				<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
 				<div class="buttons">
 					<Button severity="danger" label="Отмена" />
-					<Button label="Добавить" />
+					<Button @click="taskStore.addTask" label="Добавить" />
 				</div>
 			</div>
 		</template>
@@ -17,6 +17,7 @@
 import { useTaskStore } from '@/entities/task';
 
 const taskStore = useTaskStore();
+
 </script>
 
 <style scoped>
