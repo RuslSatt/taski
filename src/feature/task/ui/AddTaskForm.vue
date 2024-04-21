@@ -5,7 +5,7 @@
 				<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
 				<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
 				<div class="buttons">
-					<Button severity="danger" label="Отмена" />
+					<Button @click="taskStore.toggleShowAddForm" severity="danger" label="Отмена" />
 					<Button @click="taskStore.addTask" label="Добавить" />
 				</div>
 			</div>

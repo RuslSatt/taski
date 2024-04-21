@@ -14,6 +14,7 @@ export const useTaskStore = defineStore('task', () => {
 
 	function toggleShowAddForm() {
 		isShowAddForm.value = !isShowAddForm.value;
+		if (!isShowAddForm.value) $reset();
 	}
 
 	async function getTasks() {
@@ -41,6 +42,8 @@ export const useTaskStore = defineStore('task', () => {
 			.insert(task);
 
 		if (error) errorMessage.value = error.message;
+
+		$reset();
 	}
 
 	async function removeTask(task: Task) {
@@ -61,6 +64,12 @@ export const useTaskStore = defineStore('task', () => {
 		if (error) errorMessage.value = error.message;
 	}
 
+	function $reset() {
+		name.value = '';
+		description.value = '';
+		isShowAddForm.value = false;
+	}
+
 	return {
 		isShowAddForm,
 		toggleShowAddForm,
@@ -71,6 +80,7 @@ export const useTaskStore = defineStore('task', () => {
 		addTask,
 		removeTask,
 		updateTask,
-		getTasks
+		getTasks,
+		$reset
 	};
 });
