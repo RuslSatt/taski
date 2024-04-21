@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Task } from '@/entities/task';
+import type { Task, TaskInput } from '@/entities/task';
 import { supabase } from '@/shared/api/supabase';
 
 export const useTaskStore = defineStore('task', () => {
@@ -14,7 +14,7 @@ export const useTaskStore = defineStore('task', () => {
 
 	async function getTasks() {
 		const { data, error } = await supabase
-			.from('countries')
+			.from('tasks')
 			.select();
 
 		if (data?.length) {
@@ -24,8 +24,12 @@ export const useTaskStore = defineStore('task', () => {
 		}
 	}
 
-	function addTask() {
+	async function addTask(task: TaskInput) {
+		const { error } = await supabase
+			.from('tasks')
+			.insert(task);
 
+		if (error) errorMessage.value = error.message;
 	}
 
 	function removeTask() {

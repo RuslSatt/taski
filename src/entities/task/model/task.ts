@@ -3,3 +3,8 @@ export interface Task {
 	name: string;
 	description?: string;
 }
+
+export interface TaskInput {
+	name: string;
+	description?: string;
+}
