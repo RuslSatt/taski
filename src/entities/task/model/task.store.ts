@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Task, TaskInput } from '@/entities/task';
 import { supabase } from '@/shared/api/supabase';
+import { useUserStore } from '@/entities/user';
 
 export const useTaskStore = defineStore('task', () => {
 	const isShowAddForm = ref<boolean>(false);
@@ -13,6 +14,8 @@ export const useTaskStore = defineStore('task', () => {
 	const isLoading = ref<boolean>(false);
 	const errorMessage = ref<string>('');
 
+	const userStore = useUserStore();
+
 	function toggleShowAddForm() {
 		isShowAddForm.value = !isShowAddForm.value;
 		if (!isShowAddForm.value) $reset();
@@ -22,7 +25,8 @@ export const useTaskStore = defineStore('task', () => {
 		isLoading.value = true;
 		const { data, error } = await supabase
 			.from('tasks')
-			.select();
+			.select()
+			.order('created_at', { ascending: true });
 
 		if (data?.length) {
 			tasks.value = data;
@@ -34,9 +38,10 @@ export const useTaskStore = defineStore('task', () => {
 	}
 
 	async function addTask() {
-		if (!name.value) return;
+		if (!name.value || !userStore.user) return;
 
 		const task: TaskInput = {
+			userId: userStore.user.id,
 			name: name.value,
 			description: description.value
 		};
@@ -45,7 +50,9 @@ export const useTaskStore = defineStore('task', () => {
 			.from('tasks')
 			.insert(task);
 
-		if (error) errorMessage.value = error.message;
+		if (error) {
+			errorMessage.value = error.message;
+		}
 
 		$reset();
 	}

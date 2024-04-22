@@ -3,7 +3,7 @@
 		<template #content>
 			<div class="container">
 				<div class="checkbox-container">
-					<Checkbox />
+					<slot name="checkbox"></slot>
 				</div>
 				<div class="content">
 					<p class="content-name">{{ task.name }}</p>

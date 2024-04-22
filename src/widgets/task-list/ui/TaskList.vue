@@ -1,14 +1,19 @@
 <template>
 	<ul class="task-list">
 		<SkeletonList v-if="taskStore.isLoading" class="skeleton" />
-		<TaskCard v-else v-for="task in taskStore.tasks" :task="task" :key="task.id" />
+		<TaskCard v-else v-for="task in taskStore.tasks" :task="task" :key="task.id">
+			<template v-slot:checkbox>
+				<CheckBox :task="task" />
+			</template>
+		</TaskCard>
 	</ul>
 </template>
 
 <script setup lang="ts">
 import { TaskCard, useTaskStore } from '@/entities/task';
-import { onMounted } from 'vue';
+import { CheckBox } from '@/feature/task';
 import { SkeletonList } from '@/shared';
+import { onMounted } from 'vue';
 
 const taskStore = useTaskStore();
 

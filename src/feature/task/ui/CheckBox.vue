@@ -1,0 +1,23 @@
+<template>
+	<Checkbox
+		v-model="task.completed"
+		:binary="true"
+		@change="taskStore.updateTask(task)"
+	/>
+</template>
+
+<script setup lang="ts">
+import type { Task } from '@/entities/task';
+import { useTaskStore } from '@/entities/task';
+
+const taskStore = useTaskStore();
+
+defineProps<{
+	task: Task
+}>();
+
+</script>
+
+<style scoped>
+
+</style>
