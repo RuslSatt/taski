@@ -7,6 +7,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Avatar from 'primevue/avatar';
 import Checkbox from 'primevue/checkbox';
 import Skeleton from 'primevue/skeleton';
+import Dialog from 'primevue/dialog';
 
 
 export function initPrimeComponents() {
@@ -18,4 +19,5 @@ export function initPrimeComponents() {
 	app.component('Avatar', Avatar);
 	app.component('Checkbox', Checkbox);
 	app.component('Skeleton', Skeleton);
+	app.component('Dialog', Dialog);
 }

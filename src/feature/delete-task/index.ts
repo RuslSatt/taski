@@ -1,3 +1,5 @@
-import DeleteTaskButton from '@/feature/delete-task/ui/DeleteTaskButton.vue';
+import DeleteTaskButton from './ui/DeleteTaskButton.vue';
+import DeleteTaskModal from './ui/DeleteTaskModal.vue';
+import { useDeleteTaskStore } from './model/delete-task.store';
 
-export { DeleteTaskButton };
+export { DeleteTaskButton, DeleteTaskModal, useDeleteTaskStore };

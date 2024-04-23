@@ -46,24 +46,31 @@ export const useTaskStore = defineStore('task', () => {
 			description: description.value
 		};
 
-		const { error } = await supabase
+		const { data, error } = await supabase
 			.from('tasks')
-			.insert(task);
+			.insert(task)
+			.select();
 
 		if (error) {
 			errorMessage.value = error.message;
+		} else if (data) {
+			tasks.value.push(data[0]);
 		}
 
 		$reset();
 	}
 
-	async function removeTask(task: Task) {
+	async function deleteTask(task: Task) {
 		const { error } = await supabase
 			.from('tasks')
 			.delete()
 			.eq('id', task.id);
 
-		if (error) errorMessage.value = error.message;
+		if (error) {
+			errorMessage.value = error.message;
+		} else {
+			tasks.value = tasks.value.filter(item => task.id !== item.id);
+		}
 	}
 
 	async function updateTask(task: Task) {
@@ -89,7 +96,7 @@ export const useTaskStore = defineStore('task', () => {
 		name,
 		description,
 		addTask,
-		removeTask,
+		deleteTask,
 		updateTask,
 		fetchTasks,
 		isLoading,
