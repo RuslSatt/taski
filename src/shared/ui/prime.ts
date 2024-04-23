@@ -8,7 +8,7 @@ import Avatar from 'primevue/avatar';
 import Checkbox from 'primevue/checkbox';
 import Skeleton from 'primevue/skeleton';
 import Dialog from 'primevue/dialog';
-
+import ProgressBar from 'primevue/progressbar';
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -20,4 +20,5 @@ export function initPrimeComponents() {
 	app.component('Checkbox', Checkbox);
 	app.component('Skeleton', Skeleton);
 	app.component('Dialog', Dialog);
+	app.component('ProgressBar', ProgressBar);
 }
