@@ -5,6 +5,9 @@
 			<template v-slot:checkbox>
 				<CheckBox :task="task" />
 			</template>
+			<template v-slot:delete>
+				<DeleteTaskButton />
+			</template>
 		</TaskCard>
 	</ul>
 </template>
@@ -12,6 +15,7 @@
 <script setup lang="ts">
 import { TaskCard, useTaskStore } from '@/entities/task';
 import { CheckBox } from '@/feature/task';
+import { DeleteTaskButton } from '@/feature/delete-task';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
 

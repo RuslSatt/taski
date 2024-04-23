@@ -9,6 +9,10 @@
 					<p class="content-name">{{ task.name }}</p>
 					<p class="content-description">{{ task.description }}</p>
 				</div>
+				<div class="tools">
+					<slot name="edit"></slot>
+					<slot name="delete"></slot>
+				</div>
 			</div>
 		</template>
 	</Card>
@@ -43,5 +47,12 @@ defineProps<{
 
 .content-description {
 	font-size: 14px;
+}
+
+.tools {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-left: auto;
 }
 </style>
