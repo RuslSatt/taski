@@ -8,6 +8,9 @@
 			<template v-slot:delete>
 				<DeleteTaskButton :task="task" />
 			</template>
+			<template v-slot:edit>
+				<EditTaskButton :task="task" />
+			</template>
 		</TaskCard>
 		<DeleteTaskModal v-if="taskStore.tasks?.length > 0" />
 	</ul>
@@ -19,6 +22,7 @@ import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
+import { EditTaskButton } from '@/feature/edit-task';
 
 const taskStore = useTaskStore();
 

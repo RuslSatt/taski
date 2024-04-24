@@ -4,7 +4,7 @@
 		icon="pi pi-trash"
 		severity="danger"
 		text rounded
-		aria-label="Cancel"
+		aria-label="Удалить"
 	/>
 </template>
 
