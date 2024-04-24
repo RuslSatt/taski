@@ -53,5 +53,6 @@ const taskStore = useTaskStore();
 	display: flex;
 	justify-content: flex-end;
 	gap: 10px;
+	margin-top: 5px;
 }
 </style>

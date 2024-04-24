@@ -29,7 +29,8 @@ const taskStore = useTaskStore();
 	flex-direction: column;
 	align-items: center;
 	padding: 20px;
-	width: 70%;
+	width: 100%;
+	max-width: 700px;
 }
 
 .title {

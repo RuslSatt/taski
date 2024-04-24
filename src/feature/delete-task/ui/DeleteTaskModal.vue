@@ -1,11 +1,10 @@
 <template>
-	<Dialog v-model:visible="store.isVisibleModal" modal>
+	<Dialog class="dialog" v-model:visible="store.isVisibleModal" modal>
 		<template #header>
 			<div class="header">
 				<i class="pi pi-trash"></i>
 			</div>
 		</template>
-		<ProgressBar v-if="store.isLoading" class="loader" mode="indeterminate" style="height: 6px"></ProgressBar>
 		<p class="title">
 			Вы действительно хотите удалить
 			<span class="name">{{ store.task?.name }}</span>?
@@ -38,9 +37,6 @@ const store = useDeleteTaskStore();
 	align-items: center;
 	gap: 10px;
 	justify-content: flex-end;
-}
-
-.loader {
-	margin-bottom: 15px;
+	margin-top: 25px;
 }
 </style>
