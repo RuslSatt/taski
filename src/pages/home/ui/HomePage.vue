@@ -35,10 +35,12 @@ onMounted(() => {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	overflow: hidden;
 }
 
 .home-content {
 	display: flex;
 	flex: 1;
+	overflow: hidden;
 }
 </style>

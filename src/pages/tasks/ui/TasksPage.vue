@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddTaskButton, AddTaskForm } from '@/feature/task';
+import { AddTaskButton, AddTaskForm } from '@/feature/add-task';
 import { useTaskStore } from '@/entities/task';
 import { TaskList } from '@/widgets/task-list';
 
@@ -19,9 +19,8 @@ const taskStore = useTaskStore();
 
 <style scoped>
 .wrapper {
-	display: flex;
-	justify-content: center;
 	width: 100%;
+	overflow: auto;
 }
 
 .content {
@@ -31,6 +30,7 @@ const taskStore = useTaskStore();
 	padding: 20px;
 	width: 100%;
 	max-width: 700px;
+	margin: auto;
 }
 
 .title {
