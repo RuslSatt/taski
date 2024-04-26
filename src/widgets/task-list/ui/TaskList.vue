@@ -1,7 +1,14 @@
 <template>
 	<ul class="task-list">
 		<SkeletonList v-if="taskStore.isLoading" class="skeleton" />
-		<TaskCard v-else v-for="task in taskStore.tasks" :task="task" :key="task.id">
+		<TaskCard
+			v-else
+			v-for="task in taskStore.tasks"
+			:task="task"
+			:key="task.id"
+			:edit-task="editStore.task"
+			:is-visible-edit-form="editStore.isVisibleForm"
+		>
 			<template v-slot:checkbox>
 				<CheckBox :task="task" />
 			</template>
@@ -10,6 +17,9 @@
 			</template>
 			<template v-slot:edit>
 				<EditTaskButton :task="task" />
+			</template>
+			<template v-slot:editForm>
+				<TaskEditForm />
 			</template>
 		</TaskCard>
 		<DeleteTaskModal v-if="taskStore.tasks?.length > 0" />
@@ -22,9 +32,11 @@ import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
-import { EditTaskButton } from '@/feature/edit-task';
+import { EditTaskButton, useEditTaskStore } from '@/feature/edit-task';
+import { TaskEditForm } from '@/feature/add-task';
 
 const taskStore = useTaskStore();
+const editStore = useEditTaskStore();
 
 onMounted(async () => {
 	await taskStore.fetchTasks();

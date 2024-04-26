@@ -4,13 +4,13 @@
 			<h2 class="title">Задачи</h2>
 			<AddTaskButton class="add-task-button" />
 			<TaskList />
-			<AddTaskForm v-if="taskStore.isShowAddForm" />
+			<TaskForm v-if="taskStore.isShowAddForm" />
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { AddTaskButton, AddTaskForm } from '@/feature/add-task';
+import { AddTaskButton, TaskForm } from '@/feature/add-task';
 import { useTaskStore } from '@/entities/task';
 import { TaskList } from '@/widgets/task-list';
 

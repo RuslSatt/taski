@@ -1,5 +1,5 @@
 <template>
-	<Card class="card">
+	<Card v-if="!isEdit" class="card">
 		<template #content>
 			<div class="container">
 				<div class="checkbox-container">
@@ -16,14 +16,23 @@
 			</div>
 		</template>
 	</Card>
+	<slot v-if="isEdit" name="editForm"></slot>
 </template>
 
 <script setup lang="ts">
 import type { Task } from '@/entities/task';
+import { computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
 	task: Task
+	editTask?: Task | null
+	isVisibleEditForm?: boolean
 }>();
+
+const isEdit = computed(() => {
+	return props.isVisibleEditForm && props.editTask?.id === props.task.id;
+});
+
 </script>
 
 <style scoped>
