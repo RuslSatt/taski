@@ -9,17 +9,17 @@
 
 <script setup lang="ts">
 import type { Task } from '@/entities/task';
-import { useEditTaskStore } from '@/feature/edit-task';
+import { useTaskStore } from '@/entities/task';
+
+const taskStore = useTaskStore();
 
 const props = defineProps<{
 	task: Task
 }>();
 
-const editStore = useEditTaskStore();
-
 const handlerClick = () => {
-	editStore.task = props.task;
-	editStore.toggleVisibleForm();
+	taskStore.selectTask(props.task);
+	taskStore.toggleVisibleEditForm();
 };
 </script>
 

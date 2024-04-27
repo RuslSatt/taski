@@ -1,6 +1,6 @@
 <template>
 	<Dialog
-		v-model:visible="taskStore.isShowAddForm"
+		v-model:visible="taskStore.isVisibleAddForm"
 		:style="{width: '100%', maxWidth: '700px'}"
 		header="Добавить задачу"
 	>
@@ -8,7 +8,7 @@
 			<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
 			<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
 			<div class="buttons">
-				<Button @click="taskStore.toggleShowAddForm" severity="danger" label="Отмена" />
+				<Button @click="taskStore.toggleVisibleAddForm" severity="danger" label="Отмена" />
 				<Button @click="taskStore.addTask" label="Добавить" />
 			</div>
 		</div>

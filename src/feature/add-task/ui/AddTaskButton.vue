@@ -1,6 +1,6 @@
 <template>
 	<Button
-		@click.stop="taskStore.toggleShowAddForm"
+		@click.stop="taskStore.toggleVisibleAddForm"
 		label="Добавить задачу"
 		icon="pi pi-plus"
 	/>

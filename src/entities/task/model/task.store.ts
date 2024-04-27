@@ -5,10 +5,13 @@ import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 
 export const useTaskStore = defineStore('task', () => {
-	const isShowAddForm = ref<boolean>(false);
+	const isVisibleAddForm = ref<boolean>(false);
+	const isVisibleEditForm = ref<boolean>(false);
 
 	const name = ref<string>('');
 	const description = ref<string>('');
+
+	const selectedTask = ref<Task | null>(null);
 
 	const tasks = ref<Task[]>([]);
 	const isLoading = ref<boolean>(false);
@@ -16,9 +19,22 @@ export const useTaskStore = defineStore('task', () => {
 
 	const userStore = useUserStore();
 
-	function toggleShowAddForm() {
-		isShowAddForm.value = !isShowAddForm.value;
-		if (!isShowAddForm.value) $reset();
+	function toggleVisibleAddForm() {
+		$reset();
+		isVisibleAddForm.value = !isVisibleAddForm.value;
+		isVisibleEditForm.value = false;
+	}
+
+	function toggleVisibleEditForm() {
+		isVisibleEditForm.value = !isVisibleEditForm.value;
+		isVisibleAddForm.value = false;
+		if (!isVisibleEditForm.value) $reset();
+	}
+
+	function selectTask(task: Task) {
+		selectedTask.value = task;
+		name.value = selectedTask.value.name;
+		description.value = selectedTask.value.description || '';
 	}
 
 	async function fetchTasks() {
@@ -57,7 +73,7 @@ export const useTaskStore = defineStore('task', () => {
 			tasks.value.push(data[0]);
 		}
 
-		$reset();
+		$reset(true);
 	}
 
 	async function deleteTask(task: Task) {
@@ -73,24 +89,46 @@ export const useTaskStore = defineStore('task', () => {
 		}
 	}
 
-	async function updateTask(task: Task) {
+	async function updateTask() {
+		const task = selectedTask.value;
+
+		if (!task) return;
+
+		if (task.name === name.value && task.description === description.value) {
+			$reset(true);
+			return;
+		}
+
+		task.name = name.value;
+		task.description = description.value;
+
 		const { error } = await supabase
 			.from('tasks')
 			.update(task)
 			.eq('id', task.id);
 
 		if (error) errorMessage.value = error.message;
+
+		$reset(true);
 	}
 
-	function $reset() {
+	function $reset(isForm?: boolean) {
 		name.value = '';
 		description.value = '';
-		isShowAddForm.value = false;
+		selectedTask.value = null;
+
+		if (!isForm) return;
+
+		isVisibleEditForm.value = false;
+		isVisibleAddForm.value = false;
 	}
 
 	return {
-		isShowAddForm,
-		toggleShowAddForm,
+		isVisibleAddForm,
+		isVisibleEditForm,
+		toggleVisibleAddForm,
+		toggleVisibleEditForm,
+		selectTask,
 		tasks,
 		errorMessage,
 		name,
@@ -100,6 +138,7 @@ export const useTaskStore = defineStore('task', () => {
 		updateTask,
 		fetchTasks,
 		isLoading,
+		selectedTask,
 		$reset
 	};
 });

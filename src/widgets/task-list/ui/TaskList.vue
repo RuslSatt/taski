@@ -6,8 +6,8 @@
 			v-for="task in taskStore.tasks"
 			:task="task"
 			:key="task.id"
-			:edit-task="editStore.task"
-			:is-visible-edit-form="editStore.isVisibleForm"
+			:edit-task="taskStore.selectedTask"
+			:is-visible-edit-form="taskStore.isVisibleEditForm"
 		>
 			<template v-slot:checkbox>
 				<CheckBox :task="task" />
@@ -32,11 +32,10 @@ import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
-import { EditTaskButton, useEditTaskStore } from '@/feature/edit-task';
+import { EditTaskButton } from '@/feature/edit-task';
 import { TaskEditForm } from '@/feature/add-task';
 
 const taskStore = useTaskStore();
-const editStore = useEditTaskStore();
 
 onMounted(async () => {
 	await taskStore.fetchTasks();

@@ -4,7 +4,7 @@
 			<h2 class="title">Задачи</h2>
 			<AddTaskButton class="add-task-button" />
 			<TaskList />
-			<TaskForm v-if="taskStore.isShowAddForm" />
+			<TaskForm v-if="taskStore.isVisibleAddForm" />
 		</div>
 	</div>
 </template>

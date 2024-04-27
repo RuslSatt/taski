@@ -1,12 +1,12 @@
 <template>
-	<Card v-if="store.task">
+	<Card v-if="taskStore.selectedTask">
 		<template #content>
 			<div class="card-content">
-				<InputText v-model="store.task.name" class="task-name" placeholder="Название задачи" />
-				<InputText v-model="store.task.description" class="task-description" placeholder="Описание задачи" />
+				<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
+				<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
 				<div class="buttons">
-					<Button @click="store.toggleVisibleForm" severity="danger" label="Отмена" />
-					<Button @click="store.editTask" label="Сохранить" />
+					<Button @click="taskStore.toggleVisibleEditForm" severity="danger" label="Отмена" />
+					<Button @click="taskStore.updateTask" label="Сохранить" />
 				</div>
 			</div>
 		</template>
@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import { useEditTaskStore } from '@/feature/edit-task';
+import { useTaskStore } from '@/entities/task';
 
-const store = useEditTaskStore();
+const taskStore = useTaskStore();
 
 </script>
 
