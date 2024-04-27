@@ -6,7 +6,7 @@
 				<InputText v-model="store.task.description" class="task-description" placeholder="Описание задачи" />
 				<div class="buttons">
 					<Button @click="store.toggleVisibleForm" severity="danger" label="Отмена" />
-					<Button label="Сохранить" />
+					<Button @click="store.editTask" label="Сохранить" />
 				</div>
 			</div>
 		</template>
