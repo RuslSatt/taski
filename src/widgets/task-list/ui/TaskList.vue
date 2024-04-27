@@ -30,10 +30,10 @@
 import { TaskCard, useTaskStore } from '@/entities/task';
 import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
-import { SkeletonList } from '@/shared';
-import { onMounted } from 'vue';
 import { EditTaskButton } from '@/feature/edit-task';
 import { TaskEditForm } from '@/feature/add-task';
+import { SkeletonList } from '@/shared';
+import { onMounted } from 'vue';
 
 const taskStore = useTaskStore();
 
