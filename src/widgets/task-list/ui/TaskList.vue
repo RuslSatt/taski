@@ -12,11 +12,10 @@
 			<template v-slot:checkbox>
 				<CheckBox :task="task" />
 			</template>
-			<template v-slot:delete>
-				<DeleteTaskButton :task="task" />
-			</template>
-			<template v-slot:edit>
+			<template v-slot:tools>
+				<DueTaskButton />
 				<EditTaskButton :task="task" />
+				<DeleteTaskButton :task="task" />
 			</template>
 			<template v-slot:editForm>
 				<TaskEditForm />
@@ -34,6 +33,7 @@ import { EditTaskButton } from '@/feature/edit-task';
 import { TaskEditForm } from '@/feature/add-task';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
+import { DueTaskButton } from '@/feature/due-task';
 
 const taskStore = useTaskStore();
 

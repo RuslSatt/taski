@@ -10,8 +10,7 @@
 					<p class="content-description">{{ task.description }}</p>
 				</div>
 				<div class="tools">
-					<slot name="edit"></slot>
-					<slot name="delete"></slot>
+					<slot name="tools"></slot>
 				</div>
 			</div>
 		</template>
