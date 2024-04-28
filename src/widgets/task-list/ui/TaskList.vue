@@ -13,7 +13,7 @@
 				<CheckBox :task="task" />
 			</template>
 			<template v-slot:tools>
-				<DueTaskCalendar />
+				<DueTaskCalendar :task="task" />
 				<EditTaskButton :task="task" />
 				<DeleteTaskButton :task="task" />
 			</template>

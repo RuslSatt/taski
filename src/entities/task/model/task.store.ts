@@ -10,6 +10,7 @@ export const useTaskStore = defineStore('task', () => {
 
 	const name = ref<string>('');
 	const description = ref<string>('');
+	const due = ref<Date | null>(null);
 
 	const selectedTask = ref<Task | null>(null);
 
@@ -59,7 +60,8 @@ export const useTaskStore = defineStore('task', () => {
 		const task: TaskInput = {
 			userId: userStore.user.id,
 			name: name.value,
-			description: description.value
+			description: description.value,
+			due: due.value
 		};
 
 		const { data, error } = await supabase
@@ -94,13 +96,14 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (!task) return;
 
-		if (task.name === name.value && task.description === description.value) {
+		if (task.name === name.value && task.description === description.value && task.due === due.value) {
 			$reset(true);
 			return;
 		}
 
 		task.name = name.value;
 		task.description = description.value;
+		task.due = due.value;
 
 		const { error } = await supabase
 			.from('tasks')
@@ -133,6 +136,7 @@ export const useTaskStore = defineStore('task', () => {
 		errorMessage,
 		name,
 		description,
+		due,
 		addTask,
 		deleteTask,
 		updateTask,

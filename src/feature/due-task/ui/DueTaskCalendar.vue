@@ -1,5 +1,11 @@
 <template>
-	<Calendar v-model="templatedisplay" showIcon iconDisplay="input">
+	<Calendar
+		v-model="task.due"
+		showIcon
+		iconDisplay="input"
+		@update:modelValue="taskStore.updateTask"
+		@show="handlerShow"
+	>
 		<template #inputicon="{ clickCallback }">
 			<Button
 				class="button"
@@ -13,9 +19,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import type { Task } from '@/entities/task';
+import { useTaskStore } from '@/entities/task';
 
-const templatedisplay = ref();
+const taskStore = useTaskStore();
+
+const props = defineProps<{
+	task: Task
+}>();
+
+const handlerShow = () => {
+	taskStore.selectTask(props.task);
+};
 </script>
 
 <style scoped>
