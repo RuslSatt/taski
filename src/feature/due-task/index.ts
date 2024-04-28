@@ -1,3 +1,3 @@
-import DueTaskButton from '@/feature/due-task/ui/DueTaskButton.vue';
+import DueTaskCalendar from '@/feature/due-task/ui/DueTaskCalendar.vue';
 
-export { DueTaskButton };
+export { DueTaskCalendar };

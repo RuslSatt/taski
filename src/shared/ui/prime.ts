@@ -11,7 +11,6 @@ import Dialog from 'primevue/dialog';
 import ProgressBar from 'primevue/progressbar';
 import Calendar from 'primevue/calendar';
 
-
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
 	app.component('Password', Password);
