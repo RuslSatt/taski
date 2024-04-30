@@ -1,6 +1,6 @@
 <template>
 	<Calendar
-		v-model="task.due"
+		v-model="taskStore.due"
 		showIcon
 		iconDisplay="input"
 		@update:modelValue="taskStore.updateTask"

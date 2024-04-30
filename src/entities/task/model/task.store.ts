@@ -36,6 +36,9 @@ export const useTaskStore = defineStore('task', () => {
 		selectedTask.value = task;
 		name.value = selectedTask.value.name;
 		description.value = selectedTask.value.description || '';
+		if (selectedTask.value.due) {
+			due.value = new Date(selectedTask.value.due);
+		}
 	}
 
 	async function fetchTasks() {
@@ -119,6 +122,7 @@ export const useTaskStore = defineStore('task', () => {
 		name.value = '';
 		description.value = '';
 		selectedTask.value = null;
+		due.value = null;
 
 		if (!isForm) return;
 
