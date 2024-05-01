@@ -1,7 +1,10 @@
 <template>
-
-	<Calendar placeholder="Срок выполнения" v-model="taskStore.due" inputId="due" showIcon iconDisplay="input" />
-
+	<Calendar
+		placeholder="Срок выполнения"
+		v-model="taskStore.due"
+		showIcon
+		iconDisplay="input"
+	/>
 </template>
 
 <script setup lang="ts">

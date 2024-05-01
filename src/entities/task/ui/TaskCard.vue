@@ -2,15 +2,20 @@
 	<Card v-if="!isEdit" class="card">
 		<template #content>
 			<div class="container">
-				<div class="checkbox-container">
-					<slot name="checkbox"></slot>
+				<div class="info">
+					<div class="checkbox-container">
+						<slot name="checkbox"></slot>
+					</div>
+					<div class="content">
+						<p class="content-name">{{ task.name }}</p>
+						<p class="content-description">{{ task.description }}</p>
+					</div>
+					<div class="tools">
+						<slot name="tools"></slot>
+					</div>
 				</div>
-				<div class="content">
-					<p class="content-name">{{ task.name }}</p>
-					<p class="content-description">{{ task.description }}</p>
-				</div>
-				<div class="tools">
-					<slot name="tools"></slot>
+				<div class="tags">
+					<slot name="tags"></slot>
 				</div>
 			</div>
 		</template>
@@ -43,6 +48,10 @@ const isEdit = computed(() => {
 }
 
 .container {
+
+}
+
+.info {
 	display: flex;
 	gap: 15px;
 }
