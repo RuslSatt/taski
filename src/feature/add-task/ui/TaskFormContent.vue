@@ -2,7 +2,10 @@
 	<div class="card-content">
 		<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
 		<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
-		<div class="buttons">
+		<div class="card-properties">
+			<DueTaskForm />
+		</div>
+		<div class="card-buttons">
 			<Button
 				@click="toggleVisible"
 				severity="danger"
@@ -19,6 +22,7 @@
 <script setup lang="ts">
 import { useTaskStore } from '@/entities/task';
 import { computed } from 'vue';
+import { DueTaskForm } from '@/feature/due-task';
 
 const taskStore = useTaskStore();
 
@@ -56,10 +60,14 @@ const label = computed(() => {
 	font-size: 14px;
 }
 
-.buttons {
+.card-buttons {
 	display: flex;
 	justify-content: flex-end;
 	gap: 10px;
+	margin-top: 5px;
+}
+
+.card-properties {
 	margin-top: 5px;
 }
 </style>
