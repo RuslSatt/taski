@@ -48,12 +48,12 @@ const isEdit = computed(() => {
 }
 
 .container {
-
 }
 
 .info {
 	display: flex;
 	gap: 15px;
+	margin-bottom: 10px;
 }
 
 .content {

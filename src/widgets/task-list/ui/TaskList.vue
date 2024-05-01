@@ -17,6 +17,9 @@
 				<EditTaskButton :task="task" />
 				<DeleteTaskButton :task="task" />
 			</template>
+			<template v-slot:tags>
+				<DueTaskTag v-if="task.due" :task="task" />
+			</template>
 			<template v-slot:editForm>
 				<TaskEditForm />
 			</template>
@@ -33,7 +36,7 @@ import { EditTaskButton } from '@/feature/edit-task';
 import { TaskEditForm } from '@/feature/add-task';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
-import { DueTaskCalendar } from '@/feature/due-task';
+import { DueTaskCalendar, DueTaskTag } from '@/feature/due-task';
 
 const taskStore = useTaskStore();
 
