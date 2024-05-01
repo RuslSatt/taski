@@ -8,7 +8,7 @@
 	>
 		<template #inputicon="{ clickCallback }">
 			<Tag
-				:value="task.due || 'Срок выполнения'"
+				:value="date"
 				@click="clickCallback"
 			/>
 		</template>
@@ -18,6 +18,8 @@
 <script setup lang="ts">
 import type { Task } from '@/entities/task';
 import { useTaskStore } from '@/entities/task';
+import { computed } from 'vue';
+import { getViewDate } from '@/shared/lib/date/day';
 
 const taskStore = useTaskStore();
 
@@ -28,6 +30,10 @@ const props = defineProps<{
 const handlerShow = () => {
 	taskStore.selectTask(props.task);
 };
+
+const date = computed(() => {
+	return props.task.due ? getViewDate(props.task.due) : '';
+});
 </script>
 
 <style scoped>

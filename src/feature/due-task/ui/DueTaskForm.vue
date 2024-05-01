@@ -4,6 +4,7 @@
 		v-model="taskStore.due"
 		showIcon
 		iconDisplay="input"
+		dateFormat="dd.mm.yy"
 	/>
 </template>
 

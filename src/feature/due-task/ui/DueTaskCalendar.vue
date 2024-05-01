@@ -3,6 +3,7 @@
 		v-model="taskStore.due"
 		showIcon
 		iconDisplay="input"
+		dateFormat="dd.mm.yyyy"
 		@update:modelValue="taskStore.updateTask"
 		@show="handlerShow"
 	>
