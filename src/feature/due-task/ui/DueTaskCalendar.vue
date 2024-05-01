@@ -6,13 +6,20 @@
 		dateFormat="dd.mm.yyyy"
 		@update:modelValue="taskStore.updateTask"
 		@show="handlerShow"
+		@hide="handlerHide"
 	>
 		<template #inputicon="{ clickCallback }">
 			<Button
+				v-if="!isTag"
 				class="button"
 				text rounded
 				aria-label="Редактировать"
 				icon="pi pi-calendar"
+				@click="clickCallback"
+			/>
+			<Tag
+				v-else
+				:value="date"
 				@click="clickCallback"
 			/>
 		</template>
@@ -22,16 +29,27 @@
 <script setup lang="ts">
 import type { Task } from '@/entities/task';
 import { useTaskStore } from '@/entities/task';
+import { computed } from 'vue';
+import { getViewDate } from '@/shared/lib/date/day';
 
 const taskStore = useTaskStore();
 
 const props = defineProps<{
+	isTag?: boolean
 	task: Task
 }>();
 
 const handlerShow = () => {
 	taskStore.selectTask(props.task);
 };
+
+const handlerHide = () => {
+	taskStore.$resetDue();
+};
+
+const date = computed(() => {
+	return props.task.due ? getViewDate(props.task.due) : '';
+});
 </script>
 
 <style scoped>

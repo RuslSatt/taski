@@ -122,12 +122,17 @@ export const useTaskStore = defineStore('task', () => {
 		name.value = '';
 		description.value = '';
 		selectedTask.value = null;
-		due.value = null;
+
+		$resetDue();
 
 		if (!isForm) return;
 
 		isVisibleEditForm.value = false;
 		isVisibleAddForm.value = false;
+	}
+
+	function $resetDue() {
+		due.value = null;
 	}
 
 	return {
@@ -147,6 +152,7 @@ export const useTaskStore = defineStore('task', () => {
 		fetchTasks,
 		isLoading,
 		selectedTask,
-		$reset
+		$reset,
+		$resetDue
 	};
 });
