@@ -1,10 +1,15 @@
+export interface TaskPriority {
+	label: string;
+	code: string;
+}
+
 export interface Task {
 	id: string;
 	userId: string;
 	name: string;
 	description?: string;
 	due: Date | null;
-	priority: string;
+	priority: TaskPriority | null;
 	completed?: boolean;
 }
 
@@ -13,5 +18,5 @@ export interface TaskInput {
 	name: string;
 	description?: string;
 	due: Date | null;
-	priority: string;
+	priority: TaskPriority | null;
 }

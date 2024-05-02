@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Task, TaskInput } from '@/entities/task';
+import type { Task, TaskInput, TaskPriority } from '@/entities/task';
 import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 
@@ -11,7 +11,7 @@ export const useTaskStore = defineStore('task', () => {
 	const name = ref<string>('');
 	const description = ref<string>('');
 	const due = ref<Date | null>(null);
-	const priority = ref<string>('');
+	const priority = ref<TaskPriority | null>(null);
 
 	const selectedTask = ref<Task | null>(null);
 
@@ -40,6 +40,7 @@ export const useTaskStore = defineStore('task', () => {
 		if (selectedTask.value.due) {
 			due.value = new Date(selectedTask.value.due);
 		}
+		priority.value = selectedTask.value.priority;
 	}
 
 	async function fetchTasks() {
@@ -125,6 +126,7 @@ export const useTaskStore = defineStore('task', () => {
 		name.value = '';
 		description.value = '';
 		selectedTask.value = null;
+		priority.value = null;
 
 		$resetDue();
 
