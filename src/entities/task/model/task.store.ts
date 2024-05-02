@@ -11,6 +11,7 @@ export const useTaskStore = defineStore('task', () => {
 	const name = ref<string>('');
 	const description = ref<string>('');
 	const due = ref<Date | null>(null);
+	const priority = ref<string>('');
 
 	const selectedTask = ref<Task | null>(null);
 
@@ -64,7 +65,8 @@ export const useTaskStore = defineStore('task', () => {
 			userId: userStore.user.id,
 			name: name.value,
 			description: description.value,
-			due: due.value
+			due: due.value,
+			priority: priority.value
 		};
 
 		const { data, error } = await supabase
@@ -107,6 +109,7 @@ export const useTaskStore = defineStore('task', () => {
 		task.name = name.value;
 		task.description = description.value;
 		task.due = due.value;
+		task.priority = priority.value;
 
 		const { error } = await supabase
 			.from('tasks')
@@ -146,6 +149,7 @@ export const useTaskStore = defineStore('task', () => {
 		name,
 		description,
 		due,
+		priority,
 		addTask,
 		deleteTask,
 		updateTask,

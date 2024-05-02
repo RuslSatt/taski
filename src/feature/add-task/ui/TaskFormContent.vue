@@ -4,6 +4,7 @@
 		<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
 		<div class="card-properties">
 			<DueTaskForm />
+			<PriorityTaskSelect />
 		</div>
 		<div class="card-buttons">
 			<Button
@@ -23,6 +24,7 @@
 import { useTaskStore } from '@/entities/task';
 import { computed } from 'vue';
 import { DueTaskForm } from '@/feature/due-task';
+import { PriorityTaskSelect } from '@/feature/priority-task';
 
 const taskStore = useTaskStore();
 
@@ -68,6 +70,10 @@ const label = computed(() => {
 }
 
 .card-properties {
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	gap: 10px;
 	margin-top: 5px;
 }
 </style>

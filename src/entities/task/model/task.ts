@@ -4,6 +4,7 @@ export interface Task {
 	name: string;
 	description?: string;
 	due: Date | null;
+	priority: string;
 	completed?: boolean;
 }
 
@@ -12,4 +13,5 @@ export interface TaskInput {
 	name: string;
 	description?: string;
 	due: Date | null;
+	priority: string;
 }
