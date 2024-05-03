@@ -40,14 +40,16 @@ const isEdit = computed(() => {
 </script>
 
 <style scoped>
+:deep(.p-card-body) {
+	padding: 0.8rem
+}
+
 .card {
 	box-shadow: none;
 	border-bottom: 1px solid var(--surface-100);
 	width: 100%;
 	border-radius: 0;
-}
 
-.container {
 }
 
 .info {
@@ -71,5 +73,9 @@ const isEdit = computed(() => {
 	align-items: flex-start;
 	justify-content: space-between;
 	margin-left: auto;
+}
+
+.tags {
+	padding-left: 35px;
 }
 </style>
