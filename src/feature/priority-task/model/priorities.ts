@@ -1,6 +1,5 @@
 export const priorities = [
-	{ label: 'Низкий', code: 'Low' },
-	{ label: 'Средний', code: 'Medium' },
-	{ label: 'Высокий', code: 'High' },
-	{ label: 'Критичный', code: 'Critical' }
+	{ label: 'Высокий', icon: 'pi-angle-double-up', color: 'red' },
+	{ label: 'Средний', icon: 'pi-angle-up', color: 'orange' },
+	{ label: 'Низкий', icon: 'pi-angle-down', color: 'primary' }
 ];
