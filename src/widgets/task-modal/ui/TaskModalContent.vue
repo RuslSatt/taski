@@ -3,8 +3,8 @@
 		<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
 		<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
 		<div class="card-properties">
-			<DueTaskForm />
-			<PriorityTaskSelect />
+			<DueTaskForm class="card-due" />
+			<PriorityTaskSelect class="card-select" />
 		</div>
 		<div class="card-buttons">
 			<Button
@@ -71,9 +71,15 @@ const label = computed(() => {
 
 .card-properties {
 	display: flex;
-	flex-direction: column;
-	width: 250px;
 	gap: 10px;
 	margin-top: 5px;
+}
+
+.card-due {
+	width: 200px;
+}
+
+.card-select {
+	width: 170px;
 }
 </style>
