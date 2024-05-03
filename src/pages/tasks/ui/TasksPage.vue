@@ -8,7 +8,7 @@
 				<TaskCreateModal v-if="taskStore.isVisibleAddForm" />
 			</div>
 		</div>
-		<TaskPage v-if="taskStore.isVisibleTaskPage" />
+		<TaskDetails />
 	</div>
 </template>
 
@@ -17,7 +17,7 @@ import { AddTaskButton } from '@/feature/add-task';
 import { useTaskStore } from '@/entities/task';
 import { TaskList } from '@/widgets/task-list';
 import { TaskCreateModal } from '@/widgets/task-modal';
-import TaskPage from './TaskPage.vue';
+import { TaskDetails } from '@/widgets/task-details';
 
 const taskStore = useTaskStore();
 </script>

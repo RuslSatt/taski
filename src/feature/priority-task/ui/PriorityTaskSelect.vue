@@ -1,5 +1,6 @@
 <template>
 	<Dropdown
+		class="dropdown"
 		placeholder="Приоритет"
 		:options="models"
 		v-model="taskStore.priority"
@@ -36,6 +37,10 @@ const models = ref(priorities);
 </script>
 
 <style scoped>
+.dropdown {
+	width: 100%;
+}
+
 .dropdown-item {
 	display: flex;
 	align-items: center;

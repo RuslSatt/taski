@@ -5,6 +5,7 @@
 		showIcon
 		iconDisplay="input"
 		dateFormat="dd.mm.yy"
+		class="calendar"
 	/>
 </template>
 
@@ -15,5 +16,7 @@ const taskStore = useTaskStore();
 </script>
 
 <style scoped>
-
+.calendar {
+	width: 100%;
+}
 </style>

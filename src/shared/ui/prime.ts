@@ -12,6 +12,8 @@ import ProgressBar from 'primevue/progressbar';
 import Calendar from 'primevue/calendar';
 import Tag from 'primevue/tag';
 import Dropdown from 'primevue/dropdown';
+import Divider from 'primevue/divider';
+
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -27,4 +29,5 @@ export function initPrimeComponents() {
 	app.component('Calendar', Calendar);
 	app.component('Tag', Tag);
 	app.component('Dropdown', Dropdown);
+	app.component('Divider', Divider);
 }
