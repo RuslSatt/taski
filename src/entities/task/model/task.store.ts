@@ -122,6 +122,15 @@ export const useTaskStore = defineStore('task', () => {
 		$reset(true);
 	}
 
+	async function updateTaskStatus(task: Task) {
+		const { error } = await supabase
+			.from('tasks')
+			.update(task)
+			.eq('id', task.id);
+
+		if (error) errorMessage.value = error.message;
+	}
+
 	function $reset(isForm?: boolean) {
 		name.value = '';
 		description.value = '';
@@ -155,6 +164,7 @@ export const useTaskStore = defineStore('task', () => {
 		addTask,
 		deleteTask,
 		updateTask,
+		updateTaskStatus,
 		fetchTasks,
 		isLoading,
 		selectedTask,
