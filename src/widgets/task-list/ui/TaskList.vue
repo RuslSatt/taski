@@ -21,7 +21,7 @@
 				<DueTaskCalendar :is-tag="true" v-if="task.due" :task="task" />
 			</template>
 			<template v-slot:editForm>
-				<TaskEditForm />
+				<TaskEditModal />
 			</template>
 		</TaskCard>
 		<DeleteTaskModal v-if="taskStore.tasks?.length > 0" />
@@ -33,8 +33,8 @@ import { TaskCard, useTaskStore } from '@/entities/task';
 import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { EditTaskButton } from '@/feature/edit-task';
-import { TaskEditForm } from '@/feature/add-task';
 import { DueTaskCalendar } from '@/feature/due-task';
+import { TaskEditModal } from '@/widgets/task-modal';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
 

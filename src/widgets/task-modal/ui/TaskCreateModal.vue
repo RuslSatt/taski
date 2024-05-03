@@ -4,13 +4,13 @@
 		:style="{width: '100%', maxWidth: '700px'}"
 		header="Добавить задачу"
 	>
-		<TaskFormContent />
+		<TaskModalContent />
 	</Dialog>
 </template>
 
 <script setup lang="ts">
 import { useTaskStore } from '@/entities/task';
-import TaskFormContent from '@/feature/add-task/ui/TaskFormContent.vue';
+import TaskModalContent from './TaskModalContent.vue';
 
 const taskStore = useTaskStore();
 

@@ -1,13 +1,13 @@
 <template>
 	<Card>
 		<template #content>
-			<TaskFormContent />
+			<TaskModalContent />
 		</template>
 	</Card>
 </template>
 
 <script setup lang="ts">
-import TaskFormContent from '@/feature/add-task/ui/TaskFormContent.vue';
+import TaskModalContent from './TaskModalContent.vue';
 </script>
 
 <style scoped>
