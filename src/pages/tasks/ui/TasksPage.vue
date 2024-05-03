@@ -1,11 +1,14 @@
 <template>
-	<div class="wrapper">
-		<div class="content">
-			<h2 class="title">Задачи</h2>
-			<AddTaskButton class="add-task-button" />
-			<TaskList />
-			<TaskCreateModal v-if="taskStore.isVisibleAddForm" />
+	<div class="page">
+		<div class="wrapper">
+			<div class="content">
+				<h2 class="title">Задачи</h2>
+				<AddTaskButton class="add-task-button" />
+				<TaskList />
+				<TaskCreateModal v-if="taskStore.isVisibleAddForm" />
+			</div>
 		</div>
+		<TaskPage v-if="taskStore.isVisibleTaskPage" />
 	</div>
 </template>
 
@@ -14,11 +17,17 @@ import { AddTaskButton } from '@/feature/add-task';
 import { useTaskStore } from '@/entities/task';
 import { TaskList } from '@/widgets/task-list';
 import { TaskCreateModal } from '@/widgets/task-modal';
+import TaskPage from './TaskPage.vue';
 
 const taskStore = useTaskStore();
 </script>
 
 <style scoped>
+.page {
+	display: flex;
+	width: 100%;
+}
+
 .wrapper {
 	width: 100%;
 	overflow: auto;

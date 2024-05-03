@@ -7,6 +7,7 @@ import { useUserStore } from '@/entities/user';
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
 	const isVisibleEditForm = ref<boolean>(false);
+	const isVisibleTaskPage = ref<boolean>(false);
 
 	const name = ref<string>('');
 	const description = ref<string>('');
@@ -31,6 +32,10 @@ export const useTaskStore = defineStore('task', () => {
 		isVisibleEditForm.value = !isVisibleEditForm.value;
 		isVisibleAddForm.value = false;
 		if (!isVisibleEditForm.value) $reset();
+	}
+
+	function toggleVisibleTaskPage() {
+		isVisibleTaskPage.value = !isVisibleTaskPage.value;
 	}
 
 	function selectTask(task: Task) {
@@ -153,8 +158,10 @@ export const useTaskStore = defineStore('task', () => {
 	return {
 		isVisibleAddForm,
 		isVisibleEditForm,
+		isVisibleTaskPage,
 		toggleVisibleAddForm,
 		toggleVisibleEditForm,
+		toggleVisibleTaskPage,
 		selectTask,
 		tasks,
 		errorMessage,

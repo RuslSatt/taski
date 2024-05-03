@@ -1,5 +1,5 @@
 <template>
-	<Card v-if="!isEdit" class="card">
+	<Card v-if="!isEdit" class="card" @click="$emit('click')">
 		<template #content>
 			<div class="container">
 				<div class="info">

@@ -8,6 +8,7 @@
 			:key="task.id"
 			:edit-task="taskStore.selectedTask"
 			:is-visible-edit-form="taskStore.isVisibleEditForm"
+			@click="taskStore.toggleVisibleTaskPage"
 		>
 			<template v-slot:checkbox>
 				<CheckBox :task="task" />
