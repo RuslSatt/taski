@@ -102,10 +102,11 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (!task) return;
 
-		if (task.name === name.value && task.description === description.value && task.due === due.value) {
-			$reset(true);
-			return;
-		}
+		// TODO Изменить условие проверки.
+		// if (task.name === name.value && task.description === description.value && task.due === due.value) {
+		// 	$reset(true);
+		// 	return;
+		// }
 
 		task.name = name.value;
 		task.description = description.value;
