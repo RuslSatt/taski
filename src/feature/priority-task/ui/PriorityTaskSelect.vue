@@ -9,7 +9,8 @@
 		<template #value="slotProps">
 			<div v-if="slotProps.value" class="dropdown-item">
 				<i
-					:class="`pi ${slotProps.value.icon} ${slotProps.value.color}`"
+					:class="`pi ${slotProps.value.icon}`"
+					:style="{color: slotProps.value?.color}"
 				></i>
 				<div :class="`item-label ${slotProps.value.color}`">{{ slotProps.value.label }}</div>
 			</div>
@@ -19,7 +20,10 @@
 		</template>
 		<template #option="slotProps">
 			<div class="dropdown-item">
-				<i :class="`pi ${slotProps.option.icon} ${slotProps.option.color}`"></i>
+				<i
+					:class="`pi ${slotProps.option.icon}`"
+					:style="{color: slotProps.option.color}"
+				></i>
 				<div :class="`item-label ${slotProps.option.color}`">{{ slotProps.option.label }}</div>
 			</div>
 		</template>
@@ -52,7 +56,7 @@ const models = ref(priorities);
 	color: var(--orange-500);
 }
 
-.primary {
+.green {
 	color: var(--primary-500);
 }
 </style>

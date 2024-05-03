@@ -11,10 +11,15 @@
 						<p class="content-description">{{ task.description }}</p>
 					</div>
 					<div class="tools">
+
 						<slot name="tools"></slot>
 					</div>
 				</div>
 				<div class="tags">
+					<i
+						:class="`pi ${task.priority?.icon}`"
+						:style="{color: task.priority?.color}"
+					></i>
 					<slot name="tags"></slot>
 				</div>
 			</div>
@@ -76,6 +81,17 @@ const isEdit = computed(() => {
 }
 
 .tags {
+	display: flex;
+	align-items: center;
+	gap: 10px;
 	padding-left: 35px;
+}
+
+.checkbox-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 </style>

@@ -1,6 +1,7 @@
 export interface TaskPriority {
 	label: string;
 	icon: string;
+	color: string;
 }
 
 export interface Task {
