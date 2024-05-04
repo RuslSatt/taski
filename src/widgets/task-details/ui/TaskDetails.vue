@@ -1,5 +1,5 @@
 <template>
-	<div :class="{'task-details': true, hide: !taskStore.isVisibleTaskPage}">
+	<div :class="{'task-details': true, hide: !taskStore.isVisibleTaskDetails}">
 		<header class="task-details-header">
 
 		</header>

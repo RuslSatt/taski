@@ -1,7 +1,7 @@
 <template>
 	<Calendar
 		placeholder="Срок выполнения"
-		:v-model="task ? task.due : taskStore.due"
+		v-model="taskStore.due"
 		showIcon
 		iconDisplay="input"
 		dateFormat="dd.mm.yy"

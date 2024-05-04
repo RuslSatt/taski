@@ -7,7 +7,7 @@ import { useUserStore } from '@/entities/user';
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
 	const isVisibleEditForm = ref<boolean>(false);
-	const isVisibleTaskPage = ref<boolean>(false);
+	const isVisibleTaskDetails = ref<boolean>(false);
 
 	const name = ref<string>('');
 	const description = ref<string>('');
@@ -26,30 +26,30 @@ export const useTaskStore = defineStore('task', () => {
 		$reset();
 		isVisibleAddForm.value = !isVisibleAddForm.value;
 		isVisibleEditForm.value = false;
+		isVisibleTaskDetails.value = false;
 	}
 
 	function toggleVisibleEditForm() {
 		isVisibleEditForm.value = !isVisibleEditForm.value;
 		isVisibleAddForm.value = false;
 		if (!isVisibleEditForm.value) $reset();
+		isVisibleTaskDetails.value = false;
 	}
 
 	function showTaskDetails() {
-		isVisibleTaskPage.value = true;
+		isVisibleTaskDetails.value = true;
 	}
 
 	function hideTaskDetails() {
-		isVisibleTaskPage.value = false;
+		isVisibleTaskDetails.value = false;
 	}
 
 	function selectTask(task: Task) {
 		selectedTask.value = task;
 		name.value = selectedTask.value.name;
 		description.value = selectedTask.value.description || '';
-		if (selectedTask.value.due) {
-			due.value = new Date(selectedTask.value.due);
-		}
-		priority.value = selectedTask.value.priority;
+		due.value = selectedTask.value.due ? new Date(selectedTask.value.due) : null;
+		priority.value = selectedTask.value.priority || null;
 	}
 
 	async function fetchTasks() {
@@ -175,7 +175,7 @@ export const useTaskStore = defineStore('task', () => {
 	return {
 		isVisibleAddForm,
 		isVisibleEditForm,
-		isVisibleTaskPage,
+		isVisibleTaskDetails,
 		toggleVisibleAddForm,
 		toggleVisibleEditForm,
 		showTaskDetails,
