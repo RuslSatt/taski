@@ -34,8 +34,12 @@ export const useTaskStore = defineStore('task', () => {
 		if (!isVisibleEditForm.value) $reset();
 	}
 
-	function toggleVisibleTaskPage() {
-		isVisibleTaskPage.value = !isVisibleTaskPage.value;
+	function showTaskDetails() {
+		isVisibleTaskPage.value = true;
+	}
+
+	function hideTaskDetails() {
+		isVisibleTaskPage.value = false;
 	}
 
 	function selectTask(task: Task) {
@@ -137,6 +141,19 @@ export const useTaskStore = defineStore('task', () => {
 		if (error) errorMessage.value = error.message;
 	}
 
+	async function updateDetailsTask() {
+		const task = selectedTask.value;
+
+		if (!task) return;
+
+		const { error } = await supabase
+			.from('tasks')
+			.update(task)
+			.eq('id', task.id);
+
+		if (error) errorMessage.value = error.message;
+	}
+
 	function $reset(isForm?: boolean) {
 		name.value = '';
 		description.value = '';
@@ -161,7 +178,8 @@ export const useTaskStore = defineStore('task', () => {
 		isVisibleTaskPage,
 		toggleVisibleAddForm,
 		toggleVisibleEditForm,
-		toggleVisibleTaskPage,
+		showTaskDetails,
+		hideTaskDetails,
 		selectTask,
 		tasks,
 		errorMessage,
@@ -173,6 +191,7 @@ export const useTaskStore = defineStore('task', () => {
 		deleteTask,
 		updateTask,
 		updateTaskStatus,
+		updateDetailsTask,
 		fetchTasks,
 		isLoading,
 		selectedTask,

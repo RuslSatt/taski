@@ -1,5 +1,5 @@
 <template>
-	<div :class="{'task-details': true, hide: taskStore.isVisibleTaskPage}">
+	<div :class="{'task-details': true, hide: !taskStore.isVisibleTaskPage}">
 		<header class="task-details-header">
 
 		</header>
@@ -9,11 +9,12 @@
 					v-model="taskStore.selectedTask.name"
 					class="task-details-name"
 					placeholder="Название задачи"
+					@blur="taskStore.updateDetailsTask"
 				/>
 				<div class="task-details-field">
 					<p class="field-title">Срок выполнения</p>
 					<div class="field-item">
-						<DueTaskForm />
+						<DueTaskForm :task="taskStore.selectedTask" />
 					</div>
 				</div>
 				<div class="task-details-field">

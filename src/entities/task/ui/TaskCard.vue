@@ -1,5 +1,5 @@
 <template>
-	<Card v-if="!isEdit" class="card" @click="$emit('click')">
+	<Card v-if="!isEdit" class="card" @click="handlerClick">
 		<template #content>
 			<div class="container">
 				<div class="info">
@@ -37,6 +37,12 @@ const props = defineProps<{
 const isEdit = computed(() => {
 	return props.isVisibleEditForm && props.editTask?.id === props.task.id;
 });
+
+const emit = defineEmits(['clickCard']);
+
+const handlerClick = () => {
+	emit('clickCard');
+};
 
 </script>
 

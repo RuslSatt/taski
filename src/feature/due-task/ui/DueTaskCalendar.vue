@@ -15,12 +15,12 @@
 				text rounded
 				aria-label="Редактировать"
 				icon="pi pi-calendar"
-				@click="clickCallback"
+				@click.stop="clickCallback"
 			/>
 			<Tag
 				v-else
 				:value="date"
-				@click="clickCallback"
+				@click.stop="clickCallback"
 			/>
 		</template>
 	</Calendar>

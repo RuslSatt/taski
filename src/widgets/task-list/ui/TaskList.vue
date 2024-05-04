@@ -8,7 +8,7 @@
 			:key="task.id"
 			:edit-task="taskStore.selectedTask"
 			:is-visible-edit-form="taskStore.isVisibleEditForm"
-			@click="taskStore.toggleVisibleTaskPage"
+			@click-card="handlerClickCard(task)"
 		>
 			<template v-slot:checkbox>
 				<CheckBox :task="task" />
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { TaskCard, useTaskStore } from '@/entities/task';
+import { type Task, TaskCard, useTaskStore } from '@/entities/task';
 import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { EditTaskButton } from '@/feature/edit-task';
@@ -45,6 +45,11 @@ const taskStore = useTaskStore();
 onMounted(async () => {
 	await taskStore.fetchTasks();
 });
+
+const handlerClickCard = (task: Task) => {
+	taskStore.selectTask(task);
+	taskStore.showTaskDetails();
+};
 </script>
 
 <style scoped>
