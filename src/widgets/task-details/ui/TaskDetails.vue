@@ -9,18 +9,18 @@
 					v-model="taskStore.selectedTask.name"
 					class="task-details-name"
 					placeholder="Название задачи"
-					@blur="taskStore.updateDetailsTask"
+					@change="taskStore.updateDetailsTask"
 				/>
 				<div class="task-details-field">
 					<p class="field-title">Срок выполнения</p>
 					<div class="field-item">
-						<DueTaskForm :task="taskStore.selectedTask" />
+						<DueTaskForm @update="taskStore.updateDetailsTask" />
 					</div>
 				</div>
 				<div class="task-details-field">
 					<p class="field-title">Приоритет</p>
 					<div class="field-item">
-						<PriorityTaskSelect />
+						<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
 					</div>
 				</div>
 			</div>

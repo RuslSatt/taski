@@ -146,6 +146,9 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (!task) return;
 
+		task.due = due.value;
+		task.priority = priority.value;
+
 		const { error } = await supabase
 			.from('tasks')
 			.update(task)

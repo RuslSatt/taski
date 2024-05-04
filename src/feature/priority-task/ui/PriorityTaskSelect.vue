@@ -6,6 +6,7 @@
 		v-model="taskStore.priority"
 		showClear
 		optionLabel="label"
+		@update:modelValue="handlerUpdate"
 	>
 		<template #value="slotProps">
 			<div v-if="slotProps.value" class="dropdown-item">
@@ -33,6 +34,12 @@ import { useTaskStore } from '@/entities/task';
 const taskStore = useTaskStore();
 
 const models = ref(priorities);
+
+const emit = defineEmits(['update']);
+
+const handlerUpdate = () => {
+	emit('update');
+};
 
 </script>
 

@@ -6,17 +6,21 @@
 		iconDisplay="input"
 		dateFormat="dd.mm.yy"
 		class="calendar"
+		@update:modelValue="handlerUpdate"
 	/>
 </template>
 
 <script setup lang="ts">
-import { type Task, useTaskStore } from '@/entities/task';
+import { useTaskStore } from '@/entities/task';
 
 const taskStore = useTaskStore();
 
-defineProps<{
-	task?: Task
-}>();
+const emit = defineEmits(['update']);
+
+const handlerUpdate = () => {
+	emit('update');
+};
+
 </script>
 
 <style scoped>
