@@ -34,16 +34,22 @@
 					@change="taskStore.updateDetailsTask"
 				/>
 			</div>
+			<div class="task-comments">
+				<TaskComments :comments="commentStore.comments" />
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { useTaskStore } from '@/entities/task';
+import { useCommentStore } from '@/entities/comment';
 import { DueTaskForm } from '@/feature/due-task';
 import { PriorityTaskSelect } from '@/feature/priority-task';
+import TaskComments from './TaskComments.vue';
 
 const taskStore = useTaskStore();
+const commentStore = useCommentStore();
 </script>
 
 <style scoped>

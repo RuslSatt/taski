@@ -7,8 +7,8 @@
 						<slot name="checkbox"></slot>
 					</div>
 					<div class="content">
-						<p class="content-name">{{ task.name }}</p>
-						<p class="content-description">{{ task.description }}</p>
+						<p v-if="task.name" class="content-name">{{ task.name }}</p>
+						<p v-if="task.description" class="content-description">{{ task.description }}</p>
 					</div>
 					<div class="tools">
 						<slot name="tools"></slot>

@@ -14,6 +14,7 @@ import Tag from 'primevue/tag';
 import Dropdown from 'primevue/dropdown';
 import Divider from 'primevue/divider';
 import Textarea from 'primevue/textarea';
+import Panel from 'primevue/panel';
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -31,4 +32,5 @@ export function initPrimeComponents() {
 	app.component('Dropdown', Dropdown);
 	app.component('Divider', Divider);
 	app.component('Textarea', Textarea);
+	app.component('Panel', Panel);
 }
