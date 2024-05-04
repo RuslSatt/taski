@@ -1,47 +1,48 @@
 <template>
 	<div :class="{'task-details': true, hide: !taskStore.isVisibleTaskDetails}">
-		<header class="task-details-header">
-
-		</header>
 
 		<SkeletonList v-if="commentStore.isLoading" class="skeleton" />
 
 		<div v-if="taskStore.selectedTask && !commentStore.isLoading" class="task-details-body">
-			<div class="task-details-fields">
+			<TaskDetailsHeader class="task-details-header" :task="taskStore.selectedTask" />
+
+			<div class="task-details-main">
 				<InputText
 					v-model="taskStore.selectedTask.name"
 					class="task-details-name"
 					placeholder="Название задачи"
 					@change="taskStore.updateDetailsTask"
 				/>
-				<div class="task-details-field">
-					<p class="field-title">Срок выполнения</p>
-					<div class="field-item">
-						<DueTaskForm @update="taskStore.updateDetailsTask" />
+				<div class="task-details-fields">
+					<div class="task-details-field">
+						<p class="field-title">Срок выполнения</p>
+						<div class="field-item">
+							<DueTaskForm @update="taskStore.updateDetailsTask" />
+						</div>
+					</div>
+					<div class="task-details-field">
+						<p class="field-title">Приоритет</p>
+						<div class="field-item">
+							<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
+						</div>
 					</div>
 				</div>
-				<div class="task-details-field">
-					<p class="field-title">Приоритет</p>
-					<div class="field-item">
-						<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
-					</div>
-				</div>
-			</div>
-			<Divider align="left" type="solid">
-				<b>Описание</b>
-			</Divider>
-			<div class="task-details-description">
+				<Divider align="left" type="solid">
+					<b>Описание</b>
+				</Divider>
+				<div class="task-details-description">
 				<Textarea
 					class="description-area"
 					v-model="taskStore.selectedTask.description"
 					@change="taskStore.updateDetailsTask"
 				/>
-			</div>
-			<div class="task-comments">
-				<div class="task-comments-list">
-					<TaskComments :comments="commentStore.comments" />
 				</div>
-				<AddCommentForm class="task-comments-form" />
+				<div class="task-comments">
+					<div class="task-comments-list">
+						<TaskComments :comments="commentStore.comments" />
+					</div>
+					<AddCommentForm class="task-comments-form" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -56,6 +57,7 @@ import TaskComments from './TaskComments.vue';
 import { AddCommentForm } from '@/feature/add-comment';
 import { watch } from 'vue';
 import { SkeletonList } from '@/shared';
+import TaskDetailsHeader from './TaskDetailsHeader.vue';
 
 const taskStore = useTaskStore();
 const commentStore = useCommentStore();
@@ -74,25 +76,30 @@ watch(() => taskStore.selectedTask, () => {
 	width: 100%;
 	transition: margin-right 0.3s;
 	overflow: auto;
-	padding: 10px;
 }
 
 .task-details.hide {
 	margin-right: -100%;
 }
 
-.task-details-body {
+.task-details-header {
+	margin-bottom: 10px;
+}
+
+.task-details-main {
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
 	height: 100%;
+	padding: 10px 10px 10px 25px;
 }
 
 .task-details-name {
 	font-size: 24px;
 	border: none;
 	box-shadow: none;
-	margin-bottom: 25px;
+	margin-bottom: 10px;
+	margin-left: -13px;
 }
 
 .task-details-fields {
