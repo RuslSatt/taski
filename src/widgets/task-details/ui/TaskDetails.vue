@@ -37,6 +37,9 @@
 					@change="taskStore.updateDetailsTask"
 				/>
 				</div>
+				<Divider align="left" type="solid">
+					<b>Комментарии</b>
+				</Divider>
 				<div class="task-comments">
 					<div class="task-comments-list">
 						<TaskComments :comments="commentStore.comments" />
