@@ -1,5 +1,5 @@
 <template>
-	<Panel class="comment" toggleable>
+	<Panel class="comment">
 		<template #icons>
 
 		</template>

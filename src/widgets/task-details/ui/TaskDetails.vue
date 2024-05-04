@@ -3,7 +3,10 @@
 		<header class="task-details-header">
 
 		</header>
-		<div v-if="taskStore.selectedTask" class="task-details-body">
+
+		<SkeletonList v-if="commentStore.isLoading" class="skeleton" />
+
+		<div v-if="taskStore.selectedTask && !commentStore.isLoading" class="task-details-body">
 			<div class="task-details-fields">
 				<InputText
 					v-model="taskStore.selectedTask.name"
@@ -35,7 +38,10 @@
 				/>
 			</div>
 			<div class="task-comments">
-				<TaskComments :comments="commentStore.comments" />
+				<div class="task-comments-list">
+					<TaskComments :comments="commentStore.comments" />
+				</div>
+				<AddCommentForm class="task-comments-form" />
 			</div>
 		</div>
 	</div>
@@ -47,9 +53,16 @@ import { useCommentStore } from '@/entities/comment';
 import { DueTaskForm } from '@/feature/due-task';
 import { PriorityTaskSelect } from '@/feature/priority-task';
 import TaskComments from './TaskComments.vue';
+import { AddCommentForm } from '@/feature/add-comment';
+import { watch } from 'vue';
+import { SkeletonList } from '@/shared';
 
 const taskStore = useTaskStore();
 const commentStore = useCommentStore();
+
+watch(() => taskStore.selectedTask, () => {
+	if (taskStore.isVisibleTaskDetails) commentStore.fetchComments();
+});
 </script>
 
 <style scoped>
@@ -60,6 +73,8 @@ const commentStore = useCommentStore();
 	height: 100%;
 	width: 100%;
 	transition: margin-right 0.3s;
+	overflow: auto;
+	padding: 10px;
 }
 
 .task-details.hide {
@@ -70,7 +85,7 @@ const commentStore = useCommentStore();
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
-	padding: 10px;
+	height: 100%;
 }
 
 .task-details-name {
@@ -103,12 +118,30 @@ const commentStore = useCommentStore();
 
 .task-details-description {
 	width: 100%;
-	height: 100px;
+	min-height: 100px;
 }
 
 .description-area {
 	width: 100%;
 	height: 100%;
+}
+
+.task-comments {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	gap: 10px;
+}
+
+.task-comments-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+}
+
+.task-comments-form {
+	margin-top: auto;
 }
 
 </style>
