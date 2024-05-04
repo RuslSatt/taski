@@ -24,6 +24,16 @@
 					</div>
 				</div>
 			</div>
+			<Divider align="left" type="solid">
+				<b>Описание</b>
+			</Divider>
+			<div class="task-details-description">
+				<Textarea
+					class="description-area"
+					v-model="taskStore.selectedTask.description"
+					@change="taskStore.updateDetailsTask"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -83,6 +93,16 @@ const taskStore = useTaskStore();
 .field-item {
 
 	width: 250px;
+}
+
+.task-details-description {
+	width: 100%;
+	height: 100px;
+}
+
+.description-area {
+	width: 100%;
+	height: 100%;
 }
 
 </style>

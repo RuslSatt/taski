@@ -13,7 +13,7 @@ import Calendar from 'primevue/calendar';
 import Tag from 'primevue/tag';
 import Dropdown from 'primevue/dropdown';
 import Divider from 'primevue/divider';
-
+import Textarea from 'primevue/textarea';
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -30,4 +30,5 @@ export function initPrimeComponents() {
 	app.component('Tag', Tag);
 	app.component('Dropdown', Dropdown);
 	app.component('Divider', Divider);
+	app.component('Textarea', Textarea);
 }
