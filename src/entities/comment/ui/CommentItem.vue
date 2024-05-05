@@ -27,4 +27,8 @@ defineProps<{
 .comment-avatar {
 	display: flex;
 }
+
+.comment-text {
+	white-space: pre;
+}
 </style>
