@@ -6,7 +6,6 @@
 		dateFormat="dd.mm.yyyy"
 		@update:modelValue="taskStore.updateTask"
 		@show="handlerShow"
-		@hide="handlerHide"
 	>
 		<template #inputicon="{ clickCallback }">
 			<Button
@@ -41,10 +40,6 @@ const props = defineProps<{
 
 const handlerShow = () => {
 	taskStore.selectTask(props.task);
-};
-
-const handlerHide = () => {
-	taskStore.$resetDue();
 };
 
 const date = computed(() => {

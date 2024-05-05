@@ -160,7 +160,6 @@ export const useTaskStore = defineStore('task', () => {
 	function $reset(isForm?: boolean) {
 		name.value = '';
 		description.value = '';
-		selectedTask.value = null;
 		priority.value = null;
 
 		$resetDue();

@@ -3,6 +3,7 @@
 		v-model="task.completed"
 		:binary="true"
 		@change="taskStore.updateTaskStatus(task)"
+		@click.stop
 	/>
 </template>
 
