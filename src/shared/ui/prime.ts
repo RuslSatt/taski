@@ -16,7 +16,7 @@ import Divider from 'primevue/divider';
 import Textarea from 'primevue/textarea';
 import Panel from 'primevue/panel';
 import ToggleButton from 'primevue/togglebutton';
-
+import Menu from 'primevue/menu';
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -36,4 +36,5 @@ export function initPrimeComponents() {
 	app.component('Textarea', Textarea);
 	app.component('Panel', Panel);
 	app.component('ToggleButton', ToggleButton);
+	app.component('Menu', Menu);
 }

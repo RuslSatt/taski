@@ -1,7 +1,12 @@
 <template>
 	<Panel class="comment">
+		<template #header>
+			<div class="comment-avatar">
+				<Avatar label="R" shape="circle" />
+			</div>
+		</template>
 		<template #icons>
-
+			<slot name="actions"></slot>
 		</template>
 		<p class="comment-text">
 			{{ comment.text }}
@@ -18,5 +23,7 @@ defineProps<{
 </script>
 
 <style scoped>
-
+.comment-avatar {
+	display: flex;
+}
 </style>
