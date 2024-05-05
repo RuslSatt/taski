@@ -74,10 +74,14 @@ const handlerClick = () => {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	overflow: hidden;
 }
 
 .content-description {
 	font-size: 14px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .tools {
