@@ -1,7 +1,12 @@
 <template>
 	<div class="card-content">
 		<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
-		<InputText v-model="taskStore.description" class="task-description" placeholder="Описание задачи" />
+		<Textarea
+			v-model="taskStore.description"
+			class="task-description"
+			placeholder="Описание задачи"
+			:autoResize="true"
+		/>
 		<div class="card-properties">
 			<DueTaskForm class="card-due" />
 			<PriorityTaskSelect class="card-select" />
@@ -60,6 +65,7 @@ const label = computed(() => {
 
 .task-description {
 	font-size: 14px;
+	overflow: hidden;
 }
 
 .card-buttons {
