@@ -7,6 +7,9 @@
 		<template v-slot:actions>
 			<ActionsComment :comment="comment" />
 		</template>
+		<template v-slot:edit>
+			<EditCommentForm :comment="comment" />
+		</template>
 	</CommentItem>
 </template>
 
@@ -14,6 +17,7 @@
 
 import { type Comment, CommentItem } from '@/entities/comment';
 import { ActionsComment } from '@/feature/actions-comment';
+import { EditCommentForm } from '@/feature/edit-comment';
 
 defineProps<{
 	comments: Comment[]

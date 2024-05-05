@@ -69,10 +69,19 @@ export const useCommentStore = defineStore('comment', () => {
 		}
 	}
 
+	async function updateComment(comment: Comment) {
+		const { error } = await supabase
+			.from('comments')
+			.update(comment)
+			.eq('id', comment.id);
+
+		if (error) errorMessage.value = error.message;
+	}
+
 	function $reset() {
 		text.value = '';
 		comment.value = null;
 	}
 
-	return { text, isLoading, comment, comments, fetchComments, addComment, deleteComment, $reset };
+	return { text, isLoading, comment, comments, fetchComments, addComment, deleteComment, updateComment, $reset };
 });

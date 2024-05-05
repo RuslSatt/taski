@@ -8,9 +8,10 @@
 		<template #icons>
 			<slot name="actions"></slot>
 		</template>
-		<p class="comment-text">
+		<p v-if="!comment.isEdit" class="comment-text">
 			{{ comment.text }}
 		</p>
+		<slot v-else name="edit"></slot>
 	</Panel>
 </template>
 

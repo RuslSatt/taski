@@ -59,8 +59,8 @@ import { PriorityTaskSelect } from '@/feature/priority-task';
 import TaskComments from './TaskComments.vue';
 import { AddCommentForm } from '@/feature/add-comment';
 import { watch } from 'vue';
-import { SkeletonList } from '@/shared';
 import TaskDetailsHeader from './TaskDetailsHeader.vue';
+import { SkeletonList } from '@/shared';
 
 const taskStore = useTaskStore();
 const commentStore = useCommentStore();
@@ -79,6 +79,12 @@ watch(() => taskStore.selectedTask, () => {
 	width: 100%;
 	transition: margin-right 0.3s;
 	overflow: auto;
+}
+
+.task-details-body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 .task-details.hide {

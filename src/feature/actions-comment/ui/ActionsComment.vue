@@ -28,7 +28,8 @@ const menu = ref<any>(null);
 const items = ref([
 	{
 		label: 'Редактировать',
-		icon: 'pi pi-pencil'
+		icon: 'pi pi-pencil',
+		command: () => props.comment.isEdit = true
 	},
 	{
 		label: 'Удалить',
