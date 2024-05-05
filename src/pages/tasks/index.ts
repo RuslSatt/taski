@@ -1,3 +1,5 @@
-import TasksPage from '@/pages/tasks/ui/TasksPage.vue';
+import InboxTasksPage from './ui/InboxTasksPage.vue';
+import TodayTasksPage from './ui/TodayTasksPage.vue';
+import UpcomingTasksPage from './ui/UpcomingTasksPage.vue';
 
-export { TasksPage };
+export { InboxTasksPage, TodayTasksPage, UpcomingTasksPage };

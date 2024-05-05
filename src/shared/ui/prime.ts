@@ -17,6 +17,8 @@ import Textarea from 'primevue/textarea';
 import Panel from 'primevue/panel';
 import ToggleButton from 'primevue/togglebutton';
 import Menu from 'primevue/menu';
+import TabMenu from 'primevue/tabmenu';
+
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -37,4 +39,5 @@ export function initPrimeComponents() {
 	app.component('Panel', Panel);
 	app.component('ToggleButton', ToggleButton);
 	app.component('Menu', Menu);
+	app.component('TabMenu', TabMenu);
 }

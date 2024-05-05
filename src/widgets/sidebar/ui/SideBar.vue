@@ -3,12 +3,17 @@
 		<ul class="sidebar-list">
 			<li
 				@click="selectItem(item)"
-				:class="{'list-item': true, 'list-item-group': item.mode === 'tree', active: item.id === selectedItem?.id}"
+				:class="{'list-item': true, 'list-item-group': item.mode === 'tree', active: item.id === selectedId}"
 				v-for="item in items"
 				:key="item.id"
 			>
-				<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
-				<p>{{ item.label }}</p>
+				<router-link
+					:to="item.path"
+					class="list-item-link"
+				>
+					<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
+					<p>{{ item.label }}</p>
+				</router-link>
 			</li>
 		</ul>
 	</aside>
@@ -23,6 +28,7 @@ const themeStore = useThemeStore();
 interface Item {
 	id: string,
 	label: string,
+	path: string
 	icon?: string,
 	children?: Item[],
 	mode: ModeItem
@@ -31,14 +37,16 @@ interface Item {
 type ModeItem = 'single' | 'tree'
 
 const items = ref<Item[]>([
-	{ id: '1', label: 'Мои задачи', icon: 'pi pi-check-circle', mode: 'single' },
-	{ id: '2', label: 'Проекты', children: [], mode: 'tree' }
+	{ id: '1', label: 'Входящие', icon: 'pi pi-inbox', mode: 'single', path: '/inbox' },
+	{ id: '2', label: 'Сегодня', icon: 'pi pi-calendar-clock', mode: 'single', path: '/today' },
+	{ id: '3', label: 'Предстоящие', icon: 'pi pi-calendar', mode: 'single', path: '/upcoming' },
+	{ id: '4', label: 'Проекты', children: [], mode: 'tree', path: '/projects' }
 ]);
 
-const selectedItem = ref<Item | null>(null);
+const selectedId = ref<string>('1');
 
 const selectItem = (item: Item) => {
-	selectedItem.value = item;
+	selectedId.value = item.id;
 };
 
 </script>
@@ -68,15 +76,21 @@ const selectItem = (item: Item) => {
 }
 
 .list-item, .list-item-group {
-	padding: 10px;
-	height: 35px;
 	cursor: pointer;
-	display: flex;
-	align-items: center;
-	gap: 10px;
 	width: 100%;
 	border-radius: 10px;
 	transition: background-color 0.3s, color 0.3s;
+}
+
+.list-item-link {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--text-color);
+	text-decoration: none;
+	width: 100%;
+	padding: 10px;
+	height: 35px;
 }
 
 .list-item:hover, .list-item-group:hover {

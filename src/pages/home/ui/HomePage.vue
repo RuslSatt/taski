@@ -3,7 +3,7 @@
 		<NavBar />
 		<div class="home-content">
 			<SideBar />
-			<TasksPage />
+			<RouterView />
 		</div>
 	</div>
 </template>
@@ -14,7 +14,7 @@ import { useUserStore } from '@/entities/user';
 import { useRouter } from 'vue-router';
 import { NavBar } from '@/widgets/navbar';
 import { SideBar } from '@/widgets/sidebar';
-import { TasksPage } from '@/pages/tasks';
+import router from '@/app/router/router';
 
 const userStore = useUserStore();
 
@@ -26,6 +26,8 @@ onMounted(() => {
 	if (!user) {
 		const router = useRouter();
 		router.push('/auth');
+	} else {
+		router.push('/inbox');
 	}
 });
 </script>
