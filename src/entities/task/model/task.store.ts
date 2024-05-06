@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import type { Task, TaskInput, TaskPriority } from '@/entities/task';
 import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
+import type { PostgrestError } from '@supabase/supabase-js';
+import dayjs from 'dayjs';
 
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
@@ -59,13 +61,43 @@ export const useTaskStore = defineStore('task', () => {
 			.select()
 			.order('created_at', { ascending: true });
 
+		setTasksValue(data, error);
+
+		isLoading.value = false;
+	}
+
+	async function fetchTodayTasks() {
+		isLoading.value = true;
+		const { data, error } = await supabase
+			.from('tasks')
+			.select()
+			.lte('due', dayjs())
+			.order('created_at', { ascending: true });
+
+		setTasksValue(data, error);
+
+		isLoading.value = false;
+	}
+
+	async function fetchUpcomingTasks() {
+		isLoading.value = true;
+		const { data, error } = await supabase
+			.from('tasks')
+			.select()
+			.gt('due', dayjs())
+			.order('created_at', { ascending: true });
+
+		setTasksValue(data, error);
+
+		isLoading.value = false;
+	}
+
+	function setTasksValue(data: Task[] | null, error: PostgrestError | null) {
 		if (data?.length) {
 			tasks.value = data;
 		} else if (error) {
 			errorMessage.value = error.message;
 		}
-
-		isLoading.value = false;
 	}
 
 	async function addTask() {
@@ -110,12 +142,6 @@ export const useTaskStore = defineStore('task', () => {
 		const task = selectedTask.value;
 
 		if (!task) return;
-
-		// TODO Изменить условие проверки.
-		// if (task.name === name.value && task.description === description.value && task.due === due.value) {
-		// 	$reset(true);
-		// 	return;
-		// }
 
 		task.name = name.value;
 		task.description = description.value;
@@ -195,6 +221,8 @@ export const useTaskStore = defineStore('task', () => {
 		updateTaskStatus,
 		updateDetailsTask,
 		fetchTasks,
+		fetchTodayTasks,
+		fetchUpcomingTasks,
 		isLoading,
 		selectedTask,
 		$reset,

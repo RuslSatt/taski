@@ -1,5 +1,5 @@
 <template>
-	<TasksPageBase path="today" />
+	<TasksPageBase category="today" />
 </template>
 
 <script setup lang="ts">

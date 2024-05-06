@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Task, TaskCard, useTaskStore } from '@/entities/task';
+import { type Task, TaskCard, type TaskCategories, useTaskStore } from '@/entities/task';
 import { CheckBox } from '@/feature/task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { EditTaskButton } from '@/feature/edit-task';
@@ -42,8 +42,14 @@ import { onMounted } from 'vue';
 
 const taskStore = useTaskStore();
 
+const props = defineProps<{
+	category: TaskCategories;
+}>();
+
 onMounted(async () => {
-	await taskStore.fetchTasks();
+	if (props.category === 'inbox') await taskStore.fetchTasks();
+	if (props.category === 'today') await taskStore.fetchTodayTasks();
+	if (props.category === 'upcoming') await taskStore.fetchUpcomingTasks();
 });
 
 const handlerClickCard = (task: Task) => {

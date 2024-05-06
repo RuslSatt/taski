@@ -1,5 +1,5 @@
 <template>
-	<TasksPageBase path="upcoming" />
+	<TasksPageBase category="upcoming" />
 </template>
 
 <script setup lang="ts">

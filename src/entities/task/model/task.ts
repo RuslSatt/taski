@@ -1,3 +1,5 @@
+export type TaskCategories = 'inbox' | 'today' | 'upcoming';
+
 export interface TaskPriority {
 	label: string;
 	icon: string;

@@ -4,7 +4,7 @@
 			<div class="content">
 				<h2 class="title">{{ title }}</h2>
 				<AddTaskButton class="add-task-button" />
-				<TaskList />
+				<TaskList :category="category" />
 				<TaskCreateModal v-if="taskStore.isVisibleAddForm" />
 			</div>
 		</div>
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { AddTaskButton } from '@/feature/add-task';
-import { useTaskStore } from '@/entities/task';
+import { type TaskCategories, useTaskStore } from '@/entities/task';
 import { TaskList } from '@/widgets/task-list';
 import { TaskCreateModal } from '@/widgets/task-modal';
 import { TaskDetails } from '@/widgets/task-details';
@@ -23,13 +23,13 @@ import { computed } from 'vue';
 const taskStore = useTaskStore();
 
 const props = defineProps<{
-	path: 'inbox' | 'today' | 'upcoming',
+	category: TaskCategories,
 }>();
 
 const title = computed(() => {
-	if (props.path === 'inbox') return 'Входящие';
-	if (props.path === 'today') return 'Сегодня';
-	if (props.path === 'upcoming') return 'Предстоящие';
+	if (props.category === 'inbox') return 'Входящие';
+	if (props.category === 'today') return 'Сегодня';
+	if (props.category === 'upcoming') return 'Предстоящие';
 });
 </script>
 

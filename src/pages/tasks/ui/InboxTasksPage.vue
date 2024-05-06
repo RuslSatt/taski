@@ -1,5 +1,5 @@
 <template>
-	<TasksPageBase path="inbox" />
+	<TasksPageBase category="inbox" />
 </template>
 
 <script setup lang="ts">
