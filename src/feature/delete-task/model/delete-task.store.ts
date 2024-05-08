@@ -17,8 +17,8 @@ export const useDeleteTaskStore = defineStore('deleteTask', () => {
 		if (task.value) {
 			isLoading.value = true;
 			const taskStore = useTaskStore();
-			await taskStore.deleteTask(task.value);
 			isVisibleModal.value = false;
+			await taskStore.deleteTask(task.value);
 			isLoading.value = false;
 		}
 	}

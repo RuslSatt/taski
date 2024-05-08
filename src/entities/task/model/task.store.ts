@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Task, TaskInput, TaskPriority } from '@/entities/task';
+import type { Task, TaskPriority } from '@/entities/task';
 import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 import type { PostgrestError } from '@supabase/supabase-js';
@@ -103,7 +103,8 @@ export const useTaskStore = defineStore('task', () => {
 	async function addTask() {
 		if (!name.value || !userStore.user) return;
 
-		const task: TaskInput = {
+		const task: Task = {
+			id: new Date().getTime(),
 			userId: userStore.user.id,
 			name: name.value,
 			description: description.value,
@@ -111,21 +112,23 @@ export const useTaskStore = defineStore('task', () => {
 			priority: priority.value
 		};
 
-		const { data, error } = await supabase
+		tasks.value.push(task);
+
+		$reset(true);
+
+		const { error } = await supabase
 			.from('tasks')
 			.insert(task)
 			.select();
 
 		if (error) {
 			errorMessage.value = error.message;
-		} else if (data) {
-			tasks.value.push(data[0]);
 		}
-
-		$reset(true);
 	}
 
 	async function deleteTask(task: Task) {
+		tasks.value = tasks.value.filter(item => task.id !== item.id);
+
 		const { error } = await supabase
 			.from('tasks')
 			.delete()
@@ -133,8 +136,6 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
-		} else {
-			tasks.value = tasks.value.filter(item => task.id !== item.id);
 		}
 	}
 
