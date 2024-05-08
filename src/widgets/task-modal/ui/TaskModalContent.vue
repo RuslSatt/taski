@@ -34,15 +34,16 @@ import { PriorityTaskSelect } from '@/feature/priority-task';
 const taskStore = useTaskStore();
 
 const toggleVisible = computed(() => {
-	return taskStore.selectedTask ? taskStore.toggleVisibleEditForm : taskStore.toggleVisibleAddForm;
+	return taskStore.isVisibleEditForm ? taskStore.toggleVisibleEditForm : taskStore.toggleVisibleAddForm;
 });
 
 const actionTask = computed(() => {
-	return taskStore.selectedTask ? taskStore.updateTask : taskStore.addTask;
+	return taskStore.isVisibleEditForm ? taskStore.updateTask : taskStore.addTask;
 });
 
 const label = computed(() => {
-	return taskStore.selectedTask ? 'Сохранить' : 'Добавить';
+	return taskStore.isVisibleEditForm ? 'Сохранить' : 'Добавить';
+
 });
 </script>
 
