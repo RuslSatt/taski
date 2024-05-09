@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Comment, CommentInput } from './comment';
+import type { Comment } from './comment';
 import { supabase } from '@/shared/api/supabase';
 import { useTaskStore } from '@/entities/task';
 
 export const useCommentStore = defineStore('comment', () => {
-	const comments = ref<Comment[]>([{ id: '1', task_id: '1', text: 'Комментарий' }]);
+	const comments = ref<Comment[]>([]);
 	const comment = ref<Comment | null>(null);
 
 	const text = ref<string>('');
@@ -37,7 +37,8 @@ export const useCommentStore = defineStore('comment', () => {
 	async function addComment() {
 		if (!text.value || !taskStore.selectedTask) return;
 
-		const comment: CommentInput = {
+		const comment: Comment = {
+			id: new Date().getTime(),
 			text: text.value,
 			task_id: taskStore.selectedTask.id
 		};
