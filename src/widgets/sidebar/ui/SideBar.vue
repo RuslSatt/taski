@@ -13,6 +13,7 @@
 				>
 					<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
 					<p>{{ item.label }}</p>
+					<AddProjectButton class="item-button" v-if="item.id === `project`" />
 				</router-link>
 			</li>
 		</ul>
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useThemeStore } from '@/entities/theme';
+import { AddProjectButton } from '@/feature/add-project';
 
 const themeStore = useThemeStore();
 
@@ -37,10 +39,10 @@ interface Item {
 type ModeItem = 'single' | 'tree'
 
 const items = ref<Item[]>([
-	{ id: '1', label: 'Входящие', icon: 'pi pi-inbox', mode: 'single', path: '/inbox' },
-	{ id: '2', label: 'Сегодня', icon: 'pi pi-calendar-clock', mode: 'single', path: '/today' },
-	{ id: '3', label: 'Предстоящие', icon: 'pi pi-calendar', mode: 'single', path: '/upcoming' },
-	{ id: '4', label: 'Проекты', children: [], mode: 'tree', path: '/projects' }
+	{ id: 'inbox', label: 'Входящие', icon: 'pi pi-inbox', mode: 'single', path: '/inbox' },
+	{ id: 'today', label: 'Сегодня', icon: 'pi pi-calendar-clock', mode: 'single', path: '/today' },
+	{ id: 'upcoming', label: 'Предстоящие', icon: 'pi pi-calendar', mode: 'single', path: '/upcoming' },
+	{ id: 'project', label: 'Проекты', children: [], mode: 'tree', path: '/projects' }
 ]);
 
 const selectedId = ref<string>('1');
