@@ -2,8 +2,9 @@
 	<Button
 		class="button"
 		@click.prevent="projectStore.toggleVisibleAddModal"
-		text rounded
+		text rounded outlined
 		icon="pi pi-plus"
+		:label="isPage ? 'Добавить проект' : undefined"
 	/>
 </template>
 
@@ -11,12 +12,11 @@
 import { useProjectStore } from '@/entities/project';
 
 const projectStore = useProjectStore();
+
+defineProps<{
+	isPage?: boolean
+}>();
 </script>
 
 <style scoped>
-.button {
-	font-size: 16px;
-	width: 25px;
-	height: 25px;
-}
 </style>

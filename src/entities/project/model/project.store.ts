@@ -17,6 +17,7 @@ export const useProjectStore = defineStore('project', () => {
 
 	function toggleVisibleAddModal() {
 		isVisibleAddModal.value = !isVisibleAddModal.value;
+		$reset();
 	}
 
 	async function addProject() {
@@ -43,7 +44,12 @@ export const useProjectStore = defineStore('project', () => {
 
 		isLoading.value = false;
 		isVisibleAddModal.value = false;
+		$reset();
 	}
 
-	return { name, errorMessage, isLoading, projects, isVisibleAddModal, toggleVisibleAddModal, addProject };
+	function $reset() {
+		name.value = '';
+	}
+
+	return { name, errorMessage, isLoading, projects, isVisibleAddModal, toggleVisibleAddModal, addProject, $reset };
 });
