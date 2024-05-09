@@ -105,7 +105,7 @@ export const useTaskStore = defineStore('task', () => {
 
 		const task: Task = {
 			id: new Date().getTime(),
-			userId: userStore.user.id,
+			user_id: userStore.user.id,
 			name: name.value,
 			description: description.value,
 			due: due.value,

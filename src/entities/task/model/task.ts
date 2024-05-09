@@ -8,7 +8,7 @@ export interface TaskPriority {
 
 export interface Task {
 	id: number;
-	userId: string;
+	user_id: string;
 	name: string;
 	description?: string;
 	due: Date | null;
