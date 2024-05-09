@@ -6,16 +6,24 @@
 		header="Создать проект"
 	>
 		<div class="content">
-			<InputText v-model="projectStore.name" class="project-name" placeholder="Название проекта" />
-
+			<InputText
+				:disabled="!!projectStore.isLoading"
+				v-model="projectStore.name"
+				class="project-name"
+				placeholder="Название проекта"
+			/>
 			<div class="content-buttons">
 				<Button
 					@click="projectStore.toggleVisibleAddModal"
 					severity="danger"
 					label="Отмена"
+					:disabled="!!projectStore.isLoading"
 				/>
 				<Button
 					label="Добавить"
+					@click="projectStore.addProject"
+					:icon="projectStore.isLoading ? `pi pi-spin pi-spinner` : undefined"
+					:disabled="!!projectStore.isLoading"
 				/>
 			</div>
 		</div>
