@@ -20,6 +20,23 @@ export const useProjectStore = defineStore('project', () => {
 		$reset();
 	}
 
+	async function fetchProjects() {
+		isLoading.value = true;
+
+		const { data, error } = await supabase
+			.from('projects')
+			.select()
+			.order('created_at', { ascending: true });
+
+		if (error) {
+			errorMessage.value = error.message;
+		} else if (data) {
+			projects.value = data;
+		}
+
+		isLoading.value = false;
+	}
+
 	async function addProject() {
 		if (!name.value || !userStore.user) return;
 
@@ -51,5 +68,15 @@ export const useProjectStore = defineStore('project', () => {
 		name.value = '';
 	}
 
-	return { name, errorMessage, isLoading, projects, isVisibleAddModal, toggleVisibleAddModal, addProject, $reset };
+	return {
+		name,
+		errorMessage,
+		isLoading,
+		projects,
+		isVisibleAddModal,
+		toggleVisibleAddModal,
+		addProject,
+		fetchProjects,
+		$reset
+	};
 });

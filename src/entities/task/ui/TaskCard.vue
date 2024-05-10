@@ -67,7 +67,6 @@ const handlerClick = () => {
 .info {
 	display: flex;
 	gap: 15px;
-	margin-bottom: 10px;
 }
 
 .content {
@@ -96,6 +95,7 @@ const handlerClick = () => {
 	align-items: center;
 	gap: 10px;
 	padding-left: 35px;
+	margin-top: 10px;
 }
 
 .checkbox-container {
