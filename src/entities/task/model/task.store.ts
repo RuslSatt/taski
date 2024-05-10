@@ -5,6 +5,7 @@ import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 import type { PostgrestError } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
+import { useProjectStore } from '@/entities/project';
 
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
@@ -23,6 +24,7 @@ export const useTaskStore = defineStore('task', () => {
 	const errorMessage = ref<string>('');
 
 	const userStore = useUserStore();
+	const projectStore = useProjectStore();
 
 	function toggleVisibleAddForm() {
 		$reset();
@@ -92,8 +94,26 @@ export const useTaskStore = defineStore('task', () => {
 		isLoading.value = false;
 	}
 
+	async function fetchProjectTasks() {
+		const project = projectStore.project;
+
+		if (!project) return;
+
+		isLoading.value = true;
+
+		const { data, error } = await supabase
+			.from('tasks')
+			.select()
+			.eq('project_id', project.id)
+			.order('created_at', { ascending: true });
+
+		setTasksValue(data, error);
+
+		isLoading.value = false;
+	}
+
 	function setTasksValue(data: Task[] | null, error: PostgrestError | null) {
-		if (data?.length) {
+		if (data) {
 			tasks.value = data;
 		} else if (error) {
 			errorMessage.value = error.message;
@@ -224,6 +244,7 @@ export const useTaskStore = defineStore('task', () => {
 		fetchTasks,
 		fetchTodayTasks,
 		fetchUpcomingTasks,
+		fetchProjectTasks,
 		isLoading,
 		selectedTask,
 		$reset,

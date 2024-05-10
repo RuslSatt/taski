@@ -1,4 +1,4 @@
-export type TaskCategories = 'inbox' | 'today' | 'upcoming';
+export type TaskCategories = 'inbox' | 'today' | 'upcoming' | 'project';
 
 export interface TaskPriority {
 	label: string;

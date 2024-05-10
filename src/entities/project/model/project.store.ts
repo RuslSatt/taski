@@ -3,9 +3,11 @@ import { ref } from 'vue';
 import type { Project } from './project';
 import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
+import { router } from '@/app/router/router';
 
 export const useProjectStore = defineStore('project', () => {
 	const projects = ref<Project[]>([]);
+	const project = ref<Project | null>(null);
 	const selectedProject = ref<Project | null>(null);
 
 	const name = ref<string>('');
@@ -21,6 +23,11 @@ export const useProjectStore = defineStore('project', () => {
 	function selectProject(project: Project) {
 		selectedProject.value = project;
 		name.value = project.name;
+	}
+
+	async function setProject(value: Project) {
+		project.value = value;
+		await router.push(`${project.value.name}`);
 	}
 
 	function toggleVisibleActionModal() {
@@ -147,6 +154,8 @@ export const useProjectStore = defineStore('project', () => {
 		updateProject,
 		selectProject,
 		selectedProject,
+		project,
+		setProject,
 		$reset
 	};
 });

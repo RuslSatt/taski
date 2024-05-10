@@ -1,5 +1,5 @@
 <template>
-	<Card class="card">
+	<Card class="card" @click.stop="onClick">
 		<template #content>
 			<div class="container">
 				<div class="info">
@@ -17,10 +17,18 @@
 
 <script setup lang="ts">
 import type { Project } from '../model/project';
+import { useProjectStore } from '@/entities/project';
 
-defineProps<{
+const store = useProjectStore();
+
+const props = defineProps<{
 	project: Project
 }>();
+
+const onClick = () => {
+	store.setProject(props.project);
+};
+
 </script>
 
 <style scoped>

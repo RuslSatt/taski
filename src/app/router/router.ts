@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AuthPage from '@/pages/auth';
 import HomePage from '@/pages/home';
-import { InboxTasksPage, TodayTasksPage, UpcomingTasksPage } from '@/pages/tasks';
+import { InboxTasksPage, ProjectTasksPage, TodayTasksPage, UpcomingTasksPage } from '@/pages/tasks';
 import { ProjectsPage } from '@/pages/projects';
 
-const router = createRouter({
+export const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
@@ -12,6 +12,7 @@ const router = createRouter({
 			component: AuthPage
 		},
 		{
+			name: 'home',
 			path: '/',
 			component: HomePage,
 			children: [
@@ -36,4 +37,6 @@ const router = createRouter({
 	]
 });
 
-export default router;
+export const addProjectTaskRouter = (path: string) => {
+	router.addRoute('home', { path, component: ProjectTasksPage });
+};

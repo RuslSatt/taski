@@ -1,5 +1,6 @@
 <template>
-	<div class="home">
+	<ProgressSpinner class="spinner" v-if="isLoading" aria-label="Загрузка" />
+	<div v-else class="home">
 		<NavBar />
 		<div class="home-content">
 			<SideBar />
@@ -10,28 +11,49 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/entities/user';
 import { useRouter } from 'vue-router';
 import { NavBar } from '@/widgets/navbar';
 import { SideBar } from '@/widgets/sidebar';
-import router from '@/app/router/router';
+import { addProjectTaskRouter, router } from '@/app/router/router';
 import { ProjectActionModal } from '@/widgets/project-action-modal';
+import { useProjectStore } from '@/entities/project';
 
 const userStore = useUserStore();
+const projectStore = useProjectStore();
 
-onMounted(() => {
+const isLoading = ref(false);
+
+onMounted(async () => {
 	userStore.initUser();
 
 	const { user } = userStore;
 
 	if (!user) {
 		const router = useRouter();
-		router.push('/auth');
+		await router.push('/auth');
 	} else {
-		router.push('/inbox');
+		isLoading.value = true;
+		await getProjects();
+		await router.push('/inbox');
+		isLoading.value = false;
 	}
 });
+
+const getProjects = async () => {
+	await projectStore.fetchProjects();
+	addProjectRoutes();
+};
+
+const addProjectRoutes = () => {
+	const projects = projectStore.projects;
+	if (projects?.length) {
+		projects.forEach(project => {
+			addProjectTaskRouter(`${project.name}`);
+		});
+	}
+};
 </script>
 
 <style scoped>
@@ -46,5 +68,12 @@ onMounted(() => {
 	display: flex;
 	flex: 1;
 	overflow: hidden;
+}
+
+.spinner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
 }
 </style>

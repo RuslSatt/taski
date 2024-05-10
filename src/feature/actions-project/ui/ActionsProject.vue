@@ -1,6 +1,6 @@
 <template>
 	<div class="setting-comment">
-		<Button text rounded icon="pi pi-cog" @click="toggle" />
+		<Button text rounded icon="pi pi-cog" @click.stop="toggle" />
 		<Menu ref="menu" id="config_menu" :model="items" popup>
 			<template #item="{ item, props }">
 				<a class="item" v-bind="props.action">

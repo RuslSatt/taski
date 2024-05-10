@@ -15,10 +15,12 @@ import { computed } from 'vue';
 const taskStore = useTaskStore();
 
 const props = defineProps<{
+	title?: string,
 	category: TaskCategories,
 }>();
 
 const title = computed(() => {
+	if (props.title) return props.title;
 	if (props.category === 'inbox') return 'Входящие';
 	if (props.category === 'today') return 'Сегодня';
 	if (props.category === 'upcoming') return 'Предстоящие';

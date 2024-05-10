@@ -50,6 +50,7 @@ onMounted(async () => {
 	if (props.category === 'inbox') await taskStore.fetchTasks();
 	if (props.category === 'today') await taskStore.fetchTodayTasks();
 	if (props.category === 'upcoming') await taskStore.fetchUpcomingTasks();
+	if (props.category === 'project') await taskStore.fetchProjectTasks();
 });
 
 const handlerClickCard = (task: Task) => {
