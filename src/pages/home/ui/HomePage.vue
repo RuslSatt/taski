@@ -16,7 +16,7 @@ import { useUserStore } from '@/entities/user';
 import { useRouter } from 'vue-router';
 import { NavBar } from '@/widgets/navbar';
 import { SideBar } from '@/widgets/sidebar';
-import { addProjectTaskRouter, router } from '@/app/router/router';
+import { router } from '@/app/router/router';
 import { ProjectActionModal } from '@/widgets/project-action-modal';
 import { useProjectStore } from '@/entities/project';
 
@@ -35,25 +35,12 @@ onMounted(async () => {
 		await router.push('/auth');
 	} else {
 		isLoading.value = true;
-		await getProjects();
+		await projectStore.fetchProjects();
 		await router.push('/inbox');
 		isLoading.value = false;
 	}
 });
 
-const getProjects = async () => {
-	await projectStore.fetchProjects();
-	addProjectRoutes();
-};
-
-const addProjectRoutes = () => {
-	const projects = projectStore.projects;
-	if (projects?.length) {
-		projects.forEach(project => {
-			addProjectTaskRouter(`${project.name}`);
-		});
-	}
-};
 </script>
 
 <style scoped>
