@@ -1,5 +1,5 @@
 <template>
-	<Dialog class="dialog" v-model:visible="projectStore.isVisibleDeleteModal" modal>
+	<Dialog class="dialog" v-model:visible="projectStore.isVisibleDeleteModal" modal :closable="false">
 		<template #header>
 			<div class="header">
 				<i class="pi pi-trash"></i>

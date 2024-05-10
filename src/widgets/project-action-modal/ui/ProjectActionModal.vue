@@ -1,9 +1,10 @@
 <template>
 	<Dialog
 		modal
-		v-model:visible="projectStore.isVisibleAddModal"
+		v-model:visible="projectStore.isVisibleActionModal"
 		:style="{width: '100%', maxWidth: '500px'}"
-		header="Создать проект"
+		:header="title"
+		:closable="false"
 	>
 		<div class="content">
 			<InputText
@@ -14,14 +15,14 @@
 			/>
 			<div class="content-buttons">
 				<Button
-					@click="projectStore.toggleVisibleAddModal"
+					@click="onCancel"
 					severity="danger"
 					label="Отмена"
 					:disabled="!!projectStore.isLoading"
 				/>
 				<Button
-					label="Добавить"
-					@click="projectStore.addProject"
+					:label="labelButton"
+					@click="onSave"
 					:icon="projectStore.isLoading ? `pi pi-spin pi-spinner` : undefined"
 					:disabled="!!projectStore.isLoading"
 				/>
@@ -32,8 +33,26 @@
 
 <script setup lang="ts">
 import { useProjectStore } from '@/entities/project';
+import { computed } from 'vue';
 
 const projectStore = useProjectStore();
+
+const title = computed(() => {
+	return projectStore.isEditActionModal ? 'Редактировать проект' : 'Создать проект';
+});
+
+const labelButton = computed(() => {
+	return projectStore.isEditActionModal ? 'Сохранить' : 'Добавить';
+});
+
+const onCancel = computed(() => {
+	return projectStore.isEditActionModal ? projectStore.toggleVisibleEditModal : projectStore.toggleVisibleActionModal;
+});
+
+const onSave = computed(() => {
+	return projectStore.isEditActionModal ? projectStore.updateProject : projectStore.addProject;
+});
+
 </script>
 
 <style scoped>
@@ -51,3 +70,4 @@ const projectStore = useProjectStore();
 	margin-top: 5px;
 }
 </style>
+

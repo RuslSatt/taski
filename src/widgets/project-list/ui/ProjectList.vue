@@ -1,6 +1,6 @@
 <template>
 	<ul class="list">
-		<SkeletonList v-if="projectStore.isLoading" class="skeleton" />
+		<SkeletonList v-if="isShowSkeleton()" class="skeleton" />
 		<ProjectCard
 			v-else
 			v-for="project in projectStore.projects"
@@ -26,6 +26,10 @@ const projectStore = useProjectStore();
 onMounted(() => {
 	projectStore.fetchProjects();
 });
+
+const isShowSkeleton = () => {
+	return projectStore.isLoading && !projectStore.isVisibleActionModal && !projectStore.isVisibleDeleteModal;
+};
 </script>
 
 <style scoped>

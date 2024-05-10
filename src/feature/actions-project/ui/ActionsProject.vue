@@ -28,7 +28,8 @@ const menu = ref<any>(null);
 const items = ref([
 	{
 		label: 'Редактировать',
-		icon: 'pi pi-pencil'
+		icon: 'pi pi-pencil',
+		command: () => onEdit()
 	},
 	{
 		label: 'Удалить',
@@ -38,9 +39,13 @@ const items = ref([
 	}
 ]);
 
+const onEdit = () => {
+	projectStore.toggleVisibleEditModal();
+};
+
 const toggle = (e: Event) => {
 	if (menu.value) {
-		projectStore.selectedProject = props.project;
+		projectStore.selectProject(props.project);
 		menu.value.toggle(e);
 	}
 };

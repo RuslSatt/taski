@@ -12,18 +12,32 @@ export const useProjectStore = defineStore('project', () => {
 	const errorMessage = ref<string>('');
 	const isLoading = ref<boolean>(false);
 
-	const isVisibleAddModal = ref<boolean>(false);
+	const isEditActionModal = ref<boolean>(false);
+	const isVisibleActionModal = ref<boolean>(false);
 	const isVisibleDeleteModal = ref<boolean>(false);
 
 	const userStore = useUserStore();
 
-	function toggleVisibleAddModal() {
-		isVisibleAddModal.value = !isVisibleAddModal.value;
-		$reset();
+	function selectProject(project: Project) {
+		selectedProject.value = project;
+		name.value = project.name;
+	}
+
+	function toggleVisibleActionModal() {
+		isVisibleActionModal.value = !isVisibleActionModal.value;
+
+		if (!isVisibleActionModal.value) $reset();
 	}
 
 	function toggleVisibleDeleteModal() {
 		isVisibleDeleteModal.value = !isVisibleDeleteModal.value;
+
+		if (!isVisibleDeleteModal.value) $reset();
+	}
+
+	function toggleVisibleEditModal() {
+		isEditActionModal.value = !isEditActionModal.value;
+		toggleVisibleActionModal();
 	}
 
 	async function fetchProjects() {
@@ -66,7 +80,7 @@ export const useProjectStore = defineStore('project', () => {
 		}
 
 		isLoading.value = false;
-		isVisibleAddModal.value = false;
+		isVisibleActionModal.value = false;
 		$reset();
 	}
 
@@ -88,10 +102,32 @@ export const useProjectStore = defineStore('project', () => {
 
 		isLoading.value = false;
 		isVisibleDeleteModal.value = false;
+		$reset();
+	}
+
+	async function updateProject() {
+		if (!selectedProject.value) return;
+
+		isLoading.value = true;
+
+		const { error } = await supabase
+			.from('projects')
+			.update(name.value)
+			.eq('id', selectedProject.value.id);
+
+		if (error) {
+			errorMessage.value = error.message;
+		} else {
+			selectedProject.value.name = name.value;
+		}
+
+		toggleVisibleEditModal();
+		isLoading.value = false;
 	}
 
 	function $reset() {
 		name.value = '';
+		errorMessage.value = '';
 	}
 
 	return {
@@ -99,13 +135,17 @@ export const useProjectStore = defineStore('project', () => {
 		errorMessage,
 		isLoading,
 		projects,
-		isVisibleAddModal,
+		isVisibleActionModal,
 		isVisibleDeleteModal,
-		toggleVisibleAddModal,
+		isEditActionModal,
+		toggleVisibleActionModal,
 		toggleVisibleDeleteModal,
+		toggleVisibleEditModal,
 		addProject,
 		fetchProjects,
 		deleteProject,
+		updateProject,
+		selectProject,
 		selectedProject,
 		$reset
 	};

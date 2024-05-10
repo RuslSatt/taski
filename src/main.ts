@@ -5,6 +5,7 @@ import router from '@/app/router/router';
 import PrimeVue from 'primevue/config';
 
 import '@/app/styles/reset.css';
+import '@/app/styles/main.css';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 import 'primeicons/primeicons.css';
 import { initPrimeComponents } from '@/shared/ui/prime';

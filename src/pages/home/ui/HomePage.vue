@@ -4,7 +4,7 @@
 		<div class="home-content">
 			<SideBar />
 			<RouterView />
-			<AddProjectModal />
+			<ProjectActionModal />
 		</div>
 	</div>
 </template>
@@ -16,7 +16,7 @@ import { useRouter } from 'vue-router';
 import { NavBar } from '@/widgets/navbar';
 import { SideBar } from '@/widgets/sidebar';
 import router from '@/app/router/router';
-import { AddProjectModal } from '@/feature/add-project';
+import { ProjectActionModal } from '@/widgets/project-action-modal';
 
 const userStore = useUserStore();
 

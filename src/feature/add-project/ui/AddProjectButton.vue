@@ -1,7 +1,7 @@
 <template>
 	<Button
 		class="button"
-		@click.prevent="projectStore.toggleVisibleAddModal"
+		@click.prevent="projectStore.toggleVisibleActionModal"
 		text rounded outlined
 		icon="pi pi-plus"
 		:label="isPage ? 'Добавить проект' : undefined"
