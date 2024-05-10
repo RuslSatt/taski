@@ -6,18 +6,24 @@ import { useUserStore } from '@/entities/user';
 
 export const useProjectStore = defineStore('project', () => {
 	const projects = ref<Project[]>([]);
+	const selectedProject = ref<Project | null>(null);
 
 	const name = ref<string>('');
 	const errorMessage = ref<string>('');
 	const isLoading = ref<boolean>(false);
 
 	const isVisibleAddModal = ref<boolean>(false);
+	const isVisibleDeleteModal = ref<boolean>(false);
 
 	const userStore = useUserStore();
 
 	function toggleVisibleAddModal() {
 		isVisibleAddModal.value = !isVisibleAddModal.value;
 		$reset();
+	}
+
+	function toggleVisibleDeleteModal() {
+		isVisibleDeleteModal.value = !isVisibleDeleteModal.value;
 	}
 
 	async function fetchProjects() {
@@ -64,6 +70,26 @@ export const useProjectStore = defineStore('project', () => {
 		$reset();
 	}
 
+	async function deleteProject() {
+		if (!selectedProject.value) return;
+
+		isLoading.value = true;
+
+		const { error } = await supabase
+			.from('projects')
+			.delete()
+			.eq('id', selectedProject.value.id);
+
+		if (error) {
+			errorMessage.value = error.message;
+		} else {
+			projects.value = projects.value.filter(item => selectedProject.value?.id !== item.id);
+		}
+
+		isLoading.value = false;
+		isVisibleDeleteModal.value = false;
+	}
+
 	function $reset() {
 		name.value = '';
 	}
@@ -74,9 +100,13 @@ export const useProjectStore = defineStore('project', () => {
 		isLoading,
 		projects,
 		isVisibleAddModal,
+		isVisibleDeleteModal,
 		toggleVisibleAddModal,
+		toggleVisibleDeleteModal,
 		addProject,
 		fetchProjects,
+		deleteProject,
+		selectedProject,
 		$reset
 	};
 });

@@ -7,6 +7,9 @@
 			:project="project"
 			:key="project.id"
 		>
+			<template v-slot:tools>
+				<ActionsProject :project="project" />
+			</template>
 		</ProjectCard>
 	</ul>
 </template>
@@ -16,6 +19,7 @@
 import { SkeletonList } from '@/shared';
 import { ProjectCard, useProjectStore } from '@/entities/project';
 import { onMounted } from 'vue';
+import { ActionsProject } from '@/feature/actions-project';
 
 const projectStore = useProjectStore();
 
