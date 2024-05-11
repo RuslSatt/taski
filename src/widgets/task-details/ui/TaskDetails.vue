@@ -1,54 +1,61 @@
 <template>
-	<div :class="{'task-details': true, hide: !taskStore.isVisibleTaskDetails}">
+	<Dialog
+		v-model:visible="taskStore.isVisibleTaskDetails"
+		:draggable="false"
+		:style="{width: '100%', height: '80%', minWidth: '700px', maxWidth: '700px'}"
+		modal
+		:dismissableMask="true"
+	>
 
 		<SkeletonList v-if="commentStore.isLoading" class="skeleton" />
 
-		<div v-if="taskStore.selectedTask && !commentStore.isLoading" class="task-details-body">
-			<TaskDetailsHeader class="task-details-header" :task="taskStore.selectedTask" />
+		<template v-if="!commentStore.isLoading && taskStore.selectedTask" #header>
+			<TaskDetailsHeader :task="taskStore.selectedTask" />
+		</template>
 
-			<div class="task-details-main">
-				<InputText
-					v-model="taskStore.selectedTask.name"
-					class="task-details-name"
-					placeholder="Название задачи"
-					@change="taskStore.updateDetailsTask"
-				/>
-				<div class="task-details-fields">
-					<div class="task-details-field">
-						<p class="field-title">Срок выполнения</p>
-						<div class="field-item">
-							<DueTaskForm @update="taskStore.updateDetailsTask" />
-						</div>
-					</div>
-					<div class="task-details-field">
-						<p class="field-title">Приоритет</p>
-						<div class="field-item">
-							<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
-						</div>
+		<div v-if="!commentStore.isLoading && taskStore.selectedTask" class="task-details-main">
+			<InputText
+				v-model="taskStore.selectedTask.name"
+				class="task-details-name"
+				placeholder="Название задачи"
+				@change="taskStore.updateDetailsTask"
+			/>
+			<div class="task-details-fields">
+				<div class="task-details-field">
+					<p class="task-details-field-title">Срок выполнения</p>
+					<div class="task-details-field-item">
+						<DueTaskForm @update="taskStore.updateDetailsTask" />
 					</div>
 				</div>
-				<Divider align="left" type="solid">
-					<b>Описание</b>
-				</Divider>
-				<div class="task-details-description">
+				<div class="task-details-field">
+					<p class="task-details-field-title">Приоритет</p>
+					<div class="task-details-field-item">
+						<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
+					</div>
+				</div>
+			</div>
+			<Divider align="left" type="solid">
+				<b>Описание</b>
+			</Divider>
+			<div class="task-details-description">
 				<Textarea
-					class="description-area"
+					class="task-details-description-area"
 					v-model="taskStore.selectedTask.description"
 					@change="taskStore.updateDetailsTask"
 				/>
+			</div>
+			<Divider align="left" type="solid">
+				<b>Комментарии</b>
+			</Divider>
+			<div class="task-details-comments">
+				<div class="task-details-comments-list">
+					<TaskComments :comments="commentStore.comments" />
 				</div>
-				<Divider align="left" type="solid">
-					<b>Комментарии</b>
-				</Divider>
-				<div class="task-comments">
-					<div class="task-comments-list">
-						<TaskComments :comments="commentStore.comments" />
-					</div>
-					<AddCommentForm class="task-comments-form" />
-				</div>
+				<AddCommentForm class="task-details-comments-form" />
 			</div>
 		</div>
-	</div>
+
+	</Dialog>
 </template>
 
 <script setup lang="ts">
@@ -70,29 +77,10 @@ watch(() => taskStore.selectedTask, () => {
 });
 </script>
 
-<style scoped>
-.task-details {
-	display: flex;
-	flex-direction: column;
-	border-left: 1px solid var(--surface-300);
+<style>
+.p-dialog-content {
 	height: 100%;
-	width: 100%;
-	transition: margin-right 0.3s;
-	overflow: auto;
-}
-
-.task-details-body {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
-
-.task-details.hide {
-	margin-right: -100%;
-}
-
-.task-details-header {
-	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .task-details-main {
@@ -100,7 +88,7 @@ watch(() => taskStore.selectedTask, () => {
 	flex-direction: column;
 	gap: 15px;
 	height: 100%;
-	padding: 10px 10px 10px 25px;
+	padding-bottom: 10px;
 }
 
 .task-details-name {
@@ -123,12 +111,11 @@ watch(() => taskStore.selectedTask, () => {
 	gap: 20px;
 }
 
-.field-title {
+.task-details-field-title {
 	width: 200px;
 }
 
-.field-item {
-
+.task-details-field-item {
 	width: 250px;
 }
 
@@ -137,27 +124,27 @@ watch(() => taskStore.selectedTask, () => {
 	min-height: 100px;
 }
 
-.description-area {
+.task-details-description-area {
 	width: 100%;
 	height: 100%;
 }
 
-.task-comments {
+.task-details-comments {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 	gap: 10px;
+	padding-bottom: 10px;
 }
 
-.task-comments-list {
+.task-details-comments-list {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 	flex: 1;
 }
 
-.task-comments-form {
+.task-details-comments-form {
 	margin-top: auto;
 }
-
 </style>
