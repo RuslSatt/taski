@@ -5,7 +5,7 @@ import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 import type { PostgrestError } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
-import { useProjectStore } from '@/entities/project';
+import { type Project, useProjectStore } from '@/entities/project';
 
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
@@ -16,6 +16,7 @@ export const useTaskStore = defineStore('task', () => {
 	const description = ref<string>('');
 	const due = ref<Date | null>(null);
 	const priority = ref<TaskPriority | null>(null);
+	const project = ref<Project | null>(null);
 
 	const selectedTask = ref<Task | null>(null);
 
@@ -50,10 +51,18 @@ export const useTaskStore = defineStore('task', () => {
 
 	function selectTask(task: Task) {
 		selectedTask.value = task;
-		name.value = selectedTask.value.name;
-		description.value = selectedTask.value.description || '';
-		due.value = selectedTask.value.due ? new Date(selectedTask.value.due) : null;
-		priority.value = selectedTask.value.priority || null;
+
+		name.value = task.name;
+		description.value = task.description || '';
+		due.value = task.due ? new Date(task.due) : null;
+		priority.value = task.priority || null;
+
+		if (task.project_id) {
+			const foundProject = projectStore.projects.find(item => item.id === task.project_id);
+			project.value = foundProject ? foundProject : null;
+		} else {
+			project.value = null;
+		}
 	}
 
 	async function fetchTasks() {
@@ -126,6 +135,7 @@ export const useTaskStore = defineStore('task', () => {
 		const task: Task = {
 			id: new Date().getTime(),
 			user_id: userStore.user.id,
+			project_id: project.value ? project.value.id : null,
 			name: name.value,
 			description: description.value,
 			due: due.value,
@@ -166,8 +176,7 @@ export const useTaskStore = defineStore('task', () => {
 
 		task.name = name.value;
 		task.description = description.value;
-		task.due = due.value;
-		task.priority = priority.value;
+		editTaskFields(task);
 
 		const { error } = await supabase
 			.from('tasks')
@@ -193,8 +202,7 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (!task) return;
 
-		task.due = due.value;
-		task.priority = priority.value;
+		editTaskFields(task);
 
 		const { error } = await supabase
 			.from('tasks')
@@ -204,10 +212,17 @@ export const useTaskStore = defineStore('task', () => {
 		if (error) errorMessage.value = error.message;
 	}
 
+	function editTaskFields(task: Task) {
+		task.due = due.value;
+		task.priority = priority.value;
+		task.project_id = project.value ? project.value.id : null;
+	}
+
 	function $reset(isForm?: boolean) {
 		name.value = '';
 		description.value = '';
 		priority.value = null;
+		project.value = null;
 
 		$resetDue();
 
@@ -236,6 +251,7 @@ export const useTaskStore = defineStore('task', () => {
 		description,
 		due,
 		priority,
+		project,
 		addTask,
 		deleteTask,
 		updateTask,

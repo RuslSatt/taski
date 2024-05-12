@@ -33,6 +33,12 @@
 						<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
 					</div>
 				</div>
+				<div class="task-details-field">
+					<p class="task-details-field-title">Проект</p>
+					<div class="task-details-field-item">
+						<SelectTaskProject @update="taskStore.updateDetailsTask" />
+					</div>
+				</div>
 			</div>
 			<Divider align="left" type="solid">
 				<b>Описание</b>
@@ -68,6 +74,7 @@ import { AddCommentForm } from '@/feature/add-comment';
 import { watch } from 'vue';
 import TaskDetailsHeader from './TaskDetailsHeader.vue';
 import { SkeletonList } from '@/shared';
+import { SelectTaskProject } from '@/feature/select-task-project';
 
 const taskStore = useTaskStore();
 const commentStore = useCommentStore();

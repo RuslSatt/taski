@@ -1,17 +1,17 @@
 <template>
 	<Dropdown
 		class="dropdown"
-		placeholder="Приоритет"
-		:options="models"
-		v-model="taskStore.priority"
+		placeholder="Проект"
+		:options="projectStore.projects"
+		v-model="taskStore.project"
 		showClear
-		optionLabel="label"
+		optionLabel="name"
 		@update:modelValue="handlerUpdate"
 	>
 		<template #value="slotProps">
 			<div v-if="slotProps.value" class="dropdown-item">
 				<i :class="`pi ${slotProps.value.icon} ${slotProps.value?.color}`"></i>
-				<div :class="`item-label ${slotProps.value.color}`">{{ slotProps.value.label }}</div>
+				<div :class="`item-label ${slotProps.value.color}`">{{ slotProps.value.name }}</div>
 			</div>
 			<span v-else>
 				{{ slotProps.placeholder }}
@@ -20,20 +20,18 @@
 		<template #option="slotProps">
 			<div class="dropdown-item">
 				<i :class="`pi ${slotProps.option.icon} ${slotProps.option.color}`"></i>
-				<div :class="`item-label ${slotProps.option.color}`">{{ slotProps.option.label }}</div>
+				<div :class="`item-label ${slotProps.option.color}`">{{ slotProps.option.name }}</div>
 			</div>
 		</template>
 	</Dropdown>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { priorities } from '../model/priorities';
 import { useTaskStore } from '@/entities/task';
+import { useProjectStore } from '@/entities/project';
 
+const projectStore = useProjectStore();
 const taskStore = useTaskStore();
-
-const models = ref(priorities);
 
 const emit = defineEmits(['update']);
 
@@ -45,9 +43,9 @@ const handlerUpdate = () => {
 
 <style scoped>
 .dropdown {
-	width: 100%;
 	display: flex;
 	align-items: center;
+	width: 100%;
 }
 
 .dropdown-item {

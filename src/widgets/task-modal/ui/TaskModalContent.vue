@@ -10,6 +10,7 @@
 		<div class="card-properties">
 			<DueTaskForm class="card-due" />
 			<PriorityTaskSelect class="card-select" />
+			<SelectTaskProject class="card-select" />
 		</div>
 		<div class="card-buttons">
 			<Button
@@ -30,6 +31,7 @@ import { useTaskStore } from '@/entities/task';
 import { computed } from 'vue';
 import { DueTaskForm } from '@/feature/due-task';
 import { PriorityTaskSelect } from '@/feature/priority-task';
+import { SelectTaskProject } from '@/feature/select-task-project';
 
 const taskStore = useTaskStore();
 

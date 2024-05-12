@@ -9,6 +9,7 @@ export interface TaskPriority {
 export interface Task {
 	id: number;
 	user_id: string;
+	project_id: number | null;
 	name: string;
 	description?: string;
 	due: Date | null;
