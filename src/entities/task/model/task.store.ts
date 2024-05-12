@@ -11,6 +11,7 @@ export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
 	const isVisibleEditForm = ref<boolean>(false);
 	const isVisibleTaskDetails = ref<boolean>(false);
+	const isLoad = ref<boolean>(false);
 
 	const name = ref<string>('');
 	const description = ref<string>('');
@@ -21,11 +22,18 @@ export const useTaskStore = defineStore('task', () => {
 	const selectedTask = ref<Task | null>(null);
 
 	const tasks = ref<Task[]>([]);
+	const inboxTasks = ref<Task[]>([]);
+	const todayTasks = ref<Task[]>([]);
+	const upcomingTasks = ref<Task[]>([]);
+	const projectTasks = ref(new Map());
+
 	const isLoading = ref<boolean>(false);
 	const errorMessage = ref<string>('');
 
 	const userStore = useUserStore();
 	const projectStore = useProjectStore();
+
+	const dateJs = dayjs();
 
 	function toggleVisibleAddForm() {
 		$reset();
@@ -66,59 +74,60 @@ export const useTaskStore = defineStore('task', () => {
 	}
 
 	async function fetchTasks() {
+		if (isLoad.value) return;
+
 		isLoading.value = true;
 		const { data, error } = await supabase
 			.from('tasks')
 			.select()
 			.order('created_at', { ascending: true });
 
-		setTasksValue(data, error);
-
-		isLoading.value = false;
-	}
-
-	async function fetchTodayTasks() {
-		isLoading.value = true;
-		const { data, error } = await supabase
-			.from('tasks')
-			.select()
-			.lte('due', dayjs())
-			.order('created_at', { ascending: true });
+		if (data) {
+			isLoad.value = true;
+			setTasksByGroup(data);
+		}
 
 		setTasksValue(data, error);
 
 		isLoading.value = false;
 	}
 
-	async function fetchUpcomingTasks() {
-		isLoading.value = true;
-		const { data, error } = await supabase
-			.from('tasks')
-			.select()
-			.gt('due', dayjs())
-			.order('created_at', { ascending: true });
+	function setTasksByGroup(data: Task[]) {
+		inboxTasks.value = [];
+		todayTasks.value = [];
+		upcomingTasks.value = [];
+		projectTasks.value = new Map();
 
-		setTasksValue(data, error);
+		for (let task of data) {
+			if (!task.project_id) {
+				inboxTasks.value.push(task);
+			} else {
+				const tasks = projectTasks.value.get(task.project_id);
+				if (!tasks) {
+					projectTasks.value.set(task.project_id, [task]);
+				} else {
+					tasks.push(task);
+				}
+			}
 
-		isLoading.value = false;
+			if (task.due) {
+				if (dateJs.isSame(task.due) || dateJs.isAfter(task.due)) {
+					todayTasks.value.push(task);
+				}
+
+				if (dateJs.isBefore(task.due)) {
+					upcomingTasks.value.push(task);
+				}
+			}
+		}
 	}
 
-	async function fetchProjectTasks() {
+	function getProjectTasks() {
 		const project = projectStore.project;
 
 		if (!project) return;
 
-		isLoading.value = true;
-
-		const { data, error } = await supabase
-			.from('tasks')
-			.select()
-			.eq('project_id', project.id)
-			.order('created_at', { ascending: true });
-
-		setTasksValue(data, error);
-
-		isLoading.value = false;
+		return projectTasks.value.get(project.id);
 	}
 
 	function setTasksValue(data: Task[] | null, error: PostgrestError | null) {
@@ -132,6 +141,8 @@ export const useTaskStore = defineStore('task', () => {
 	async function addTask() {
 		if (!name.value || !userStore.user) return;
 
+		isLoading.value = true;
+
 		const task: Task = {
 			id: new Date().getTime(),
 			user_id: userStore.user.id,
@@ -142,10 +153,6 @@ export const useTaskStore = defineStore('task', () => {
 			priority: priority.value
 		};
 
-		tasks.value.push(task);
-
-		$reset(true);
-
 		const { error } = await supabase
 			.from('tasks')
 			.insert(task)
@@ -153,11 +160,17 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
+		} else {
+			tasks.value.push(task);
+			setTasksByGroup(tasks.value);
 		}
+
+		isLoading.value = false;
+		$reset(true);
 	}
 
 	async function deleteTask(task: Task) {
-		tasks.value = tasks.value.filter(item => task.id !== item.id);
+		isLoading.value = true;
 
 		const { error } = await supabase
 			.from('tasks')
@@ -166,13 +179,20 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
+		} else {
+			tasks.value = tasks.value.filter(item => task.id !== item.id);
+			setTasksByGroup(tasks.value);
 		}
+
+		isLoading.value = false;
 	}
 
 	async function updateTask() {
 		const task = selectedTask.value;
 
 		if (!task) return;
+
+		isLoading.value = true;
 
 		task.name = name.value;
 		task.description = description.value;
@@ -183,8 +203,13 @@ export const useTaskStore = defineStore('task', () => {
 			.update(task)
 			.eq('id', task.id);
 
-		if (error) errorMessage.value = error.message;
+		if (error) {
+			errorMessage.value = error.message;
+		} else {
+			setTasksByGroup(tasks.value);
+		}
 
+		isLoading.value = false;
 		$reset(true);
 	}
 
@@ -258,12 +283,14 @@ export const useTaskStore = defineStore('task', () => {
 		updateTaskStatus,
 		updateDetailsTask,
 		fetchTasks,
-		fetchTodayTasks,
-		fetchUpcomingTasks,
-		fetchProjectTasks,
+		getProjectTasks,
 		isLoading,
+		isLoad,
 		selectedTask,
 		$reset,
-		$resetDue
+		$resetDue,
+		inboxTasks,
+		todayTasks,
+		upcomingTasks
 	};
 });

@@ -1,9 +1,9 @@
 <template>
 	<ul class="task-list">
-		<SkeletonList v-if="taskStore.isLoading" class="skeleton" />
+		<SkeletonList v-if="isShowSkeleton" class="skeleton" />
 		<TaskCard
 			v-else
-			v-for="task in taskStore.tasks"
+			v-for="task in tasks"
 			:task="task"
 			:key="task.id"
 			:edit-task="taskStore.selectedTask"
@@ -38,7 +38,7 @@ import { EditTaskButton } from '@/feature/edit-task';
 import { DueTaskCalendar } from '@/feature/due-task';
 import { TaskEditModal } from '@/widgets/task-modal';
 import { SkeletonList } from '@/shared';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { TaskProjectTag } from '@/feature/select-task-project';
 
 const taskStore = useTaskStore();
@@ -47,17 +47,27 @@ const props = defineProps<{
 	category: TaskCategories;
 }>();
 
+const tasks = computed(() => {
+	if (props.category === 'inbox') return taskStore.inboxTasks;
+	if (props.category === 'today') return taskStore.todayTasks;
+	if (props.category === 'upcoming') return taskStore.upcomingTasks;
+	if (props.category === 'project') {
+		return taskStore.getProjectTasks();
+	}
+});
+
 onMounted(async () => {
-	if (props.category === 'inbox') await taskStore.fetchTasks();
-	if (props.category === 'today') await taskStore.fetchTodayTasks();
-	if (props.category === 'upcoming') await taskStore.fetchUpcomingTasks();
-	if (props.category === 'project') await taskStore.fetchProjectTasks();
+	await taskStore.fetchTasks();
 });
 
 const handlerClickCard = (task: Task) => {
 	taskStore.selectTask(task);
 	taskStore.showTaskDetails();
 };
+
+const isShowSkeleton = computed(() => {
+	return taskStore.isLoading && !taskStore.isLoad;
+});
 </script>
 
 <style scoped>
