@@ -18,14 +18,9 @@
 
 import { SkeletonList } from '@/shared';
 import { ProjectCard, useProjectStore } from '@/entities/project';
-import { onMounted } from 'vue';
 import { ActionsProject } from '@/feature/actions-project';
 
 const projectStore = useProjectStore();
-
-onMounted(() => {
-	projectStore.fetchProjects();
-});
 
 const isShowSkeleton = () => {
 	return projectStore.isLoading && !projectStore.isVisibleActionModal && !projectStore.isVisibleDeleteModal;

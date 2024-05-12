@@ -132,6 +132,10 @@ export const useProjectStore = defineStore('project', () => {
 		isLoading.value = false;
 	}
 
+	function getProjectById(id: number) {
+		return projects.value.find(item => item.id === id);
+	}
+
 	function $reset() {
 		name.value = '';
 		errorMessage.value = '';
@@ -156,6 +160,7 @@ export const useProjectStore = defineStore('project', () => {
 		selectedProject,
 		project,
 		setProject,
+		getProjectById,
 		$reset
 	};
 });

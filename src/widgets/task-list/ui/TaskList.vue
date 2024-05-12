@@ -20,6 +20,7 @@
 			</template>
 			<template v-slot:tags>
 				<DueTaskCalendar :is-tag="true" v-if="task.due" :task="task" />
+				<TaskProjectTag v-if="task.project_id" :task="task" />
 			</template>
 			<template v-slot:editForm>
 				<TaskEditModal />
@@ -38,7 +39,7 @@ import { DueTaskCalendar } from '@/feature/due-task';
 import { TaskEditModal } from '@/widgets/task-modal';
 import { SkeletonList } from '@/shared';
 import { onMounted } from 'vue';
-
+import { TaskProjectTag } from '@/feature/select-task-project';
 
 const taskStore = useTaskStore();
 
