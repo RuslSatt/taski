@@ -4,6 +4,7 @@
 		:draggable="false"
 		:style="{width: '100%', height: '80%', minWidth: '700px', maxWidth: '700px'}"
 		modal
+		:closable="!commentStore.isLoading"
 		:dismissableMask="true"
 	>
 
@@ -48,6 +49,7 @@
 					class="task-details-description-area"
 					v-model="taskStore.selectedTask.description"
 					@change="taskStore.updateDetailsTask"
+					autoResize
 				/>
 			</div>
 			<Divider align="left" type="solid">
@@ -128,7 +130,6 @@ watch(() => taskStore.selectedTask, () => {
 
 .task-details-description {
 	width: 100%;
-	min-height: 100px;
 }
 
 .task-details-description-area {
@@ -142,6 +143,7 @@ watch(() => taskStore.selectedTask, () => {
 	height: 100%;
 	gap: 10px;
 	padding-bottom: 10px;
+	line-height: 1.3;
 }
 
 .task-details-comments-list {
