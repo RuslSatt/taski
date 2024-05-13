@@ -4,6 +4,7 @@ import type { Project } from './project';
 import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 import { router } from '@/app/router/router';
+import { useMenuStore } from '@/entities/menu';
 
 export const useProjectStore = defineStore('project', () => {
 	const projects = ref<Project[]>([]);
@@ -19,6 +20,7 @@ export const useProjectStore = defineStore('project', () => {
 	const isVisibleDeleteModal = ref<boolean>(false);
 
 	const userStore = useUserStore();
+	const menuStore = useMenuStore();
 
 	function selectProject(project: Project) {
 		selectedProject.value = project;
@@ -59,6 +61,7 @@ export const useProjectStore = defineStore('project', () => {
 			errorMessage.value = error.message;
 		} else if (data) {
 			projects.value = data;
+			menuStore.addProjects(projects.value);
 		}
 
 		isLoading.value = false;
@@ -132,7 +135,7 @@ export const useProjectStore = defineStore('project', () => {
 		isLoading.value = false;
 	}
 
-	function getProjectById(id: number) {
+	function getProjectById(id: number | string) {
 		return projects.value.find(item => item.id === id);
 	}
 

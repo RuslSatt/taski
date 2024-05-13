@@ -30,12 +30,15 @@ export const router = createRouter({
 					component: UpcomingTasksPage
 				},
 				{
+					name: 'projects',
 					path: 'projects',
 					component: ProjectsPage
 				},
 				{
+					name: 'project',
 					path: 'projects/:id',
-					component: ProjectTasksPage
+					component: ProjectTasksPage,
+					props: true
 				}
 			]
 		},

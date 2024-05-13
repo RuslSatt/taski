@@ -3,18 +3,28 @@
 		<ul class="sidebar-list">
 			<li
 				@click="selectItem(item)"
-				:class="{'list-item': true, 'list-item-group': item.mode === 'tree', active: item.id === selectedId}"
-				v-for="item in items"
+				:class="{'list-item': true, }"
+				v-for="item in menuStore.items"
 				:key="item.id"
 			>
 				<router-link
 					:to="item.path"
-					class="list-item-link"
+					:class="{'list-item-link': true, active: item.id === selectedId }"
 				>
 					<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
 					<p>{{ item.label }}</p>
 					<AddProjectButton class="item-button" v-if="item.id === `project`" />
 				</router-link>
+
+				<ul v-if="item.children?.length">
+					<li
+						@click.stop="selectProject(child)"
+						v-for="child in item.children"
+						:class="{'list-item-link': true, active: child.id === selectedId }"
+					>
+						<p>{{ child.label }}</p>
+					</li>
+				</ul>
 			</li>
 		</ul>
 	</aside>
@@ -24,31 +34,23 @@
 import { ref } from 'vue';
 import { useThemeStore } from '@/entities/theme';
 import { AddProjectButton } from '@/feature/add-project';
+import { type MenuItem, useMenuStore } from '@/entities/menu';
+import { useProjectStore } from '@/entities/project';
 
 const themeStore = useThemeStore();
+const menuStore = useMenuStore();
+const projectStore = useProjectStore();
 
-interface Item {
-	id: string,
-	label: string,
-	path: string
-	icon?: string,
-	children?: Item[],
-	mode: ModeItem
-}
+const selectedId = ref<string | number>('inbox');
 
-type ModeItem = 'single' | 'tree'
-
-const items = ref<Item[]>([
-	{ id: 'inbox', label: 'Входящие', icon: 'pi pi-inbox', mode: 'single', path: '/inbox' },
-	{ id: 'today', label: 'Сегодня', icon: 'pi pi-calendar-clock', mode: 'single', path: '/today' },
-	{ id: 'upcoming', label: 'Предстоящие', icon: 'pi pi-calendar', mode: 'single', path: '/upcoming' },
-	{ id: 'project', label: 'Проекты', icon: 'pi pi-th-large', children: [], mode: 'tree', path: '/projects' }
-]);
-
-const selectedId = ref<string>('1');
-
-const selectItem = (item: Item) => {
+const selectItem = (item: MenuItem) => {
 	selectedId.value = item.id;
+};
+
+const selectProject = (item: MenuItem) => {
+	selectedId.value = item.id;
+	const project = projectStore.getProjectById(item.id);
+	if (project) projectStore.setProject(project);
 };
 
 </script>
@@ -78,28 +80,28 @@ const selectItem = (item: Item) => {
 }
 
 .list-item, .list-item-group {
-	cursor: pointer;
 	width: 100%;
-	border-radius: 10px;
-	transition: background-color 0.3s, color 0.3s;
 }
 
 .list-item-link {
+	cursor: pointer;
 	display: flex;
 	align-items: center;
+	border-radius: 10px;
 	gap: 10px;
 	color: var(--text-color);
 	text-decoration: none;
 	width: 100%;
 	padding: 10px;
 	height: 35px;
+	transition: background-color 0.3s, color 0.3s;
 }
 
-.list-item:hover, .list-item-group:hover {
+.list-item-link:hover, .list-item-group:hover {
 	background-color: var(--surface-200);
 }
 
-.list-item.active {
+.list-item-link.active {
 	color: var(--highlight-text-color);
 	background-color: var(--highlight-bg);
 }
