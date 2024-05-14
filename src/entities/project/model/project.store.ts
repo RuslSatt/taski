@@ -29,7 +29,7 @@ export const useProjectStore = defineStore('project', () => {
 
 	async function setProject(value: Project) {
 		project.value = value;
-		await router.push(`projects/${project.value.id}`);
+		await router.push({ name: 'project', params: { id: project.value.id }, replace: true });
 	}
 
 	function toggleVisibleActionModal() {

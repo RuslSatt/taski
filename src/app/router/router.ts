@@ -37,8 +37,7 @@ export const router = createRouter({
 				{
 					name: 'project',
 					path: 'projects/:id',
-					component: ProjectTasksPage,
-					props: true
+					component: ProjectTasksPage
 				}
 			]
 		},
