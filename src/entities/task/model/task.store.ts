@@ -115,7 +115,7 @@ export const useTaskStore = defineStore('task', () => {
 					todayTasks.value.push(task);
 				}
 
-				if (dateJs.isBefore(task.due)) {
+				if (dateJs.isBefore(task.due) && !task.completed) {
 					upcomingTasks.value.push(task);
 				}
 			}
@@ -219,7 +219,11 @@ export const useTaskStore = defineStore('task', () => {
 			.update(task)
 			.eq('id', task.id);
 
-		if (error) errorMessage.value = error.message;
+		if (error) {
+			errorMessage.value = error.message;
+		} else {
+			setTasksByGroup(tasks.value);
+		}
 	}
 
 	async function updateDetailsTask() {
