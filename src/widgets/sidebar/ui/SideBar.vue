@@ -12,10 +12,18 @@
 				>
 					<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
 					<p>{{ item.label }}</p>
-					<AddProjectButton class="item-button" v-if="item.id === `projects`" />
+					<div class="item-buttons">
+						<AddProjectButton class="item-button" v-if="item.id === `projects`" />
+						<Button
+							@click.prevent="hide = !hide"
+							:class="{'item-button': true, hide: hide }"
+							text rounded icon="pi pi-angle-down"
+							v-if="item.id === `projects`"
+						/>
+					</div>
 				</router-link>
 
-				<ul v-if="item.children?.length">
+				<ul class="project-list" :class="{hide: hide }" v-if="item.children?.length">
 					<li
 						@click.stop="selectProject(child)"
 						v-for="child in item.children"
@@ -34,6 +42,7 @@ import { useThemeStore } from '@/entities/theme';
 import { AddProjectButton } from '@/feature/add-project';
 import { type MenuItem, useMenuStore } from '@/entities/menu';
 import { useProjectStore } from '@/entities/project';
+import { ref } from 'vue';
 
 const themeStore = useThemeStore();
 const menuStore = useMenuStore();
@@ -43,6 +52,8 @@ const selectProject = (item: MenuItem) => {
 	const project = projectStore.getProjectById(item.id);
 	if (project) projectStore.setProject(project);
 };
+
+const hide = ref(false);
 
 </script>
 
@@ -70,7 +81,11 @@ const selectProject = (item: MenuItem) => {
 	padding: 10px;
 }
 
-.list-item, .list-item-group {
+.project-list.hide {
+	display: none
+}
+
+.list-item {
 	width: 100%;
 }
 
@@ -85,7 +100,6 @@ const selectProject = (item: MenuItem) => {
 	width: 100%;
 	padding: 10px;
 	height: 35px;
-	//transition: background-color 0.3s, color 0.3s;
 }
 
 .list-item-link:hover, .list-item-group:hover {
@@ -97,10 +111,6 @@ const selectProject = (item: MenuItem) => {
 	background-color: var(--highlight-bg);
 }
 
-.list-item-group {
-	margin-top: 5px;
-}
-
 .item-buttons {
 	display: flex;
 	align-items: center;
@@ -109,8 +119,11 @@ const selectProject = (item: MenuItem) => {
 }
 
 .item-button {
-	margin-left: auto;
 	width: 24px;
 	height: 24px;
+}
+
+.item-button.hide {
+	transform: rotate(-90deg);
 }
 </style>

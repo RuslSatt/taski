@@ -2,7 +2,7 @@
 	<Button
 		class="button"
 		@click.prevent="projectStore.toggleVisibleActionModal"
-		text rounded outlined
+		text rounded
 		icon="pi pi-plus"
 		:label="isPage ? 'Добавить проект' : undefined"
 	/>
