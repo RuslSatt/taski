@@ -6,6 +6,7 @@ import { useUserStore } from '@/entities/user';
 import type { PostgrestError } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
 import { type Project, useProjectStore } from '@/entities/project';
+import { useRoute } from 'vue-router';
 
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
@@ -34,12 +35,20 @@ export const useTaskStore = defineStore('task', () => {
 	const projectStore = useProjectStore();
 
 	const dateJs = dayjs();
+	const route = useRoute();
 
 	function toggleVisibleAddForm() {
 		$reset();
 		isVisibleAddForm.value = !isVisibleAddForm.value;
 		isVisibleEditForm.value = false;
 		isVisibleTaskDetails.value = false;
+
+		if (isVisibleAddForm.value) setPageParams();
+	}
+
+	function setPageParams() {
+		if (route.name === 'today') due.value = new Date();
+		if (route.name === 'project') project.value = projectStore.project;
 	}
 
 	function toggleVisibleEditForm() {

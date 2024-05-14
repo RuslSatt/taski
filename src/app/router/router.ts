@@ -18,14 +18,17 @@ export const router = createRouter({
 			component: HomePage,
 			children: [
 				{
+					name: 'inbox',
 					path: 'inbox',
 					component: InboxTasksPage
 				},
 				{
+					name: 'today',
 					path: 'today',
 					component: TodayTasksPage
 				},
 				{
+					name: 'upcoming',
 					path: 'upcoming',
 					component: UpcomingTasksPage
 				},
