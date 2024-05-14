@@ -1,26 +1,35 @@
 <template>
 	<div class="card-content">
-		<InputText v-model="taskStore.name" class="task-name" placeholder="Название задачи" />
+		<InputText
+			v-model="taskStore.name"
+			class="task-name"
+			placeholder="Название задачи"
+			:disabled="!!taskStore.isLoading"
+		/>
 		<Textarea
 			v-model="taskStore.description"
 			class="task-description"
 			placeholder="Описание задачи"
 			:autoResize="true"
+			:disabled="!!taskStore.isLoading"
 		/>
 		<div class="card-properties">
-			<DueTaskForm class="card-due" />
-			<PriorityTaskSelect class="card-select" />
-			<SelectTaskProject class="card-select" />
+			<DueTaskForm :disabled="!!taskStore.isLoading" class="card-due" />
+			<PriorityTaskSelect :disabled="!!taskStore.isLoading" class="card-select" />
+			<SelectTaskProject :disabled="!!taskStore.isLoading" class="card-select" />
 		</div>
 		<div class="card-buttons">
 			<Button
 				@click="toggleVisible"
 				severity="danger"
 				label="Отмена"
+				:disabled="!!taskStore.isLoading"
 			/>
 			<Button
 				@click="actionTask"
 				:label="label"
+				:icon="taskStore.isLoading ? 'pi pi-spinner-dotted pi-spin' : undefined"
+				:disabled="!!taskStore.isLoading"
 			/>
 		</div>
 	</div>

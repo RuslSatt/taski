@@ -10,8 +10,19 @@
 			<span class="name">{{ store.task?.name }}</span>?
 		</p>
 		<div class="buttons">
-			<Button @click="store.toggleVisibleModal" label="Отмена" severity="secondary"></Button>
-			<Button @click="store.deleteTask" label="Удалить" severity="danger"></Button>
+			<Button
+				@click="store.toggleVisibleModal"
+				label="Отмена"
+				severity="secondary"
+				:disabled="!!store.isLoading"
+			/>
+			<Button
+				@click="store.deleteTask"
+				label="Удалить"
+				severity="danger"
+				:icon="store.isLoading ? 'pi pi-spinner-dotted pi-spin' : undefined"
+				:disabled="!!store.isLoading"
+			/>
 		</div>
 	</Dialog>
 </template>
