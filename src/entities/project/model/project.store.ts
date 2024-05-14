@@ -87,6 +87,7 @@ export const useProjectStore = defineStore('project', () => {
 			errorMessage.value = error.message;
 		} else if (data) {
 			projects.value.push(data[0]);
+			menuStore.addProjects(projects.value);
 		}
 
 		isLoading.value = false;
@@ -108,6 +109,7 @@ export const useProjectStore = defineStore('project', () => {
 			errorMessage.value = error.message;
 		} else {
 			projects.value = projects.value.filter(item => selectedProject.value?.id !== item.id);
+			menuStore.addProjects(projects.value);
 		}
 
 		isLoading.value = false;

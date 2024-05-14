@@ -4,19 +4,17 @@
 			v-model="taskStore.name"
 			class="task-name"
 			placeholder="Название задачи"
-			:disabled="!!taskStore.isLoading"
 		/>
 		<Textarea
 			v-model="taskStore.description"
 			class="task-description"
 			placeholder="Описание задачи"
 			:autoResize="true"
-			:disabled="!!taskStore.isLoading"
 		/>
 		<div class="card-properties">
-			<DueTaskForm :disabled="!!taskStore.isLoading" class="card-due" />
-			<PriorityTaskSelect :disabled="!!taskStore.isLoading" class="card-select" />
-			<SelectTaskProject :disabled="!!taskStore.isLoading" class="card-select" />
+			<DueTaskForm class="card-due" />
+			<PriorityTaskSelect class="card-select" />
+			<SelectTaskProject class="card-select" />
 		</div>
 		<div class="card-buttons">
 			<Button

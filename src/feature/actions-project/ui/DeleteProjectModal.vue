@@ -21,7 +21,7 @@
 				:label="projectStore.isLoading ? 'Удаление' : 'Удалить'"
 				severity="danger"
 				:disabled="!!projectStore.isLoading"
-				:icon="projectStore.isLoading ? `pi pi-spin pi-spinner` : undefined"
+				:icon="projectStore.isLoading ? `pi pi-spin pi-spinner-dotted` : undefined"
 			/>
 		</div>
 	</Dialog>
