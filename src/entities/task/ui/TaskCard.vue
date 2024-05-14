@@ -56,12 +56,13 @@ const handlerClick = () => {
 	border-bottom: 1px solid var(--surface-100);
 	width: 100%;
 	border-radius: 0;
-	transition: box-shadow 0.3s;
+	transition: box-shadow 0.15s, background-color 0.15s;
 }
 
 .card:hover {
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
+	background-color: var(--surface-100);
 }
 
 .info {
