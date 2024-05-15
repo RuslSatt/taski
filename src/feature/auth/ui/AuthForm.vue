@@ -5,7 +5,7 @@
 			<h2 class="form-title">
 				{{ title }}
 			</h2>
-			<InputText v-model="authStore.email" placeholder="Email" class="form-input" />
+			<InputText id="email" v-model="authStore.email" placeholder="Email" class="form-input" />
 			<Password
 				v-model="authStore.password"
 				:feedback="!isSignIn"

@@ -11,6 +11,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useUserStore } from '@/entities/user';
+
+const userStore = useUserStore();
 
 const items = ref([
 	{
@@ -23,7 +26,8 @@ const items = ref([
 	},
 	{
 		label: 'Выход',
-		icon: 'pi pi-sign-out'
+		icon: 'pi pi-sign-out',
+		command: () => onLogout()
 	}
 ]);
 
@@ -31,6 +35,10 @@ const userMenu = ref();
 
 const toggleUserMenu = (event: Event) => {
 	userMenu.value.toggle(event);
+};
+
+const onLogout = () => {
+	userStore.logout();
 };
 </script>
 
