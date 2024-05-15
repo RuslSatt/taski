@@ -8,12 +8,13 @@
 			aria-label="Bookmark"
 			@click="themeStore.toggleShowNavBar"
 		/>
-		<Avatar label="R" class="avatar" shape="circle" />
+		<UserMenu />
 	</header>
 </template>
 
 <script setup lang="ts">
 import { useThemeStore } from '@/entities/theme';
+import { UserMenu } from '@/widgets/user-menu';
 
 const themeStore = useThemeStore();
 </script>
