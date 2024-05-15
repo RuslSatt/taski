@@ -48,5 +48,11 @@ export const useMenuStore = defineStore('menu', () => {
 		}
 	}
 
-	return { items, selectedId, addProjects };
+	function $reset() {
+		const projectItem = items.value.find(item => item.id === 'projects');
+		if (projectItem) projectItem.children = [];
+		selectedId.value = 'inbox';
+	}
+
+	return { items, selectedId, addProjects, $reset };
 });

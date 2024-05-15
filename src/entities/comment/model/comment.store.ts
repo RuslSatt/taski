@@ -6,7 +6,6 @@ import { useTaskStore } from '@/entities/task';
 
 export const useCommentStore = defineStore('comment', () => {
 	const comments = ref<Comment[]>([]);
-	const comment = ref<Comment | null>(null);
 
 	const text = ref<string>('');
 
@@ -54,7 +53,7 @@ export const useCommentStore = defineStore('comment', () => {
 			comments.value.push(data[0]);
 		}
 
-		$reset();
+		$resetFields();
 	}
 
 	async function deleteComment(comment: Comment) {
@@ -79,10 +78,16 @@ export const useCommentStore = defineStore('comment', () => {
 		if (error) errorMessage.value = error.message;
 	}
 
-	function $reset() {
+	function $resetFields() {
 		text.value = '';
-		comment.value = null;
 	}
 
-	return { text, isLoading, comment, comments, fetchComments, addComment, deleteComment, updateComment, $reset };
+	function $reset() {
+		$resetFields();
+		comments.value = [];
+		isLoading.value = false;
+		errorMessage.value = '';
+	}
+
+	return { text, isLoading, comments, fetchComments, addComment, deleteComment, updateComment, $resetFields, $reset };
 });

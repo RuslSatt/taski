@@ -11,6 +11,12 @@
 
 <script setup lang="ts">
 import { AuthForm } from '@/feature/auth';
+import { onMounted } from 'vue';
+import { useAppStore } from '@/app/store/store';
+
+const appStore = useAppStore();
+
+onMounted(() => appStore.$reset());
 </script>
 
 <style scoped>

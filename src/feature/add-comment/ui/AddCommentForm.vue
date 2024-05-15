@@ -21,7 +21,7 @@ const commentStore = useCommentStore();
 
 const onCancel = () => {
 	commentFormStore.hideCreateCommentModal();
-	commentStore.$reset();
+	commentStore.$resetFields();
 };
 
 const onCreate = () => {

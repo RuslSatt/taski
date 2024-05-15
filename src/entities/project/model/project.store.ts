@@ -35,13 +35,13 @@ export const useProjectStore = defineStore('project', () => {
 	function toggleVisibleActionModal() {
 		isVisibleActionModal.value = !isVisibleActionModal.value;
 
-		if (!isVisibleActionModal.value) $reset();
+		if (!isVisibleActionModal.value) $resetFields();
 	}
 
 	function toggleVisibleDeleteModal() {
 		isVisibleDeleteModal.value = !isVisibleDeleteModal.value;
 
-		if (!isVisibleDeleteModal.value) $reset();
+		if (!isVisibleDeleteModal.value) $resetFields();
 	}
 
 	function toggleVisibleEditModal() {
@@ -92,7 +92,7 @@ export const useProjectStore = defineStore('project', () => {
 
 		isLoading.value = false;
 		isVisibleActionModal.value = false;
-		$reset();
+		$resetFields();
 	}
 
 	async function deleteProject() {
@@ -114,7 +114,7 @@ export const useProjectStore = defineStore('project', () => {
 
 		isLoading.value = false;
 		isVisibleDeleteModal.value = false;
-		$reset();
+		$resetFields();
 	}
 
 	async function updateProject() {
@@ -141,9 +141,21 @@ export const useProjectStore = defineStore('project', () => {
 		return projects.value.find(item => item.id === id);
 	}
 
-	function $reset() {
+	function $resetFields() {
 		name.value = '';
 		errorMessage.value = '';
+	}
+
+	function $reset() {
+		projects.value = [];
+		project.value = null;
+		selectedProject.value = null;
+		name.value = '';
+		errorMessage.value = '';
+		isLoading.value = false;
+		isEditActionModal.value = false;
+		isVisibleActionModal.value = false;
+		isVisibleDeleteModal.value = false;
 	}
 
 	return {

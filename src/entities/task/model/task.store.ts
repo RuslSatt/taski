@@ -38,7 +38,7 @@ export const useTaskStore = defineStore('task', () => {
 	const route = useRoute();
 
 	function toggleVisibleAddForm() {
-		$reset();
+		$resetFields();
 		isVisibleAddForm.value = !isVisibleAddForm.value;
 		isVisibleEditForm.value = false;
 		isVisibleTaskDetails.value = false;
@@ -54,7 +54,7 @@ export const useTaskStore = defineStore('task', () => {
 	function toggleVisibleEditForm() {
 		isVisibleEditForm.value = !isVisibleEditForm.value;
 		isVisibleAddForm.value = false;
-		if (!isVisibleEditForm.value) $reset();
+		if (!isVisibleEditForm.value) $resetFields();
 		isVisibleTaskDetails.value = false;
 	}
 
@@ -175,7 +175,8 @@ export const useTaskStore = defineStore('task', () => {
 		}
 
 		isLoading.value = false;
-		$reset(true);
+		$resetFields();
+		$resetModals();
 	}
 
 	async function deleteTask(task: Task) {
@@ -219,7 +220,8 @@ export const useTaskStore = defineStore('task', () => {
 		}
 
 		isLoading.value = false;
-		$reset(true);
+		$resetFields();
+		$resetModals();
 	}
 
 	async function updateTaskStatus(task: Task) {
@@ -256,18 +258,32 @@ export const useTaskStore = defineStore('task', () => {
 		task.project_id = project.value ? project.value.id : null;
 	}
 
-	function $reset(isForm?: boolean) {
+	function $reset() {
+		isLoad.value = false;
+		selectedTask.value = null;
+		tasks.value = [];
+		inboxTasks.value = [];
+		todayTasks.value = [];
+		upcomingTasks.value = [];
+		projectTasks.value = new Map();
+		isLoading.value = false;
+		errorMessage.value = '';
+		$resetFields();
+		$resetModals();
+	}
+
+	function $resetFields() {
 		name.value = '';
 		description.value = '';
 		priority.value = null;
 		project.value = null;
-
 		$resetDue();
+	}
 
-		if (!isForm) return;
-
+	function $resetModals() {
 		isVisibleEditForm.value = false;
 		isVisibleAddForm.value = false;
+		isVisibleTaskDetails.value = false;
 	}
 
 	function $resetDue() {
@@ -281,7 +297,6 @@ export const useTaskStore = defineStore('task', () => {
 		toggleVisibleAddForm,
 		toggleVisibleEditForm,
 		showTaskDetails,
-		hideTaskDetails,
 		selectTask,
 		tasks,
 		errorMessage,
@@ -301,7 +316,6 @@ export const useTaskStore = defineStore('task', () => {
 		isLoad,
 		selectedTask,
 		$reset,
-		$resetDue,
 		inboxTasks,
 		todayTasks,
 		upcomingTasks
