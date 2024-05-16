@@ -3,6 +3,7 @@
 		v-model:visible="taskStore.isVisibleAddForm"
 		:style="{width: '100%', maxWidth: '700px'}"
 		header="Добавить задачу"
+		modal
 	>
 		<TaskModalContent />
 	</Dialog>

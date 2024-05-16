@@ -27,7 +27,7 @@
 				@click="actionTask"
 				:label="label"
 				:icon="taskStore.isLoading ? 'pi pi-spinner-dotted pi-spin' : undefined"
-				:disabled="!!taskStore.isLoading"
+				:disabled="isDisabledButton"
 			/>
 		</div>
 	</div>
@@ -52,7 +52,21 @@ const actionTask = computed(() => {
 
 const label = computed(() => {
 	return taskStore.isVisibleEditForm ? 'Сохранить' : 'Добавить';
+});
 
+const isDisabledButton = computed(() => {
+	if (taskStore.isVisibleEditForm) {
+		return taskStore.isLoading || !taskStore.isAccessSaveEdit;
+	} else {
+		return taskStore.isLoading;
+	}
+});
+
+taskStore.$subscribe(() => {
+	if (taskStore.isVisibleEditForm) {
+		console.log('check access edit');
+		taskStore.checkAccessEdit();
+	}
 });
 </script>
 

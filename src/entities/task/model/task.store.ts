@@ -7,6 +7,13 @@ import type { PostgrestError } from '@supabase/supabase-js';
 import dayjs from 'dayjs';
 import { type Project, useProjectStore } from '@/entities/project';
 import { useRoute } from 'vue-router';
+import {
+	isChangedDate,
+	isChangedDescription,
+	isChangedName,
+	isChangedPriority,
+	isChangedProjectId
+} from './helpers/check-edit-task';
 
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
@@ -31,6 +38,8 @@ export const useTaskStore = defineStore('task', () => {
 	const isLoading = ref<boolean>(false);
 	const errorMessage = ref<string>('');
 
+	const isAccessSaveEdit = ref<boolean>(false);
+
 	const userStore = useUserStore();
 	const projectStore = useProjectStore();
 
@@ -51,6 +60,25 @@ export const useTaskStore = defineStore('task', () => {
 		if (route.name === 'project') project.value = projectStore.project;
 	}
 
+	function checkAccessEdit() {
+		const task = selectedTask.value;
+		if (!task) return;
+
+		if (isChangedName(task.name, name.value)) {
+			isAccessSaveEdit.value = true;
+		} else if (isChangedDescription(task.description, description.value)) {
+			isAccessSaveEdit.value = true;
+		} else if (isChangedDate(task.due, due.value)) {
+			isAccessSaveEdit.value = true;
+		} else if (isChangedProjectId(task.project_id, project.value?.id)) {
+			isAccessSaveEdit.value = true;
+		} else if (isChangedPriority(task.priority?.label, priority.value?.label)) {
+			isAccessSaveEdit.value = true;
+		} else {
+			isAccessSaveEdit.value = false;
+		}
+	}
+
 	function toggleVisibleEditForm() {
 		isVisibleEditForm.value = !isVisibleEditForm.value;
 		isVisibleAddForm.value = false;
@@ -60,10 +88,6 @@ export const useTaskStore = defineStore('task', () => {
 
 	function showTaskDetails() {
 		isVisibleTaskDetails.value = true;
-	}
-
-	function hideTaskDetails() {
-		isVisibleTaskDetails.value = false;
 	}
 
 	function selectTask(task: Task) {
@@ -200,7 +224,7 @@ export const useTaskStore = defineStore('task', () => {
 	async function updateTask() {
 		const task = selectedTask.value;
 
-		if (!task) return;
+		if (!task || !isAccessSaveEdit) return;
 
 		isLoading.value = true;
 
@@ -268,6 +292,7 @@ export const useTaskStore = defineStore('task', () => {
 		projectTasks.value = new Map();
 		isLoading.value = false;
 		errorMessage.value = '';
+		isAccessSaveEdit.value = false;
 		$resetFields();
 		$resetModals();
 	}
@@ -278,6 +303,7 @@ export const useTaskStore = defineStore('task', () => {
 		priority.value = null;
 		project.value = null;
 		$resetDue();
+		isAccessSaveEdit.value = false;
 	}
 
 	function $resetModals() {
@@ -318,6 +344,8 @@ export const useTaskStore = defineStore('task', () => {
 		$reset,
 		inboxTasks,
 		todayTasks,
-		upcomingTasks
+		upcomingTasks,
+		isAccessSaveEdit,
+		checkAccessEdit
 	};
 });
