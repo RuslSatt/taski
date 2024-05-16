@@ -57,16 +57,14 @@ const label = computed(() => {
 const isDisabledButton = computed(() => {
 	if (taskStore.isVisibleEditForm) {
 		return taskStore.isLoading || !taskStore.isAccessSaveEdit;
-	} else {
-		return taskStore.isLoading;
+	} else if (taskStore.isVisibleAddForm) {
+		return taskStore.isLoading || !taskStore.isAccessAddTask;
 	}
 });
 
 taskStore.$subscribe(() => {
-	if (taskStore.isVisibleEditForm) {
-		console.log('check access edit');
-		taskStore.checkAccessEdit();
-	}
+	if (taskStore.isVisibleEditForm) taskStore.checkAccessEdit();
+	if (taskStore.isVisibleAddForm) taskStore.checkAccessAdd();
 });
 </script>
 

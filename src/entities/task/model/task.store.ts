@@ -39,6 +39,7 @@ export const useTaskStore = defineStore('task', () => {
 	const errorMessage = ref<string>('');
 
 	const isAccessSaveEdit = ref<boolean>(false);
+	const isAccessAddTask = ref<boolean>(false);
 
 	const userStore = useUserStore();
 	const projectStore = useProjectStore();
@@ -77,6 +78,10 @@ export const useTaskStore = defineStore('task', () => {
 		} else {
 			isAccessSaveEdit.value = false;
 		}
+	}
+
+	function checkAccessAdd() {
+		isAccessAddTask.value = !!name.value;
 	}
 
 	function toggleVisibleEditForm() {
@@ -304,6 +309,7 @@ export const useTaskStore = defineStore('task', () => {
 		project.value = null;
 		$resetDue();
 		isAccessSaveEdit.value = false;
+		isAccessAddTask.value = false;
 	}
 
 	function $resetModals() {
@@ -346,6 +352,8 @@ export const useTaskStore = defineStore('task', () => {
 		todayTasks,
 		upcomingTasks,
 		isAccessSaveEdit,
-		checkAccessEdit
+		isAccessAddTask,
+		checkAccessEdit,
+		checkAccessAdd
 	};
 });
