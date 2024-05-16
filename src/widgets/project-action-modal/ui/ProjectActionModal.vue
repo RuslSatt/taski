@@ -24,7 +24,7 @@
 					:label="labelButton"
 					@click="onSave"
 					:icon="projectStore.isLoading ? `pi pi-spin pi-spinner` : undefined"
-					:disabled="!!projectStore.isLoading"
+					:disabled="isDisabledButton"
 				/>
 			</div>
 		</div>
@@ -51,6 +51,22 @@ const onCancel = computed(() => {
 
 const onSave = computed(() => {
 	return projectStore.isEditActionModal ? projectStore.updateProject : projectStore.addProject;
+});
+
+const isDisabledButton = computed(() => {
+	if (projectStore.isEditActionModal) {
+		return projectStore.isLoading || !projectStore.isAccessEdit;
+	} else {
+		return projectStore.isLoading || !projectStore.isAccessAdd;
+	}
+});
+
+projectStore.$subscribe(() => {
+	if (projectStore.isEditActionModal) {
+		projectStore.checkAccessEdit();
+	} else {
+		projectStore.checkAccessAdd();
+	}
 });
 
 </script>

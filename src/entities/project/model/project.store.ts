@@ -19,8 +19,19 @@ export const useProjectStore = defineStore('project', () => {
 	const isVisibleActionModal = ref<boolean>(false);
 	const isVisibleDeleteModal = ref<boolean>(false);
 
+	const isAccessEdit = ref<boolean>(false);
+	const isAccessAdd = ref<boolean>(false);
+
 	const userStore = useUserStore();
 	const menuStore = useMenuStore();
+
+	function checkAccessAdd() {
+		isAccessAdd.value = !!name.value;
+	}
+
+	function checkAccessEdit() {
+		isAccessEdit.value = name.value !== selectedProject.value?.name;
+	}
 
 	function selectProject(project: Project) {
 		selectedProject.value = project;
@@ -144,18 +155,19 @@ export const useProjectStore = defineStore('project', () => {
 	function $resetFields() {
 		name.value = '';
 		errorMessage.value = '';
+		isAccessAdd.value = false;
+		isAccessEdit.value = false;
 	}
 
 	function $reset() {
 		projects.value = [];
 		project.value = null;
 		selectedProject.value = null;
-		name.value = '';
-		errorMessage.value = '';
 		isLoading.value = false;
 		isEditActionModal.value = false;
 		isVisibleActionModal.value = false;
 		isVisibleDeleteModal.value = false;
+		$resetFields();
 	}
 
 	return {
@@ -178,6 +190,10 @@ export const useProjectStore = defineStore('project', () => {
 		project,
 		setProject,
 		getProjectById,
-		$reset
+		$reset,
+		isAccessAdd,
+		isAccessEdit,
+		checkAccessAdd,
+		checkAccessEdit
 	};
 });
