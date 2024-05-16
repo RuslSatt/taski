@@ -14,7 +14,7 @@
 						<slot name="tools"></slot>
 					</div>
 				</div>
-				<div class="tags">
+				<div v-if="isTag" class="tags">
 					<i v-if="task.priority" :class="`pi ${task.priority?.icon} ${task.priority?.color}`"></i>
 					<slot name="tags"></slot>
 				</div>
@@ -44,6 +44,10 @@ const handlerClick = () => {
 	emit('clickCard');
 };
 
+const isTag = computed(() => {
+	return props.task.due || props.task.project_id || props.task.priority;
+});
+
 </script>
 
 <style scoped>
@@ -67,6 +71,7 @@ const handlerClick = () => {
 
 .info {
 	display: flex;
+	align-items: flex-start;
 	gap: 15px;
 }
 
@@ -77,16 +82,21 @@ const handlerClick = () => {
 	overflow: hidden;
 }
 
+.content-name {
+	line-height: 16px;
+}
+
 .content-description {
 	font-size: 14px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	line-height: 16px;
 }
 
 .tools {
 	display: flex;
-	align-items: flex-start;
+	align-self: flex-start;
 	justify-content: space-between;
 	margin-left: auto;
 }
