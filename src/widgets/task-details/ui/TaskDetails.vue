@@ -7,7 +7,7 @@
 		modal :closable="!commentStore.isLoading"
 		:dismissableMask="true"
 	>
-		<SkeletonList v-if="commentStore.isLoading" class="skeleton" />
+		<SkeletonList v-if="commentStore.isLoading && !commentStore.selectedComment" class="skeleton" />
 
 		<template v-if="!commentStore.isLoading && taskStore.selectedTask" #header>
 			<TaskDetailsHeader :task="taskStore.selectedTask" />
@@ -74,7 +74,7 @@ import { useCommentStore } from '@/entities/comment';
 import { DueTaskForm } from '@/feature/due-task';
 import { PriorityTaskSelect } from '@/feature/priority-task';
 import TaskComments from './TaskComments.vue';
-import { AddCommentForm } from '@/feature/add-comment';
+import { AddCommentForm, useAddCommentStore } from '@/feature/add-comment';
 import { watch } from 'vue';
 import TaskDetailsHeader from './TaskDetailsHeader.vue';
 import { SkeletonList } from '@/shared';
@@ -82,9 +82,17 @@ import { SelectTaskProject } from '@/feature/select-task-project';
 
 const taskStore = useTaskStore();
 const commentStore = useCommentStore();
+const addCommentStore = useAddCommentStore();
 
 watch(() => taskStore.selectedTask, () => {
 	if (taskStore.isVisibleTaskDetails) commentStore.fetchComments();
+});
+
+watch(() => taskStore.isVisibleTaskDetails, () => {
+	if (!taskStore.isVisibleTaskDetails) {
+		commentStore.selectedComment = null;
+		addCommentStore.hideCreateCommentModal();
+	}
 });
 </script>
 

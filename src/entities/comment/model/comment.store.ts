@@ -6,6 +6,7 @@ import { useTaskStore } from '@/entities/task';
 
 export const useCommentStore = defineStore('comment', () => {
 	const comments = ref<Comment[]>([]);
+	const selectedComment = ref<Comment | null>(null);
 
 	const text = ref<string>('');
 
@@ -13,6 +14,11 @@ export const useCommentStore = defineStore('comment', () => {
 	const errorMessage = ref<string>('');
 
 	const taskStore = useTaskStore();
+
+	function selectComment(comment: Comment) {
+		selectedComment.value = comment;
+		text.value = comment.text;
+	}
 
 	async function fetchComments() {
 		if (!taskStore.selectedTask) return;
@@ -50,13 +56,24 @@ export const useCommentStore = defineStore('comment', () => {
 		}
 	}
 
-	async function updateComment(comment: Comment) {
+	async function updateComment() {
+		const comment = selectedComment.value;
+		if (!comment) return;
+
+		selectedComment.value = null;
+
+		if (comment.text === text.value) return;
+
+		comment.text = text.value;
+
 		const { error } = await supabase
 			.from('comments')
 			.update(comment)
 			.eq('id', comment.id);
 
 		if (error) errorMessage.value = error.message;
+
+		$resetFields();
 	}
 
 	function $resetFields() {
@@ -68,7 +85,20 @@ export const useCommentStore = defineStore('comment', () => {
 		comments.value = [];
 		isLoading.value = false;
 		errorMessage.value = '';
+		selectedComment.value = null;
 	}
 
-	return { text, isLoading, comments, fetchComments, addComment, deleteComment, updateComment, $resetFields, $reset };
+	return {
+		text,
+		isLoading,
+		comments,
+		fetchComments,
+		addComment,
+		deleteComment,
+		updateComment,
+		$resetFields,
+		$reset,
+		selectComment,
+		selectedComment
+	};
 });

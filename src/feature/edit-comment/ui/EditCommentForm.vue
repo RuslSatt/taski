@@ -1,13 +1,21 @@
 <template>
 	<div class="comment-edit">
 		<Textarea
-			v-model="comment.text"
+			v-model="commentStore.text"
 			class="comment-edit-area"
+			:auto-resize="true"
 		/>
 
 		<div class="comment-edit-buttons">
-			<Button @click="comment.isEdit = false" severity="danger" label="Отмена" />
-			<Button @click="onSave" label="Сохранить" />
+			<Button
+				@click="commentStore.selectedComment = null"
+				severity="danger"
+				label="Отмена"
+			/>
+			<Button
+				@click="commentStore.updateComment"
+				label="Сохранить"
+			/>
 		</div>
 	</div>
 </template>
@@ -18,14 +26,9 @@ import { useCommentStore } from '@/entities/comment';
 
 const commentStore = useCommentStore();
 
-const props = defineProps<{
+defineProps<{
 	comment: Comment;
 }>();
-
-const onSave = () => {
-	props.comment.isEdit = undefined;
-	commentStore.updateComment(props.comment);
-};
 </script>
 
 <style scoped>

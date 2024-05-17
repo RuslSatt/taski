@@ -8,7 +8,7 @@
 		<template #icons>
 			<slot name="actions"></slot>
 		</template>
-		<p v-if="!comment.isEdit" class="comment-text">
+		<p v-if="!isEdit" class="comment-text">
 			{{ comment.text }}
 		</p>
 		<slot v-else name="edit"></slot>
@@ -17,10 +17,18 @@
 
 <script setup lang="ts">
 import type { Comment } from '@/entities/comment';
+import { useCommentStore } from '@/entities/comment';
+import { computed } from 'vue';
 
-defineProps<{
+const commentStore = useCommentStore();
+
+const props = defineProps<{
 	comment: Comment;
 }>();
+
+const isEdit = computed(() => {
+	return props.comment.id === commentStore.selectedComment?.id;
+});
 </script>
 
 <style scoped>

@@ -29,7 +29,9 @@ const items = ref([
 	{
 		label: 'Редактировать',
 		icon: 'pi pi-pencil',
-		command: () => props.comment.isEdit = true
+		command: () => {
+			commentStore.selectComment(props.comment);
+		}
 	},
 	{
 		label: 'Удалить',
