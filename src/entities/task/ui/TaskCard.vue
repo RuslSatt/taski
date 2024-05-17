@@ -92,6 +92,7 @@ const isTag = computed(() => {
 	overflow: hidden;
 	white-space: nowrap;
 	line-height: 16px;
+	color: var(--surface-500);
 }
 
 .tools {

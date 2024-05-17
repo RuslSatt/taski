@@ -4,6 +4,7 @@
 			v-model="taskStore.name"
 			class="task-name"
 			placeholder="Название задачи"
+			:autoResize="true"
 		/>
 		<Textarea
 			v-model="taskStore.description"
@@ -82,7 +83,10 @@ taskStore.$subscribe(() => {
 }
 
 .task-name {
-	font-size: 18px;
+	font-size: 14px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
 }
 
 .task-description {
