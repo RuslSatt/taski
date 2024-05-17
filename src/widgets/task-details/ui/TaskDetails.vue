@@ -7,7 +7,6 @@
 		:closable="!commentStore.isLoading"
 		:dismissableMask="true"
 	>
-
 		<SkeletonList v-if="commentStore.isLoading" class="skeleton" />
 
 		<template v-if="!commentStore.isLoading && taskStore.selectedTask" #header>
@@ -15,54 +14,57 @@
 		</template>
 
 		<div v-if="!commentStore.isLoading && taskStore.selectedTask" class="task-details-main">
-			<InputText
-				v-model="taskStore.selectedTask.name"
-				class="task-details-name"
-				placeholder="Название задачи"
-				@change="taskStore.updateDetailsTask"
-			/>
-			<div class="task-details-fields">
-				<div class="task-details-field">
-					<p class="task-details-field-title">Срок выполнения</p>
-					<div class="task-details-field-item">
-						<DueTaskForm @update="taskStore.updateDetailsTask" />
+			<div class="task-details-content">
+				<InputText
+					v-model="taskStore.selectedTask.name"
+					class="task-details-name"
+					placeholder="Название задачи"
+					@change="taskStore.updateDetailsTask"
+				/>
+				<div class="task-details-fields">
+					<div class="task-details-field">
+						<p class="task-details-field-title">Срок выполнения</p>
+						<div class="task-details-field-item">
+							<DueTaskForm @update="taskStore.updateDetailsTask" />
+						</div>
+					</div>
+					<div class="task-details-field">
+						<p class="task-details-field-title">Приоритет</p>
+						<div class="task-details-field-item">
+							<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
+						</div>
+					</div>
+					<div class="task-details-field">
+						<p class="task-details-field-title">Проект</p>
+						<div class="task-details-field-item">
+							<SelectTaskProject @update="taskStore.updateDetailsTask" />
+						</div>
 					</div>
 				</div>
-				<div class="task-details-field">
-					<p class="task-details-field-title">Приоритет</p>
-					<div class="task-details-field-item">
-						<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
-					</div>
-				</div>
-				<div class="task-details-field">
-					<p class="task-details-field-title">Проект</p>
-					<div class="task-details-field-item">
-						<SelectTaskProject @update="taskStore.updateDetailsTask" />
-					</div>
-				</div>
-			</div>
-			<Divider align="left" type="solid">
-				<b>Описание</b>
-			</Divider>
-			<div class="task-details-description">
+				<Divider align="left" type="solid">
+					<b>Описание</b>
+				</Divider>
+				<div class="task-details-description">
 				<Textarea
 					class="task-details-description-area"
 					v-model="taskStore.selectedTask.description"
 					@change="taskStore.updateDetailsTask"
 					autoResize
 				/>
-			</div>
-			<Divider align="left" type="solid">
-				<b>Комментарии</b>
-			</Divider>
-			<div class="task-details-comments">
-				<div class="task-details-comments-list">
-					<TaskComments :comments="commentStore.comments" />
 				</div>
+				<Divider align="left" type="solid">
+					<b>Комментарии</b>
+				</Divider>
+				<div class="task-details-comments">
+					<div class="task-details-comments-list">
+						<TaskComments :comments="commentStore.comments" />
+					</div>
+				</div>
+			</div>
+			<div class="task-details-comment-form">
 				<AddCommentForm class="task-details-comments-form" />
 			</div>
 		</div>
-
 	</Dialog>
 </template>
 
@@ -98,6 +100,14 @@ watch(() => taskStore.selectedTask, () => {
 	gap: 15px;
 	height: 100%;
 	padding-bottom: 10px;
+	overflow: hidden;
+}
+
+.task-details-content {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: auto;
 }
 
 .task-details-name {
@@ -153,7 +163,7 @@ watch(() => taskStore.selectedTask, () => {
 	flex: 1;
 }
 
-.task-details-comments-form {
+.task-details-comment-form {
 	margin-top: auto;
 }
 </style>

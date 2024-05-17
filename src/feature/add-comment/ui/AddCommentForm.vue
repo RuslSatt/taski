@@ -5,7 +5,7 @@
 			placeholder="Введите комментарий"
 			:class="{area: true, creating: commentFormStore.isCreateCommentState}"
 		/>
-		<div v-if="commentFormStore.isCreateCommentState" class="comment-form-buttons">
+		<div v-show="commentFormStore.isCreateCommentState" class="comment-form-buttons">
 			<Button @click.stop="onCancel" severity="danger" label="Отмена" />
 			<Button @click="onCreate" label="Комментировать" />
 		</div>
@@ -38,7 +38,7 @@ const onCreate = () => {
 
 .area {
 	width: 100%;
-	height: 40px;
+	height: 35px;
 }
 
 .area.creating {
