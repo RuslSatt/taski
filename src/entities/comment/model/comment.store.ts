@@ -33,27 +33,8 @@ export const useCommentStore = defineStore('comment', () => {
 		isLoading.value = false;
 	}
 
-	async function addComment() {
-		if (!text.value || !taskStore.selectedTask) return;
-
-		const comment: Comment = {
-			id: new Date().getTime(),
-			text: text.value,
-			task_id: taskStore.selectedTask.id
-		};
-
-		const { data, error } = await supabase
-			.from('comments')
-			.insert(comment)
-			.select();
-
-		if (error) {
-			errorMessage.value = error.message;
-		} else if (data) {
-			comments.value.push(data[0]);
-		}
-
-		$resetFields();
+	function addComment(comment: Comment) {
+		comments.value.push(comment);
 	}
 
 	async function deleteComment(comment: Comment) {

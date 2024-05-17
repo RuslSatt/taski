@@ -1,31 +1,38 @@
 <template>
-	<div @click="commentFormStore.showCreateCommentModal" class="comment-form">
+	<div @click="addCommentStore.showCreateCommentModal" class="comment-form">
 		<Textarea
-			v-model="commentStore.text"
+			v-model="addCommentStore.text"
 			placeholder="Введите комментарий"
-			:class="{area: true, creating: commentFormStore.isCreateCommentState}"
+			:class="{area: true, creating: addCommentStore.isCreateCommentState}"
 		/>
-		<div v-show="commentFormStore.isCreateCommentState" class="comment-form-buttons">
-			<Button @click.stop="onCancel" severity="danger" label="Отмена" />
-			<Button @click="onCreate" label="Комментировать" />
+		<div v-show="addCommentStore.isCreateCommentState" class="comment-form-buttons">
+			<Button
+				@click.stop="onCancel"
+				severity="danger"
+				label="Отмена"
+				:disabled="addCommentStore.isLoading"
+			/>
+			<Button
+				@click="onCreate"
+				label="Комментировать"
+				:icon="addCommentStore.isLoading ? 'pi pi-spinner-dotted pi-spin' : undefined"
+				:disabled="addCommentStore.isLoading"
+			/>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { useCommentFormStore } from '../model/comment-form.store';
-import { useCommentStore } from '@/entities/comment';
+import { useAddCommentStore } from '../model/add-comment.store';
 
-const commentFormStore = useCommentFormStore();
-const commentStore = useCommentStore();
+const addCommentStore = useAddCommentStore();
 
 const onCancel = () => {
-	commentFormStore.hideCreateCommentModal();
-	commentStore.$resetFields();
+	addCommentStore.hideCreateCommentModal();
 };
 
 const onCreate = () => {
-	commentStore.addComment();
+	addCommentStore.addComment();
 };
 </script>
 
