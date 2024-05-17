@@ -8,7 +8,6 @@
 	>
 		<div class="content">
 			<InputText
-				:disabled="!!projectStore.isLoading"
 				v-model="projectStore.name"
 				class="project-name"
 				placeholder="Название проекта"
@@ -23,7 +22,7 @@
 				<Button
 					:label="labelButton"
 					@click="onSave"
-					:icon="projectStore.isLoading ? `pi pi-spin pi-spinner` : undefined"
+					:icon="projectStore.isLoading ? `pi pi-spin pi-spinner-dotted` : undefined"
 					:disabled="isDisabledButton"
 				/>
 			</div>

@@ -135,13 +135,14 @@ export const useProjectStore = defineStore('project', () => {
 
 		const { error } = await supabase
 			.from('projects')
-			.update(name.value)
+			.update({ name: name.value })
 			.eq('id', selectedProject.value.id);
 
 		if (error) {
 			errorMessage.value = error.message;
 		} else {
 			selectedProject.value.name = name.value;
+			menuStore.addProjects(projects.value);
 		}
 
 		toggleVisibleEditModal();
