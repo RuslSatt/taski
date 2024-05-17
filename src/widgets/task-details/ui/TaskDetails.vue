@@ -91,7 +91,7 @@ watch(() => taskStore.selectedTask, () => {
 <style>
 .p-dialog-content {
 	height: 100%;
-	padding-bottom: 10px;
+	padding: 0 5px;
 }
 
 .task-details-main {
@@ -108,6 +108,7 @@ watch(() => taskStore.selectedTask, () => {
 	flex-direction: column;
 	height: 100%;
 	overflow: auto;
+	padding: 10px
 }
 
 .task-details-name {
@@ -165,5 +166,6 @@ watch(() => taskStore.selectedTask, () => {
 
 .task-details-comment-form {
 	margin-top: auto;
+	padding: 0 10px;
 }
 </style>
