@@ -1,10 +1,10 @@
 <template>
 	<Dialog
+		class="task-details"
 		v-model:visible="taskStore.isVisibleTaskDetails"
 		:draggable="false"
 		:style="{width: '100%', height: '80%', minWidth: '700px', maxWidth: '700px'}"
-		modal
-		:closable="!commentStore.isLoading"
+		modal :closable="!commentStore.isLoading"
 		:dismissableMask="true"
 	>
 		<SkeletonList v-if="commentStore.isLoading" class="skeleton" />
@@ -89,9 +89,9 @@ watch(() => taskStore.selectedTask, () => {
 </script>
 
 <style>
-.p-dialog-content {
+.task-details .p-dialog-content {
 	height: 100%;
-	padding: 0 5px;
+	padding: 5px;
 }
 
 .task-details-main {

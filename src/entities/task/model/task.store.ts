@@ -47,6 +47,11 @@ export const useTaskStore = defineStore('task', () => {
 	const dateJs = dayjs();
 	const route = useRoute();
 
+	function setPageParams() {
+		if (route.name === 'today') due.value = new Date();
+		if (route.name === 'project') project.value = projectStore.project;
+	}
+
 	function toggleVisibleAddForm() {
 		$resetFields();
 		isVisibleAddForm.value = !isVisibleAddForm.value;
@@ -56,9 +61,20 @@ export const useTaskStore = defineStore('task', () => {
 		if (isVisibleAddForm.value) setPageParams();
 	}
 
-	function setPageParams() {
-		if (route.name === 'today') due.value = new Date();
-		if (route.name === 'project') project.value = projectStore.project;
+	function showEditForm() {
+		isVisibleEditForm.value = true;
+
+		isVisibleAddForm.value = false;
+		isVisibleTaskDetails.value = false;
+	}
+
+	function hideEditForm() {
+		isVisibleEditForm.value = false;
+		if (!isVisibleEditForm.value) $resetFields();
+	}
+
+	function showTaskDetails() {
+		isVisibleTaskDetails.value = true;
 	}
 
 	function checkAccessEdit() {
@@ -82,17 +98,6 @@ export const useTaskStore = defineStore('task', () => {
 
 	function checkAccessAdd() {
 		isAccessAddTask.value = !!name.value;
-	}
-
-	function toggleVisibleEditForm() {
-		isVisibleEditForm.value = !isVisibleEditForm.value;
-		isVisibleAddForm.value = false;
-		if (!isVisibleEditForm.value) $resetFields();
-		isVisibleTaskDetails.value = false;
-	}
-
-	function showTaskDetails() {
-		isVisibleTaskDetails.value = true;
 	}
 
 	function selectTask(task: Task) {
@@ -137,6 +142,8 @@ export const useTaskStore = defineStore('task', () => {
 		projectTasks.value = new Map();
 
 		for (let task of data) {
+			if (task.due) task.due = new Date(task.due);
+
 			if (!task.project_id) {
 				inboxTasks.value.push(task);
 			} else {
@@ -253,17 +260,15 @@ export const useTaskStore = defineStore('task', () => {
 		$resetModals();
 	}
 
-	async function updateTaskStatus(task: Task) {
+	async function updateTaskParams(task: Task) {
+		setTasksByGroup(tasks.value);
+
 		const { error } = await supabase
 			.from('tasks')
 			.update(task)
 			.eq('id', task.id);
 
-		if (error) {
-			errorMessage.value = error.message;
-		} else {
-			setTasksByGroup(tasks.value);
-		}
+		if (error) errorMessage.value = error.message;
 	}
 
 	async function updateDetailsTask() {
@@ -327,7 +332,8 @@ export const useTaskStore = defineStore('task', () => {
 		isVisibleEditForm,
 		isVisibleTaskDetails,
 		toggleVisibleAddForm,
-		toggleVisibleEditForm,
+		showEditForm,
+		hideEditForm,
 		showTaskDetails,
 		selectTask,
 		tasks,
@@ -340,7 +346,7 @@ export const useTaskStore = defineStore('task', () => {
 		addTask,
 		deleteTask,
 		updateTask,
-		updateTaskStatus,
+		updateTaskParams,
 		updateDetailsTask,
 		fetchTasks,
 		getProjectTasks,

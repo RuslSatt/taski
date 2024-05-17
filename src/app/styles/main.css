@@ -5,3 +5,7 @@ html {
 textarea {
     line-height: 1.3;
 }
+
+.p-dialog-content {
+    padding-bottom: 10px;
+}

@@ -2,7 +2,7 @@
 	<Checkbox
 		v-model="task.completed"
 		:binary="true"
-		@change="taskStore.updateTaskStatus(task)"
+		@change="taskStore.updateTaskParams(task)"
 		@click.stop
 	/>
 </template>

@@ -19,7 +19,7 @@ const props = defineProps<{
 
 const handlerClick = () => {
 	taskStore.selectTask(props.task);
-	taskStore.toggleVisibleEditForm();
+	taskStore.showEditForm();
 };
 </script>
 

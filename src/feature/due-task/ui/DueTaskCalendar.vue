@@ -1,11 +1,10 @@
 <template>
 	<Calendar
-		v-model="taskStore.due"
+		v-model="task.due"
 		showIcon
 		iconDisplay="input"
 		dateFormat="dd.mm.yyyy"
-		@update:modelValue="taskStore.updateTask"
-		@show="handlerShow"
+		@update:modelValue="taskStore.updateTaskParams(task)"
 	>
 		<template #inputicon="{ clickCallback }">
 			<Button
@@ -37,10 +36,6 @@ const props = defineProps<{
 	isTag?: boolean
 	task: Task
 }>();
-
-const handlerShow = () => {
-	taskStore.selectTask(props.task);
-};
 
 const date = computed(() => {
 	return props.task.due ? getViewDate(props.task.due) : '';

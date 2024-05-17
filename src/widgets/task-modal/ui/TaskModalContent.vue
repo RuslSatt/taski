@@ -44,7 +44,7 @@ import { SelectTaskProject } from '@/feature/select-task-project';
 const taskStore = useTaskStore();
 
 const toggleVisible = computed(() => {
-	return taskStore.isVisibleEditForm ? taskStore.toggleVisibleEditForm : taskStore.toggleVisibleAddForm;
+	return taskStore.isVisibleEditForm ? taskStore.hideEditForm : taskStore.toggleVisibleAddForm;
 });
 
 const actionTask = computed(() => {
@@ -78,15 +78,13 @@ taskStore.$subscribe(() => {
 }
 
 .task-name, .task-description {
-	border: none;
-	box-shadow: none
+	border: 1px solid var(--surface-200);
 }
 
 .task-name {
-	font-size: 14px;
+	font-size: 16px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-weight: bold;
 }
 
 .task-description {
