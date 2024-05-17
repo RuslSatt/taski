@@ -1,17 +1,13 @@
 <template>
 	<header class="header">
-		<ToggleButton v-model="task.completed" @change="taskStore.updateTaskStatus(task)"
-					  onLabel="Выполнено"
-					  offLabel="Выполнить"
-					  onIcon="pi pi-check"
-					  offIcon="pi pi-circle"
+		<ToggleButton
+			v-model="task.completed"
+			@change="taskStore.updateTaskParams(task)"
+			onLabel="Выполнено"
+			offLabel="Выполнить"
+			onIcon="pi pi-check"
+			offIcon="pi pi-circle"
 		/>
-		<!--		<Button-->
-		<!--			text-->
-		<!--			rounded-->
-		<!--			icon="pi pi-angle-double-right"-->
-		<!--			@click.stop="taskStore.hideTaskDetails"-->
-		<!--		/>-->
 	</header>
 </template>
 
