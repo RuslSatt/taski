@@ -5,6 +5,8 @@ import { supabase } from '@/shared/api/supabase';
 import { useUserStore } from '@/entities/user';
 import { router } from '@/app/router/router';
 import { useMenuStore } from '@/entities/menu';
+import { ToastControl } from '@/shared';
+import { useToast } from 'primevue/usetoast';
 
 export const useProjectStore = defineStore('project', () => {
 	const projects = ref<Project[]>([]);
@@ -24,6 +26,7 @@ export const useProjectStore = defineStore('project', () => {
 
 	const userStore = useUserStore();
 	const menuStore = useMenuStore();
+	const Toast = new ToastControl(useToast());
 
 	function checkAccessAdd() {
 		isAccessAdd.value = !!name.value;
@@ -96,9 +99,11 @@ export const useProjectStore = defineStore('project', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
+			Toast.addErrorToast(error.message);
 		} else if (data) {
 			projects.value.push(data[0]);
 			menuStore.addProjects(projects.value);
+			Toast.addSuccessToast(project.name, 'Добавлен проект');
 		}
 
 		isLoading.value = false;
@@ -118,9 +123,11 @@ export const useProjectStore = defineStore('project', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
+			Toast.addErrorToast(error.message);
 		} else {
 			projects.value = projects.value.filter(item => selectedProject.value?.id !== item.id);
 			menuStore.addProjects(projects.value);
+			Toast.addSuccessToast(selectedProject.value.name, 'Удален проект');
 		}
 
 		isLoading.value = false;
@@ -140,9 +147,11 @@ export const useProjectStore = defineStore('project', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
+			Toast.addErrorToast(error.message);
 		} else {
 			selectedProject.value.name = name.value;
 			menuStore.addProjects(projects.value);
+			Toast.addSuccessToast(selectedProject.value.name, 'Обновлен проект');
 		}
 
 		toggleVisibleEditModal();
