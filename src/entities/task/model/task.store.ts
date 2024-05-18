@@ -15,6 +15,7 @@ import {
 	isChangedProjectId
 } from './helpers/check-edit-task';
 import { useToast } from 'primevue/usetoast';
+import { ToastControl } from '@/shared';
 
 export const useTaskStore = defineStore('task', () => {
 	const isVisibleAddForm = ref<boolean>(false);
@@ -47,7 +48,7 @@ export const useTaskStore = defineStore('task', () => {
 
 	const dateJs = dayjs();
 	const route = useRoute();
-	const toast = useToast();
+	const Toast = new ToastControl(useToast());
 
 	function setPageParams() {
 		if (route.name === 'today') due.value = new Date();
@@ -207,11 +208,11 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
-			addErrorToast(error.message);
+			Toast.addErrorToast(error.message);
 		} else {
 			tasks.value.push(task);
 			setTasksByGroup(tasks.value);
-			addSuccessToast(task.name, 'Добавлена задача');
+			Toast.addSuccessToast(task.name, 'Добавлена задача');
 		}
 
 		isLoading.value = false;
@@ -229,11 +230,11 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
-			addErrorToast(error.message);
+			Toast.addErrorToast(error.message);
 		} else {
 			tasks.value = tasks.value.filter(item => task.id !== item.id);
 			setTasksByGroup(tasks.value);
-			addSuccessToast(task.name, 'Удалена задача');
+			Toast.addSuccessToast(task.name, 'Удалена задача');
 		}
 
 		isLoading.value = false;
@@ -257,10 +258,10 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (error) {
 			errorMessage.value = error.message;
-			addErrorToast(error.message);
+			Toast.addErrorToast(error.message);
 		} else {
 			setTasksByGroup(tasks.value);
-			addSuccessToast(task.name, 'Обновлена задача');
+			Toast.addSuccessToast(task.name, 'Обновлена задача');
 		}
 
 		isLoading.value = false;
@@ -268,23 +269,6 @@ export const useTaskStore = defineStore('task', () => {
 		$resetModals();
 	}
 
-	function addSuccessToast(name: string, summary: string) {
-		toast.add({
-			severity: 'success',
-			summary: `${summary}`,
-			detail: `${name}`,
-			life: 3000
-		});
-	}
-
-	function addErrorToast(message: string) {
-		toast.add({
-			severity: 'error',
-			summary: `Ошибка выполнения запроса`,
-			detail: `${message}`,
-			life: 3000
-		});
-	}
 
 	async function updateTaskParams(task: Task) {
 		setTasksByGroup(tasks.value);
