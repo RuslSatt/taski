@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { type Task, TaskCard, type TaskCategories, useTaskStore } from '@/entities/task';
-import { CheckBox } from '@/feature/task';
+import { CheckBox } from '@/feature/complete-task';
 import { DeleteTaskButton, DeleteTaskModal } from '@/feature/delete-task';
 import { EditTaskButton } from '@/feature/edit-task';
 import { DueTaskCalendar } from '@/feature/due-task';

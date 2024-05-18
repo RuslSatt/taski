@@ -20,7 +20,7 @@ export const useAddCommentStore = defineStore('addComment', () => {
 
 	function hideCreateCommentModal() {
 		isCreateCommentState.value = false;
-		$resetFields();
+		$reset();
 	}
 
 	async function addComment() {
@@ -47,17 +47,13 @@ export const useAddCommentStore = defineStore('addComment', () => {
 
 		isLoading.value = false;
 
-		$resetFields();
+		$reset();
 	}
 
 	function $reset() {
-		$resetFields();
+		text.value = '';
 		isLoading.value = false;
 		errorMessage.value = '';
-	}
-
-	function $resetFields() {
-		text.value = '';
 	}
 
 	return {
