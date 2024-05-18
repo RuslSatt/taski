@@ -57,7 +57,7 @@ const isTag = computed(() => {
 
 .card {
 	box-shadow: none;
-	border-bottom: 1px solid var(--surface-100);
+	border: 1px solid var(--surface-100);
 	width: 100%;
 	border-radius: 0;
 	transition: box-shadow 0.15s, background-color 0.15s;
