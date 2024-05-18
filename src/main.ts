@@ -3,6 +3,7 @@ import { createPinia } from 'pinia';
 import App from './app/App.vue';
 import { router } from '@/app/router/router';
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 
 import '@/app/styles/reset.css';
 import '@/app/styles/main.css';
@@ -16,6 +17,7 @@ const pinia = createPinia();
 app.use(router);
 app.use(pinia);
 app.use(PrimeVue);
+app.use(ToastService);
 
 initPrimeComponents();
 app.mount('#app');

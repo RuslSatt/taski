@@ -18,6 +18,7 @@ import Panel from 'primevue/panel';
 import ToggleButton from 'primevue/togglebutton';
 import Menu from 'primevue/menu';
 import TabMenu from 'primevue/tabmenu';
+import Toast from 'primevue/toast';
 
 
 export function initPrimeComponents() {
@@ -40,4 +41,5 @@ export function initPrimeComponents() {
 	app.component('ToggleButton', ToggleButton);
 	app.component('Menu', Menu);
 	app.component('TabMenu', TabMenu);
+	app.component('Toast', Toast);
 }

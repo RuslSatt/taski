@@ -6,6 +6,7 @@
 			<SideBar />
 			<RouterView />
 			<ProjectActionModal />
+			<Toast position="bottom-left" />
 		</div>
 	</div>
 </template>
