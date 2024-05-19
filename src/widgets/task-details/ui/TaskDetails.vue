@@ -4,9 +4,11 @@
 		v-model:visible="taskStore.isVisibleTaskDetails"
 		:draggable="false"
 		:style="{width: '100%', height: '90%', minWidth: '700px', maxWidth: '700px'}"
-		modal :closable="!commentStore.isLoading"
+		modal :closable="!commentStore.isLoading" :dismissableMask="commentStore.isLoading"
 	>
-		<SkeletonList v-if="commentStore.isLoading && !commentStore.selectedComment" class="skeleton" />
+		<div v-if="commentStore.isLoading && !commentStore.selectedComment" class="skeleton">
+			<SkeletonDetails />
+		</div>
 
 		<template v-if="!commentStore.isLoading && taskStore.selectedTask" #header>
 			<TaskDetailsHeader :task="taskStore.selectedTask" />
@@ -77,7 +79,7 @@ import TaskComments from './TaskComments.vue';
 import { AddCommentForm, useAddCommentStore } from '@/feature/add-comment';
 import { watch } from 'vue';
 import TaskDetailsHeader from './TaskDetailsHeader.vue';
-import { SkeletonList } from '@/shared';
+import { SkeletonDetails } from '@/shared';
 import { SelectTaskProject } from '@/feature/select-task-project';
 
 const taskStore = useTaskStore();
@@ -99,20 +101,20 @@ watch(() => taskStore.isVisibleTaskDetails, () => {
 <style>
 .task-details .p-dialog-content {
 	height: 100%;
-	padding: 5px;
+	padding: 0;
 }
 
 .task-details .p-dialog-footer {
-	padding: 10px 5px;
+	padding: 10px;
 	border-top: 1px solid var(--surface-200);
 }
 
-.task-details-main {
+.task-details-main, .skeleton {
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
 	height: 100%;
-	padding: 10px
+	padding: 10px 20px
 }
 
 .task-details-name {
