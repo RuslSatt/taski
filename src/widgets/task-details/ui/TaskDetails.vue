@@ -3,9 +3,8 @@
 		class="task-details"
 		v-model:visible="taskStore.isVisibleTaskDetails"
 		:draggable="false"
-		:style="{width: '100%', height: '80%', minWidth: '700px', maxWidth: '700px'}"
+		:style="{width: '100%', height: '90%', minWidth: '700px', maxWidth: '700px'}"
 		modal :closable="!commentStore.isLoading"
-		:dismissableMask="true"
 	>
 		<SkeletonList v-if="commentStore.isLoading && !commentStore.selectedComment" class="skeleton" />
 
@@ -14,57 +13,58 @@
 		</template>
 
 		<div v-if="!commentStore.isLoading && taskStore.selectedTask" class="task-details-main">
-			<div class="task-details-content">
-				<InputText
-					v-model="taskStore.selectedTask.name"
-					class="task-details-name"
-					placeholder="Название задачи"
-					@change="taskStore.updateDetailsTask"
-				/>
-				<div class="task-details-fields">
-					<div class="task-details-field">
-						<p class="task-details-field-title">Срок выполнения</p>
-						<div class="task-details-field-item">
-							<DueTaskForm @update="taskStore.updateDetailsTask" />
-						</div>
-					</div>
-					<div class="task-details-field">
-						<p class="task-details-field-title">Приоритет</p>
-						<div class="task-details-field-item">
-							<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
-						</div>
-					</div>
-					<div class="task-details-field">
-						<p class="task-details-field-title">Проект</p>
-						<div class="task-details-field-item">
-							<SelectTaskProject @update="taskStore.updateDetailsTask" />
-						</div>
+			<InputText
+				v-model="taskStore.selectedTask.name"
+				class="task-details-name"
+				placeholder="Название задачи"
+				@change="taskStore.updateDetailsTask"
+			/>
+			<div class="task-details-fields">
+				<div class="task-details-field">
+					<p class="task-details-field-title">Срок выполнения</p>
+					<div class="task-details-field-item">
+						<DueTaskForm @update="taskStore.updateDetailsTask" />
 					</div>
 				</div>
-				<Divider align="left" type="solid">
-					<b>Описание</b>
-				</Divider>
-				<div class="task-details-description">
+				<div class="task-details-field">
+					<p class="task-details-field-title">Приоритет</p>
+					<div class="task-details-field-item">
+						<PriorityTaskSelect @update="taskStore.updateDetailsTask" />
+					</div>
+				</div>
+				<div class="task-details-field">
+					<p class="task-details-field-title">Проект</p>
+					<div class="task-details-field-item">
+						<SelectTaskProject @update="taskStore.updateDetailsTask" />
+					</div>
+				</div>
+			</div>
+			<Divider align="left" type="solid">
+				<b>Описание</b>
+			</Divider>
+			<div class="task-details-description">
 				<Textarea
 					class="task-details-description-area"
 					v-model="taskStore.selectedTask.description"
 					@change="taskStore.updateDetailsTask"
 					autoResize
 				/>
-				</div>
-				<Divider align="left" type="solid">
-					<b>Комментарии</b>
-				</Divider>
-				<div class="task-details-comments">
-					<div class="task-details-comments-list">
-						<TaskComments :comments="commentStore.comments" />
-					</div>
+			</div>
+			<Divider align="left" type="solid">
+				<b>Комментарии</b>
+			</Divider>
+			<div class="task-details-comments">
+				<div class="task-details-comments-list">
+					<TaskComments :comments="commentStore.comments" />
 				</div>
 			</div>
+		</div>
+
+		<template v-if="!commentStore.isLoading && taskStore.selectedTask" #footer>
 			<div class="task-details-comment-form">
 				<AddCommentForm class="task-details-comments-form" />
 			</div>
-		</div>
+		</template>
 	</Dialog>
 </template>
 
@@ -102,20 +102,16 @@ watch(() => taskStore.isVisibleTaskDetails, () => {
 	padding: 5px;
 }
 
+.task-details .p-dialog-footer {
+	padding: 10px 5px;
+	border-top: 1px solid var(--surface-200);
+}
+
 .task-details-main {
 	display: flex;
 	flex-direction: column;
-	gap: 15px;
-	height: 100%;
-	padding-bottom: 10px;
-	overflow: hidden;
-}
-
-.task-details-content {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
 	overflow: auto;
+	height: 100%;
 	padding: 10px
 }
 
@@ -173,7 +169,7 @@ watch(() => taskStore.isVisibleTaskDetails, () => {
 }
 
 .task-details-comment-form {
-	margin-top: auto;
+	width: 100%;
 	padding: 0 10px;
 }
 </style>

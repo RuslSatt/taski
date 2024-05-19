@@ -41,7 +41,8 @@ defineProps<{
 
 .comment-edit-area {
 	width: 100%;
-	height: 120px;
+	max-height: 30vh;
+	overflow: auto !important;
 }
 
 .comment-edit-buttons {

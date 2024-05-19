@@ -4,6 +4,7 @@
 			v-model="addCommentStore.text"
 			placeholder="Введите комментарий"
 			:class="{area: true, creating: addCommentStore.isCreateCommentState}"
+			:auto-resize="true"
 		/>
 		<div v-show="addCommentStore.isCreateCommentState" class="comment-form-buttons">
 			<Button
@@ -45,7 +46,8 @@ const onCreate = () => {
 
 .area {
 	width: 100%;
-	height: 35px;
+	max-height: 30vh;
+	overflow: auto !important;
 }
 
 .area.creating {
