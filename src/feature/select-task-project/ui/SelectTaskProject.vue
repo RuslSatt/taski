@@ -7,6 +7,7 @@
 		showClear
 		optionLabel="name"
 		@update:modelValue="handlerUpdate"
+		emptyMessage="Нет проектов"
 	>
 		<template #value="slotProps">
 			<div v-if="slotProps.value" class="dropdown-item">
