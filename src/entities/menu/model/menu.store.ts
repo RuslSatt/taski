@@ -27,13 +27,13 @@ export const useMenuStore = defineStore('menu', () => {
 	watch(() => route.path, selectItem);
 
 	function addProjects(projects: Project[]) {
-		if (!projects?.length) return;
-
 		const projectItem = items.value.find(item => item.id === 'projects');
 
 		if (!projectItem) return;
 
 		projectItem.children = [];
+
+		if (!projects?.length) return;
 
 		for (let project of projects) {
 			const item = {
