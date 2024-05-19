@@ -9,3 +9,17 @@ textarea {
 .p-dialog-content {
     padding-bottom: 10px;
 }
+
+.tsk-card {
+    box-shadow: none;
+    border: 1px solid var(--surface-100);
+    width: 100%;
+    border-radius: 0;
+    transition: border 0.15s;
+}
+
+.tsk-card:hover {
+    border: 1px solid var(--surface-300);
+    cursor: pointer;
+
+}

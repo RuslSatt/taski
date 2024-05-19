@@ -1,5 +1,5 @@
 <template>
-	<Card v-if="!isEdit" class="card" @click="handlerClick">
+	<Card v-if="!isEdit" class="tsk-card" @click="handlerClick">
 		<template #content>
 			<div class="container">
 				<div class="info">
@@ -53,20 +53,6 @@ const isTag = computed(() => {
 <style scoped>
 :deep(.p-card-body) {
 	padding: 0.8rem
-}
-
-.card {
-	box-shadow: none;
-	border: 1px solid var(--surface-100);
-	width: 100%;
-	border-radius: 0;
-	transition: box-shadow 0.15s, background-color 0.15s;
-}
-
-.card:hover {
-	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-	background-color: var(--surface-100);
 }
 
 .info {
