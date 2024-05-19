@@ -18,11 +18,13 @@ const userStore = useUserStore();
 const items = ref([
 	{
 		label: 'Профиль',
-		icon: 'pi pi-user'
+		icon: 'pi pi-wrench',
+		disabled: true
 	},
 	{
 		label: 'Настройки',
-		icon: 'pi pi-cog'
+		icon: 'pi pi-wrench',
+		disabled: true
 	},
 	{
 		label: 'Выход',

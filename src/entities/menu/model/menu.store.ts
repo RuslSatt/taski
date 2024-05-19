@@ -8,7 +8,7 @@ export const useMenuStore = defineStore('menu', () => {
 	const items = ref<MenuItem[]>([
 		{ id: 'inbox', label: 'Входящие', icon: 'pi pi-inbox', mode: 'single', path: '/inbox' },
 		{ id: 'today', label: 'Сегодня', icon: 'pi pi-calendar-clock', mode: 'single', path: '/today' },
-		{ id: 'upcoming', label: 'Предстоящие', icon: 'pi pi-calendar', mode: 'single', path: '/upcoming' },
+		{ id: 'upcoming', label: 'Предстоящие', icon: 'pi pi-wrench', mode: 'single', path: '/upcoming' },
 		{ id: 'projects', label: 'Проекты', children: [], icon: 'pi pi-th-large', mode: 'tree', path: '/projects' }
 	]);
 

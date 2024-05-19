@@ -8,7 +8,11 @@
 			>
 				<router-link
 					:to="item.path"
-					:class="{'list-item-link': true, active: item.id === menuStore.selectedId }"
+					:class="{
+						'list-item-link': true,
+						active: item.id === menuStore.selectedId,
+						disabled: item.id === 'upcoming'
+					}"
 				>
 					<i v-if="item.icon" :class="`pi ${item.icon}`"></i>
 					<p>{{ item.label }}</p>
@@ -109,6 +113,11 @@ const hide = ref(false);
 .list-item-link.active {
 	color: var(--highlight-text-color);
 	background-color: var(--highlight-bg);
+}
+
+.list-item-link.disabled {
+	color: var(--surface-400);
+	pointer-events: none;
 }
 
 .item-buttons {
