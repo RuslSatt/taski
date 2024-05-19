@@ -288,6 +288,8 @@ export const useTaskStore = defineStore('task', () => {
 
 		editTaskFields(task);
 
+		setTasksByGroup(tasks.value);
+
 		const { error } = await supabase
 			.from('tasks')
 			.update(task)
