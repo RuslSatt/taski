@@ -2,7 +2,8 @@
 	<Dialog
 		modal
 		v-model:visible="projectStore.isVisibleActionModal"
-		:style="{width: '100%', maxWidth: '500px'}"
+		:style="{width: '50vw', maxWidth: '500px'}"
+		:breakpoints="{ '1120px': '70vw', '769px': '90vw' }"
 		:header="title"
 		:closable="false"
 	>

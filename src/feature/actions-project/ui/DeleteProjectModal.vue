@@ -1,5 +1,12 @@
 <template>
-	<Dialog class="dialog" v-model:visible="projectStore.isVisibleDeleteModal" modal :closable="false">
+	<Dialog
+		class="dialog"
+		v-model:visible="projectStore.isVisibleDeleteModal"
+		modal
+		:closable="false"
+		:style="{width: '50vw', maxWidth: '400px'}"
+		:breakpoints="{ '1120px': '70vw', '769px': '90vw' }"
+	>
 		<template #header>
 			<div class="header">
 				<i class="pi pi-trash"></i>
