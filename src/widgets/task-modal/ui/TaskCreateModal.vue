@@ -1,7 +1,8 @@
 <template>
 	<Dialog
 		v-model:visible="taskStore.isVisibleAddForm"
-		:style="{width: '100%', maxWidth: '700px'}"
+		:style="{width: '50vw', maxWidth: '864px'}"
+		:breakpoints="{ '1120px': '70vw', '769px': '90vw' }"
 		header="Добавить задачу"
 		modal
 	>

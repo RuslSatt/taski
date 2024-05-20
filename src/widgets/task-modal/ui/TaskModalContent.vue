@@ -112,4 +112,19 @@ taskStore.$subscribe(() => {
 .card-select {
 	width: 170px;
 }
+
+@media (max-width: 559px) {
+	.card-properties {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.card-due {
+		width: 100%;
+	}
+
+	.card-select {
+		width: 100%;
+	}
+}
 </style>
