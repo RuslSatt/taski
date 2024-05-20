@@ -33,7 +33,7 @@ onMounted(() => appStore.$reset());
 	justify-content: flex-start;
 	width: 400px;
 	height: 100vh;
-	padding: 10px;
+	padding: 20px;
 }
 
 .auth-logo {

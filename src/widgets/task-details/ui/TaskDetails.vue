@@ -177,4 +177,14 @@ watch(() => taskStore.isVisibleTaskDetails, () => {
 	width: 100%;
 	padding: 0 10px;
 }
+
+@media (max-width: 450px) {
+	.task-details-field-title {
+		display: none;
+	}
+
+	.task-details-field-item {
+		width: 100%;
+	}
+}
 </style>
