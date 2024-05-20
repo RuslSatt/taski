@@ -1,4 +1,8 @@
 <template>
+	<div
+		@click.prevent="themeStore.isHideNavBar = true"
+		:class="{'sidebar-mask': true, active: !themeStore.isHideNavBar}"
+	></div>
 	<aside :class="{sidebar: true, hide: themeStore.isHideNavBar}">
 		<ul class="sidebar-list">
 			<li
@@ -46,7 +50,8 @@ import { useThemeStore } from '@/entities/theme';
 import { AddProjectButton } from '@/feature/add-project';
 import { type MenuItem, useMenuStore } from '@/entities/menu';
 import { useProjectStore } from '@/entities/project';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useBreakpoints } from '@/shared';
 
 const themeStore = useThemeStore();
 const menuStore = useMenuStore();
@@ -59,6 +64,11 @@ const selectProject = (item: MenuItem) => {
 
 const hide = ref(false);
 
+const { width } = useBreakpoints();
+
+watch(() => width.value, () => {
+	themeStore.isHideNavBar = width.value < 768;
+});
 </script>
 
 <style scoped>
@@ -68,6 +78,7 @@ const hide = ref(false);
 	border-right: 1px solid var(--surface-300);
 	height: 100%;
 	min-width: 250px;
+	background-color: var(--surface-0);
 	transition: margin-left 0.3s;
 }
 
@@ -134,5 +145,25 @@ const hide = ref(false);
 
 .item-button.hide {
 	transform: rotate(-90deg);
+}
+
+@media (max-width: 769px) {
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
+	}
+
+	.sidebar-mask.active {
+		background-color: #0006;
+		height: 100%;
+		left: 0;
+		position: fixed;
+		top: 0;
+		transition: background-color .5s;
+		width: 100%;
+		z-index: 10;
+	}
 }
 </style>

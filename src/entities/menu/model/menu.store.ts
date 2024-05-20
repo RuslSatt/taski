@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 import type { MenuItem } from '@/entities/menu';
 import { type Project } from '@/entities/project';
 import { useRoute } from 'vue-router';
+import { useThemeStore } from '@/entities/theme';
 
 export const useMenuStore = defineStore('menu', () => {
 	const items = ref<MenuItem[]>([
@@ -13,6 +14,7 @@ export const useMenuStore = defineStore('menu', () => {
 	]);
 
 	const route = useRoute();
+	const themeStore = useThemeStore();
 
 	const selectedId = ref<string | number>('inbox');
 
@@ -24,7 +26,10 @@ export const useMenuStore = defineStore('menu', () => {
 		if (route.path === '/projects') selectedId.value = 'projects';
 	}
 
-	watch(() => route.path, selectItem);
+	watch(() => route.path, () => {
+		selectItem();
+		if (window.innerWidth < 769) themeStore.isHideNavBar = true;
+	});
 
 	function addProjects(projects: Project[]) {
 		const projectItem = items.value.find(item => item.id === 'projects');
