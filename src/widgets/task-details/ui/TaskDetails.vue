@@ -3,8 +3,11 @@
 		class="task-details"
 		v-model:visible="taskStore.isVisibleTaskDetails"
 		:draggable="false"
-		:style="{width: '100%', height: '90%', minWidth: '700px', maxWidth: '700px'}"
-		modal :closable="!commentStore.isLoading" :dismissableMask="commentStore.isLoading"
+		:style="{height: '90%', width: '50vw', maxWidth: '864px'}"
+		:breakpoints="{ '1120px': '70vw', '769px': '90vw' }"
+		modal
+		:closable="!commentStore.isLoading"
+		:dismissableMask="commentStore.isLoading"
 	>
 		<div v-if="commentStore.isLoading && !commentStore.selectedComment" class="skeleton">
 			<SkeletonDetails />
