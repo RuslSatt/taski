@@ -14,7 +14,7 @@
 		/>
 		<div class="card-properties">
 			<DueTaskForm class="card-due" />
-			<PriorityTaskSelect class="card-select" />
+			<PriorityTaskSelect class="card-priority" />
 			<SelectTaskProject class="card-select" />
 		</div>
 		<div class="card-buttons">
@@ -75,6 +75,7 @@ taskStore.$subscribe(() => {
 	flex-direction: column;
 	justify-content: center;
 	gap: 5px;
+	overflow: hidden;
 }
 
 .task-name, .task-description {
@@ -106,11 +107,15 @@ taskStore.$subscribe(() => {
 }
 
 .card-due {
-	width: 200px;
+	flex: 1 1 30%;
+}
+
+.card-priority {
+	flex: 1 1 30%;
 }
 
 .card-select {
-	width: 170px;
+	flex: 1 1 40%;
 }
 
 @media (max-width: 559px) {

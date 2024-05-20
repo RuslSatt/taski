@@ -47,12 +47,19 @@ const handlerUpdate = () => {
 	display: flex;
 	align-items: center;
 	width: 100%;
+	overflow: hidden;
 }
 
 .dropdown-item {
 	display: flex;
 	align-items: center;
 	gap: 5px;
+}
+
+.item-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 18px
 }
 
 .red {
