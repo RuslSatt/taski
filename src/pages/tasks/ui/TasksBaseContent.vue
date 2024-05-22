@@ -2,6 +2,9 @@
 	<h2 class="title">{{ title }}</h2>
 	<AddTaskButton class="add-task-button" />
 	<TaskList :category="category" />
+	<Fieldset class="fieldset" :toggleable="true" :collapsed="true" legend="Выполнено">
+		<TaskList :category="category" />
+	</Fieldset>
 	<TaskCreateModal v-if="taskStore.isVisibleAddForm" />
 </template>
 
@@ -31,5 +34,17 @@ const title = computed(() => {
 .title {
 	font-size: 24px;
 	margin-bottom: 20px;
+}
+
+.fieldset {
+	margin-top: 20px;
+	width: 100%;
+	max-width: 700px;
+	padding: 0;
+	border: none;
+}
+
+:deep(.p-toggleable-content) {
+	transition: none;
 }
 </style>

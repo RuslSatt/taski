@@ -76,6 +76,7 @@ const isShowSkeleton = computed(() => {
 	flex-direction: column;
 	gap: 15px;
 	width: 100%;
+	max-width: 700px;
 	margin-top: 20px;
 }
 </style>

@@ -19,7 +19,7 @@ import ToggleButton from 'primevue/togglebutton';
 import Menu from 'primevue/menu';
 import TabMenu from 'primevue/tabmenu';
 import Toast from 'primevue/toast';
-
+import Fieldset from 'primevue/fieldset';
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -42,4 +42,5 @@ export function initPrimeComponents() {
 	app.component('Menu', Menu);
 	app.component('TabMenu', TabMenu);
 	app.component('Toast', Toast);
+	app.component('Fieldset', Fieldset);
 }
