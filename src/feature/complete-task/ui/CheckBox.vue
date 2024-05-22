@@ -19,6 +19,9 @@ defineProps<{
 
 </script>
 
-<style scoped>
-
+<style>
+.completed .p-checkbox-box {
+	border-color: var(--bluegray-200);
+	background: var(--bluegray-200);
+}
 </style>

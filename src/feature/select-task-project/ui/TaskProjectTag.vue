@@ -3,6 +3,7 @@
 		class="tag"
 		:value="value"
 		@click.stop="routeToProjectPage"
+		:severity="task.completed ? 'secondary' : undefined"
 	/>
 </template>
 
@@ -40,5 +41,9 @@ const routeToProjectPage = async () => {
 <style scoped>
 .tag {
 	margin-left: auto;
+}
+
+.completed .p-tag {
+	color: var(--bluegray-300);
 }
 </style>

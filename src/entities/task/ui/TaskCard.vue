@@ -1,5 +1,5 @@
 <template>
-	<Card v-if="!isEdit" class="tsk-card" @click="handlerClick">
+	<Card v-if="!isEdit" :class="{'td-card': true, completed: task.completed}" @click="handlerClick">
 		<template #content>
 			<div class="container">
 				<div class="info">
@@ -55,6 +55,12 @@ const isTag = computed(() => {
 	padding: 0.8rem
 }
 
+.completed .content-name,
+.completed .content-description,
+.completed .pi {
+	color: var(--bluegray-300);
+}
+
 .info {
 	display: flex;
 	align-items: flex-start;
@@ -73,12 +79,11 @@ const isTag = computed(() => {
 }
 
 .content-description {
-	font-size: 14px;
+	font-size: 12px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	line-height: 16px;
-	color: var(--surface-500);
+	line-height: 14px;
 }
 
 .tools {

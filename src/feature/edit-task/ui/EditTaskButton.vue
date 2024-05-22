@@ -4,6 +4,7 @@
 		text rounded
 		aria-label="Редактировать"
 		@click.stop="handlerClick"
+		:severity="task.completed ? 'secondary' : undefined"
 	/>
 </template>
 

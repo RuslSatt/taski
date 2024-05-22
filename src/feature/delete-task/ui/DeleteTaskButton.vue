@@ -2,7 +2,7 @@
 	<Button
 		@click.stop="startDeleteTask"
 		icon="pi pi-trash"
-		severity="danger"
+		:severity="task.completed ? 'secondary' : 'danger'"
 		text rounded
 		aria-label="Удалить"
 	/>

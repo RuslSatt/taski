@@ -13,11 +13,13 @@
 				text rounded
 				aria-label="Редактировать"
 				icon="pi pi-calendar"
+				:severity="task.completed ? 'secondary' : undefined"
 				@click.stop="clickCallback"
 			/>
 			<Tag
 				v-else
 				:value="date"
+				:severity="task.completed ? 'secondary' : undefined"
 				@click.stop="clickCallback"
 			/>
 		</template>
@@ -43,10 +45,11 @@ const date = computed(() => {
 </script>
 
 <style scoped>
-
 :deep(.p-inputtext) {
 	display: none
 }
 
-
+.completed .p-tag {
+	color: var(--bluegray-300);
+}
 </style>

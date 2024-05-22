@@ -1,5 +1,5 @@
 <template>
-	<Card class="tsk-card" @click.stop="onClick">
+	<Card class="td-card" @click.stop="onClick">
 		<template #content>
 			<div class="container">
 				<div class="info">
