@@ -2,8 +2,14 @@
 	<h2 class="title">{{ title }}</h2>
 	<AddTaskButton class="add-task-button" />
 	<TaskList :category="category" />
-	<Fieldset class="fieldset" :toggleable="true" :collapsed="true" legend="Выполнено">
-		<TaskList :category="category" />
+	<Fieldset
+		v-if="isFieldset && hasCompletedTasks"
+		class="fieldset"
+		:toggleable="true"
+		:collapsed="true"
+		legend="Выполнено"
+	>
+		<TaskList :is-completed-set="true" :category="category" />
 	</Fieldset>
 	<TaskCreateModal v-if="taskStore.isVisibleAddForm" />
 </template>
@@ -22,11 +28,23 @@ const props = defineProps<{
 	category: TaskCategories,
 }>();
 
+const isFieldset = computed(() => {
+	return props.category !== 'today' && props.category !== 'upcoming';
+});
+
 const title = computed(() => {
 	if (props.title) return props.title;
 	if (props.category === 'inbox') return 'Входящие';
 	if (props.category === 'today') return 'Сегодня';
 	if (props.category === 'upcoming') return 'Предстоящие';
+});
+
+const hasCompletedTasks = computed(() => {
+	if (props.category === 'inbox') {
+		return taskStore.getCompletedTasks(props.category);
+	} else if (props.title) {
+		return taskStore.getProjectTasks(true);
+	}
 });
 </script>
 

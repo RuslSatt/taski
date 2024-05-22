@@ -35,7 +35,8 @@ export const useTaskStore = defineStore('task', () => {
 	const inboxTasks = ref<Task[]>([]);
 	const todayTasks = ref<Task[]>([]);
 	const upcomingTasks = ref<Task[]>([]);
-	const projectTasks = ref(new Map());
+	const projectTasks = ref<Map<number, Task[]>>(new Map());
+	const completedTasks = ref<Map<string | number, Task[]>>(new Map());
 
 	const isLoading = ref<boolean>(false);
 	const errorMessage = ref<string>('');
@@ -130,7 +131,7 @@ export const useTaskStore = defineStore('task', () => {
 
 		if (data) {
 			isLoad.value = true;
-			setTasksByGroup(data);
+			setTasksByCategory(data);
 		}
 
 		setTasksValue(data, error);
@@ -138,24 +139,20 @@ export const useTaskStore = defineStore('task', () => {
 		isLoading.value = false;
 	}
 
-	function setTasksByGroup(data: Task[]) {
+	function setTasksByCategory(data: Task[]) {
 		inboxTasks.value = [];
 		todayTasks.value = [];
 		upcomingTasks.value = [];
 		projectTasks.value = new Map();
+		completedTasks.value = new Map();
 
 		for (let task of data) {
 			if (task.due) task.due = new Date(task.due);
 
 			if (!task.project_id) {
-				inboxTasks.value.push(task);
+				task.completed ? setCompletedTask(task, 'inbox') : inboxTasks.value.push(task);
 			} else {
-				const tasks = projectTasks.value.get(task.project_id);
-				if (!tasks) {
-					projectTasks.value.set(task.project_id, [task]);
-				} else {
-					tasks.push(task);
-				}
+				task.completed ? setCompletedTask(task, task.project_id) : setProjectTask(task, task.project_id);
 			}
 
 			if (task.due) {
@@ -170,12 +167,39 @@ export const useTaskStore = defineStore('task', () => {
 		}
 	}
 
-	function getProjectTasks() {
+	function setCompletedTask(task: Task, key: string | number) {
+		const completed = completedTasks.value.get(key);
+
+		if (!completed) {
+			completedTasks.value.set(key, [task]);
+		} else {
+			completed.push(task);
+		}
+	}
+
+	function setProjectTask(task: Task, key: number) {
+		const tasks = projectTasks.value.get(key);
+		if (!tasks) {
+			projectTasks.value.set(key, [task]);
+		} else {
+			tasks.push(task);
+		}
+	}
+
+	function getCompletedTasks(key: 'inbox') {
+		return completedTasks.value.get(key);
+	}
+
+	function getProjectTasks(isCompletedTasks?: boolean) {
 		const project = projectStore.project;
 
 		if (!project) return;
 
-		return projectTasks.value.get(project.id);
+		if (isCompletedTasks) {
+			return completedTasks.value.get(project.id);
+		} else {
+			return projectTasks.value.get(project.id);
+		}
 	}
 
 	function setTasksValue(data: Task[] | null, error: PostgrestError | null) {
@@ -211,7 +235,7 @@ export const useTaskStore = defineStore('task', () => {
 			Toast.addErrorToast(error.message);
 		} else {
 			tasks.value.push(task);
-			setTasksByGroup(tasks.value);
+			setTasksByCategory(tasks.value);
 			Toast.addSuccessToast(task.name, 'Добавлена задача');
 		}
 
@@ -233,7 +257,7 @@ export const useTaskStore = defineStore('task', () => {
 			Toast.addErrorToast(error.message);
 		} else {
 			tasks.value = tasks.value.filter(item => task.id !== item.id);
-			setTasksByGroup(tasks.value);
+			setTasksByCategory(tasks.value);
 			Toast.addSuccessToast(task.name, 'Удалена задача');
 		}
 
@@ -260,7 +284,7 @@ export const useTaskStore = defineStore('task', () => {
 			errorMessage.value = error.message;
 			Toast.addErrorToast(error.message);
 		} else {
-			setTasksByGroup(tasks.value);
+			setTasksByCategory(tasks.value);
 			Toast.addSuccessToast(task.name, 'Обновлена задача');
 		}
 
@@ -269,9 +293,8 @@ export const useTaskStore = defineStore('task', () => {
 		$resetModals();
 	}
 
-
 	async function updateTaskParams(task: Task) {
-		setTasksByGroup(tasks.value);
+		setTasksByCategory(tasks.value);
 
 		const { error } = await supabase
 			.from('tasks')
@@ -288,7 +311,7 @@ export const useTaskStore = defineStore('task', () => {
 
 		editTaskFields(task);
 
-		setTasksByGroup(tasks.value);
+		setTasksByCategory(tasks.value);
 
 		const { error } = await supabase
 			.from('tasks')
@@ -362,6 +385,7 @@ export const useTaskStore = defineStore('task', () => {
 		updateDetailsTask,
 		fetchTasks,
 		getProjectTasks,
+		getCompletedTasks,
 		isLoading,
 		isLoad,
 		selectedTask,

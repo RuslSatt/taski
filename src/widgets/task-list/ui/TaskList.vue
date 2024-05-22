@@ -45,15 +45,20 @@ const taskStore = useTaskStore();
 
 const props = defineProps<{
 	category: TaskCategories;
+	isCompletedSet?: boolean;
 }>();
 
 const tasks = computed(() => {
-	if (props.category === 'inbox') return taskStore.inboxTasks;
+	if (props.category === 'inbox') {
+		if (props.isCompletedSet) {
+			return taskStore.getCompletedTasks(props.category);
+		} else {
+			return taskStore.inboxTasks;
+		}
+	}
 	if (props.category === 'today') return taskStore.todayTasks;
 	if (props.category === 'upcoming') return taskStore.upcomingTasks;
-	if (props.category === 'project') {
-		return taskStore.getProjectTasks();
-	}
+	if (props.category === 'project') return taskStore.getProjectTasks(props.isCompletedSet);
 });
 
 onMounted(async () => {
