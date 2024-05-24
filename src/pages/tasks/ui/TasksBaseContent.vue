@@ -6,7 +6,8 @@
 		v-if="isFieldset && hasCompletedTasks"
 		class="fieldset"
 		:toggleable="true"
-		:collapsed="true"
+		:collapsed="themeStore.isCollapsedCompletedTask"
+		@update:collapsed="themeStore.toggleCompletedTask"
 		legend="Выполнено"
 	>
 		<TaskList :is-completed-set="true" :category="category" />
@@ -20,8 +21,10 @@ import { type TaskCategories, useTaskStore } from '@/entities/task';
 import { TaskList } from '@/widgets/task-list';
 import { TaskCreateModal } from '@/widgets/task-modal';
 import { computed } from 'vue';
+import { useThemeStore } from '@/entities/theme';
 
 const taskStore = useTaskStore();
+const themeStore = useThemeStore();
 
 const props = defineProps<{
 	title?: string,
