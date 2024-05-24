@@ -56,10 +56,9 @@ const hasCompletedTasks = computed(() => {
 
 .fieldset {
 	margin-top: 20px;
-	width: 100%;
-	max-width: 700px;
 	padding: 0;
 	border: none;
+	min-width: 0;
 }
 
 :deep(.p-toggleable-content) {

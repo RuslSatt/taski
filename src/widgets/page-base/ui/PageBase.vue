@@ -19,16 +19,13 @@
 
 .wrapper {
 	width: 100%;
-	overflow: auto;
+	overflow: hidden auto;
 }
 
 .content {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
 	padding: 20px;
 	width: 100%;
 	max-width: 700px;
-	margin: auto;
+	margin: 0 auto;
 }
 </style>
