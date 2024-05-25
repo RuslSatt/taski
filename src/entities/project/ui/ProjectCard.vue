@@ -1,5 +1,9 @@
 <template>
-	<Card class="td-card" @click.stop="onClick">
+	<Card
+		class="td-card"
+		:style="project.color ? {borderLeft: `2px solid ${project.color}`} : {}"
+		@click.stop="onClick"
+	>
 		<template #content>
 			<div class="container">
 				<div class="info">
@@ -33,11 +37,12 @@ const onClick = () => {
 
 <style scoped>
 :deep(.p-card-body) {
-	padding: 0.8rem
+	padding: 0.2rem
 }
 
 .info {
 	display: flex;
+	align-items: center;
 	gap: 15px;
 }
 

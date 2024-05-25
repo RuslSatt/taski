@@ -1,5 +1,8 @@
 <template>
-	<h2 class="title">{{ title }}</h2>
+	<div class="title-container">
+		<ButtonColor v-if="color" :color="color" />
+		<h2 class="title">{{ title }}</h2>
+	</div>
 	<p v-if="description" class="description">{{ description }}</p>
 	<AddTaskButton class="add-task-button" />
 	<TaskList :category="category" />
@@ -23,6 +26,7 @@ import { TaskList } from '@/widgets/task-list';
 import { TaskCreateModal } from '@/widgets/task-modal';
 import { computed } from 'vue';
 import { useThemeStore } from '@/entities/theme';
+import { ButtonColor } from '@/feature/project/select-project-color';
 
 const taskStore = useTaskStore();
 const themeStore = useThemeStore();
@@ -30,6 +34,7 @@ const themeStore = useThemeStore();
 const props = defineProps<{
 	title?: string,
 	description?: string,
+	color?: string,
 	category: TaskCategories,
 }>();
 
@@ -54,9 +59,15 @@ const hasCompletedTasks = computed(() => {
 </script>
 
 <style scoped>
+.title-container {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
 .title {
 	font-size: 24px;
-	margin-bottom: 20px;
 }
 
 .description {

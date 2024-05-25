@@ -19,6 +19,7 @@
 				placeholder="Описание проекта"
 				:autoResize="true"
 			/>
+			<SelectProjectColor />
 			<div class="content-buttons">
 				<Button
 					@click="onCancel"
@@ -40,6 +41,7 @@
 <script setup lang="ts">
 import { useProjectStore } from '@/entities/project';
 import { computed } from 'vue';
+import { SelectProjectColor } from '@/feature/project/select-project-color';
 
 const projectStore = useProjectStore();
 

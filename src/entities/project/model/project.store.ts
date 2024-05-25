@@ -181,6 +181,8 @@ export const useProjectStore = defineStore('project', () => {
 
 	function $resetFields() {
 		name.value = '';
+		description.value = '';
+		color.value = '';
 		errorMessage.value = '';
 		isAccessAdd.value = false;
 		isAccessEdit.value = false;

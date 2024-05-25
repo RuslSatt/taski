@@ -4,6 +4,7 @@
 			<TasksBaseContent
 				:title="projectStore.project?.name"
 				:description="projectStore.project?.description"
+				:color="projectStore.project?.color"
 				category="project"
 			/>
 		</template>

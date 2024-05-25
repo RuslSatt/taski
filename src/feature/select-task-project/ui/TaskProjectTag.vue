@@ -3,7 +3,8 @@
 		class="tag"
 		:value="value"
 		@click.stop="routeToProjectPage"
-		:severity="task.completed ? 'secondary' : undefined"
+		severity="secondary"
+		:style="{color: currentProject?.color}"
 	/>
 </template>
 
