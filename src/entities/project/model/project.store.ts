@@ -14,6 +14,8 @@ export const useProjectStore = defineStore('project', () => {
 	const selectedProject = ref<Project | null>(null);
 
 	const name = ref<string>('');
+	const description = ref<string>('');
+	const color = ref<string>('');
 	const errorMessage = ref<string>('');
 	const isLoading = ref<boolean>(false);
 
@@ -33,12 +35,22 @@ export const useProjectStore = defineStore('project', () => {
 	}
 
 	function checkAccessEdit() {
-		isAccessEdit.value = name.value !== selectedProject.value?.name;
+		if (name.value != selectedProject.value?.name) {
+			isAccessEdit.value = true;
+		} else if (description.value != selectedProject.value?.description) {
+			isAccessEdit.value = true;
+		} else if (color.value != selectedProject.value?.color) {
+			isAccessEdit.value = true;
+		} else {
+			isAccessEdit.value = false;
+		}
 	}
 
 	function selectProject(project: Project) {
 		selectedProject.value = project;
 		name.value = project.name;
+		description.value = project.description;
+		color.value = project.color;
 	}
 
 	async function setProject(value: Project) {
@@ -89,7 +101,9 @@ export const useProjectStore = defineStore('project', () => {
 		const project: Project = {
 			id: new Date().getTime(),
 			name: name.value,
-			user_id: userStore.user.id
+			user_id: userStore.user.id,
+			description: description.value,
+			color: color.value
 		};
 
 		const { data, error } = await supabase
@@ -140,16 +154,19 @@ export const useProjectStore = defineStore('project', () => {
 
 		isLoading.value = true;
 
+		selectedProject.value.name = name.value;
+		selectedProject.value.description = description.value;
+		selectedProject.value.color = color.value;
+
 		const { error } = await supabase
 			.from('projects')
-			.update({ name: name.value })
+			.update(selectedProject.value)
 			.eq('id', selectedProject.value.id);
 
 		if (error) {
 			errorMessage.value = error.message;
 			Toast.addErrorToast(error.message);
 		} else {
-			selectedProject.value.name = name.value;
 			menuStore.addProjects(projects.value);
 			Toast.addSuccessToast(selectedProject.value.name, 'Обновлен проект');
 		}
@@ -182,6 +199,8 @@ export const useProjectStore = defineStore('project', () => {
 
 	return {
 		name,
+		description,
+		color,
 		errorMessage,
 		isLoading,
 		projects,

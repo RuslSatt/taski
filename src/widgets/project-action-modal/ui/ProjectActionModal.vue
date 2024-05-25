@@ -13,6 +13,12 @@
 				class="project-name"
 				placeholder="Название проекта"
 			/>
+			<Textarea
+				v-model="projectStore.description"
+				class="project-description"
+				placeholder="Описание проекта"
+				:autoResize="true"
+			/>
 			<div class="content-buttons">
 				<Button
 					@click="onCancel"

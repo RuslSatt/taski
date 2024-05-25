@@ -1,7 +1,11 @@
 <template>
 	<PageBase>
 		<template v-slot:content>
-			<TasksBaseContent :title="projectStore.project?.name" category="project" />
+			<TasksBaseContent
+				:title="projectStore.project?.name"
+				:description="projectStore.project?.description"
+				category="project"
+			/>
 		</template>
 		<template v-slot:details>
 			<TaskDetails />

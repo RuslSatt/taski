@@ -1,5 +1,6 @@
 <template>
 	<h2 class="title">{{ title }}</h2>
+	<p v-if="description" class="description">{{ description }}</p>
 	<AddTaskButton class="add-task-button" />
 	<TaskList :category="category" />
 	<Fieldset
@@ -28,6 +29,7 @@ const themeStore = useThemeStore();
 
 const props = defineProps<{
 	title?: string,
+	description?: string,
 	category: TaskCategories,
 }>();
 
@@ -54,6 +56,10 @@ const hasCompletedTasks = computed(() => {
 <style scoped>
 .title {
 	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.description {
 	margin-bottom: 20px;
 }
 
