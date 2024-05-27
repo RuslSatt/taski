@@ -45,6 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
 		if (user) {
 			userStore.setUser(user);
 			await router.push('/');
+			$reset();
 		} else if (error) {
 			errorMessage.value = error.message;
 		}

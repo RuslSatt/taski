@@ -5,6 +5,14 @@
 			<h2 class="form-title">
 				{{ title }}
 			</h2>
+			<Message
+				v-show="authStore.errorMessage"
+				class="form-error-message"
+				:closable="false"
+				severity="error"
+			>
+				{{ authStore.errorMessage }}
+			</Message>
 			<InputText id="email" v-model="authStore.email" placeholder="Email" class="form-input" />
 			<Password
 				v-model="authStore.password"
@@ -63,7 +71,6 @@ const onSign = async () => {
 	} else {
 		await authStore.signUp();
 	}
-	authStore.$reset();
 };
 
 onMounted(() => {
@@ -119,4 +126,9 @@ onMounted(() => {
 .form-toggle-sign-btn {
 	padding: 1px 0;
 }
+
+.form-error-message {
+	margin: 0;
+}
+
 </style>

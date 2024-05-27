@@ -20,6 +20,7 @@ import Menu from 'primevue/menu';
 import TabMenu from 'primevue/tabmenu';
 import Toast from 'primevue/toast';
 import Fieldset from 'primevue/fieldset';
+import Message from 'primevue/message';
 
 export function initPrimeComponents() {
 	app.component('InputText', InputText);
@@ -43,4 +44,5 @@ export function initPrimeComponents() {
 	app.component('TabMenu', TabMenu);
 	app.component('Toast', Toast);
 	app.component('Fieldset', Fieldset);
+	app.component('Message', Message);
 }
