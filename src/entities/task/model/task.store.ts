@@ -156,11 +156,11 @@ export const useTaskStore = defineStore('task', () => {
 			}
 
 			if (task.due) {
-				if (dateJs.isSame(task.due) || dateJs.isAfter(task.due) && !task.completed) {
+				if (dateJs.isSame(task.due, 'day') || dateJs.isAfter(task.due, 'day') && !task.completed) {
 					todayTasks.value.push(task);
 				}
 
-				if (dateJs.isBefore(task.due) && !task.completed) {
+				if (dateJs.isBefore(task.due, 'day') && !task.completed) {
 					upcomingTasks.value.push(task);
 				}
 			}
