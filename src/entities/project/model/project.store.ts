@@ -118,11 +118,12 @@ export const useProjectStore = defineStore('project', () => {
 			projects.value.push(data[0]);
 			menuStore.addProjects(projects.value);
 			Toast.addSuccessToast(project.name, 'Добавлен проект');
+
+			isVisibleActionModal.value = false;
+			$resetFields();
 		}
 
 		isLoading.value = false;
-		isVisibleActionModal.value = false;
-		$resetFields();
 	}
 
 	async function deleteProject() {
@@ -142,11 +143,12 @@ export const useProjectStore = defineStore('project', () => {
 			projects.value = projects.value.filter(item => selectedProject.value?.id !== item.id);
 			menuStore.addProjects(projects.value);
 			Toast.addSuccessToast(selectedProject.value.name, 'Удален проект');
+
+			isVisibleDeleteModal.value = false;
+			$resetFields();
 		}
 
 		isLoading.value = false;
-		isVisibleDeleteModal.value = false;
-		$resetFields();
 	}
 
 	async function updateProject() {
@@ -169,9 +171,9 @@ export const useProjectStore = defineStore('project', () => {
 		} else {
 			menuStore.addProjects(projects.value);
 			Toast.addSuccessToast(selectedProject.value.name, 'Обновлен проект');
+			toggleVisibleEditModal();
 		}
 
-		toggleVisibleEditModal();
 		isLoading.value = false;
 	}
 

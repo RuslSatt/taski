@@ -237,11 +237,12 @@ export const useTaskStore = defineStore('task', () => {
 			tasks.value.push(task);
 			setTasksByCategory(tasks.value);
 			Toast.addSuccessToast(task.name, 'Добавлена задача');
+
+			$resetFields();
+			$resetModals();
 		}
 
 		isLoading.value = false;
-		$resetFields();
-		$resetModals();
 	}
 
 	async function deleteTask(task: Task) {
@@ -286,11 +287,12 @@ export const useTaskStore = defineStore('task', () => {
 		} else {
 			setTasksByCategory(tasks.value);
 			Toast.addSuccessToast(task.name, 'Обновлена задача');
+
+			$resetFields();
+			$resetModals();
 		}
 
 		isLoading.value = false;
-		$resetFields();
-		$resetModals();
 	}
 
 	async function updateTaskParams(task: Task) {
